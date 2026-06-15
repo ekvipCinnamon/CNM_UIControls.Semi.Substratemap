@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "TcHmi.Controls.WaferMap.ChipStatusAssignment": {
+      "$schema": "http://json-schema.org/draft-04/schema",
+      "title": "ChipStatusAssignment",
+      "type": "object",
+      "properties": {
+        "chips_id": {
+          "type": "integer"
+        },
+        "status": {
+          "$ref": "tchmi:framework#/definitions/TcHmi.Controls.WaferMap.ChipStatus"
+        }
+      },
+      "required": [
+        "chips_id",
+        "status"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

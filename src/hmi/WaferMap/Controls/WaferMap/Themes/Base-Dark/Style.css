@@ -1,0 +1,13 @@
+/** Styles for theme: Base-Dark */
+.TcHmi_Controls_WaferMap_WaferMap {
+    --wafermap-background: transparent;
+    --wafermap-wafer-color: rgb(70, 70, 70);
+    --wafermap-edge-color: rgb(180, 180, 180);
+    --wafermap-selection-color: rgb(80, 150, 255);
+    /* Chip Status Color */
+    --wafermap-status-ready: rgb(120, 120, 120);
+    --wafermap-status-processing: rgb(240, 190, 40);
+    --wafermap-status-completed: rgb(40, 200, 110);
+    --wafermap-status-failed: rgb(255, 90, 90);
+    --wafermap-status-unknown: rgb(90, 90, 90);
+}

@@ -1,0 +1,129 @@
+#---------------------------------------------------------
+#							common
+#---------------------------------------------------------
+
+# ignore entire 'IM' directory
+[Ii][Mm]/
+
+# ignore any temporary directory
+[tT][mM][pP]/
+[tT][eE][mM][pP]/
+
+# ignore any *.backup directory
+*.[Bb][Aa][cC][Kk][uU][Pp]/
+
+# ignore any log directory
+[lL][oO][gG]/
+[lL][oO][gG][sS]/
+
+#ignore archive folders
+[Aa][Rr][Cc][Hh][Ii][Vv][Ee]/
+[Aa][Rr][Cc][Hh][Ii][Vv]/
+
+# ignore backup files
+*.bak
+
+# ignore enterprise architect ldb
+*.ldb
+
+# ignore any file starting with a tilde
+~*.*
+
+# ignore any file with file extension tmp or temp
+*.[tT][mM][pP]
+*.[tT][eE][mM][pP]
+
+# ignore info files
+*.info
+
+# ignore log files
+*.log
+
+#---------------------------------------------------------
+#					Beckhoff specific
+#---------------------------------------------------------
+
+#ignore not required files
+**/.vs/
+*.~u
+*.project.~u
+*.suo
+*.tmcRefac
+*.plcproj.bak
+*.plcproj.orig
+*.tpy
+*.tclrs
+*.compileinfo
+*.asm
+*.core
+LineIDs.dbg
+LineIDs.dbg.bak
+*.tsproj.bak
+*.tsproj.b?k
+*.tsproj.orig
+*.xti.bak
+*.xti.bk?
+*.xti.orig
+*.xtv
+*.xtv.bak
+*.xtv.bk?
+
+# ignore not required folders
+**/_Boot/
+**/_CompileInfo/
+**/_ModuleInstall/
+**/_Deployment/
+**/_Repository/
+**/Release/
+**/x64Debug/
+**/x64Release/
+**/x86Debug/
+**/x86Release/
+**/_output/
+**/.TcGit/
+
+# =========================================
+# TwinCAT HMI (TE2000)
+# =========================================
+.engineering_servers/
+tchmipublish.journal.json
+liveview_*
+*.cache
+*.db-shm
+*.db-wal
+*.pid
+**/.hmiframework/
+**/.hmipkgs/
+Packages/
+blob_storage/
+
+# =========================================
+# TypeScript Compilation Artifacts
+# =========================================
+tsconfig.json
+**/*.d.ts
+**/*.js.map
+/common/PopupUtil.js
+/common/RecipeUtil.js
+/common/SymbolSubscriptionUtil.js
+/common/SymbolUtil.js
+/common/Types.js
+/Controls/*/**/*.js
+
+# =========================================
+# Visual Studio & TwinCAT 3 Core
+# =========================================
+.vs/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.opendb
+*.dbmdl
+*.plcproj.bak
+*.tcproj.bak
+*.tsproj.bak
+_Boot/

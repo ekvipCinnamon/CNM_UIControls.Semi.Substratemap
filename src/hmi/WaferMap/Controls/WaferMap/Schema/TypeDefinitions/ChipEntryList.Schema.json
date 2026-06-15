@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "TcHmi.Controls.WaferMap.ChipEntryList": {
+      "$schema": "http://json-schema.org/draft-04/schema",
+      "title": "ChipEntryList",
+      "type": "array",
+      "items": {
+        "$ref": "tchmi:framework#/definitions/TcHmi.Controls.WaferMap.ChipEntry"
+      },
+      "minItems": 0
+    }
+  }
+}

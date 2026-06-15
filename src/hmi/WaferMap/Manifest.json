@@ -1,0 +1,87 @@
+{
+  "modules": [
+    {
+      "type": "Package",
+      "nugetId": "Beckhoff.TwinCAT.HMI.Framework"
+    },
+    {
+      "type": "Control",
+      "basePath": "./Controls/WaferMap",
+      "descriptionFile": "Description.json",
+      "toolboxCategory": ""
+    }
+  ],
+  "provideMetadata": {
+    "toolbox": {
+      "WaferMap": {
+        "200": "WaferMap"
+      }
+    }
+  },
+  "$schema": ".hmiframework/Schema/Manifest.Schema.json",
+  "apiVersion": 1,
+  "symbols": {
+    "internal": {},
+    "themedResources": {},
+    "timer": {},
+    "package": {}
+  },
+  "intervals": {},
+  "actionTemplates": [],
+  "themes": {
+    "Base-Dark": {
+      "resources": [
+        {
+          "name": "Themes/Base-Dark/Base-Dark.theme",
+          "description": "",
+          "type": "ThemedValues"
+        }
+      ],
+      "replacesThemeForControls": [],
+      "replacesThemeForPackageComponents": []
+    },
+    "Base": {
+      "resources": [
+        {
+          "name": "Themes/Base/Base.theme",
+          "description": "",
+          "type": "ThemedValues"
+        }
+      ],
+      "replacesThemeForControls": [],
+      "replacesThemeForPackageComponents": []
+    }
+  },
+  "dataTypes": [
+    {
+      "schema": "Controls/WaferMap/Schema/ChipStatus.schema.json"
+    },
+    {
+      "schema": "Controls/WaferMap/Schema/ChipStatusAssignment.schema.json"
+    },
+    {
+      "schema": "Controls/WaferMap/Schema/ChipStatus.schema.json"
+    },
+    {
+      "schema": "Controls/WaferMap/Schema/ChipStatusAssignment.schema.json"
+    },
+    {
+      "schema": "Controls/WaferMap/Schema/TypeDefinitions/ChipStatus.schema.json"
+    },
+    {
+      "schema": "Controls/WaferMap/Schema/TypeDefinitions/ChipStatusAssignment.schema.json"
+    },
+    {
+      "schema": "Controls/WaferMap/Schema/TypeDefinitions/MetricPrefix.schema.json"
+    },
+    {
+      "schema": "Controls/WaferMap/Schema/TypeDefinitions/ChipStatusAssignmentList.schema.json"
+    },
+    {
+      "schema": "Controls/WaferMap/Schema/TypeDefinitions/ChipEntry.schema.json"
+    },
+    {
+      "schema": "Controls/WaferMap/Schema/TypeDefinitions/ChipEntryList.schema.json"
+    }
+  ]
+}

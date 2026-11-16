@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-substrate-full-record.xml
+  Covers: the NORMAL case for the <Substrates> block - a Substrate carrying all
+          four modelled children at once. Before this, exactly one fixture in the
+          corpus carried any Substrate child (LotId + GoodDevices), and none
+          carried SupplierName or Status at all.
+  Child order is the XSD sequence: LotId, [AliasIds, CarrierType, CarrierId,
+  SlotNumber, SubstrateNumber -> recognised but not modelled, so absent],
+  GoodDevices, SupplierName, Status.
+  Grid: 3 cols x 2 rows, all tokens distinct. LowerLeft / UpRight, so logical
+  (0,0) is serialization (col 0, row 1).
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Full" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="3" Y="2"/>
+      <StepSize X="1.0" Y="1.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="FULL-REC-01">
+      <LotId>LOT-42</LotId>
+      <GoodDevices>5</GoodDevices>
+      <SupplierName>ACME Substrates GmbH</SupplierName>
+      <Status>Sorted</Status>
+    </Substrate>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="FULL-REC-01" LayoutSpecifier="Full"
+        OriginLocation="LowerLeft" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>abc</BinCode>
+          <BinCode>d.f</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

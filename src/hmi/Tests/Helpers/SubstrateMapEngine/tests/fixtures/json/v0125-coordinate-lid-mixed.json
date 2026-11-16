@@ -1,0 +1,54 @@
+{
+  "$comment": "HAND-AUTHORED from v0125-coordinate-lid-mixed.xml, transcribed entry by entry from the XML bytes - NOT produced by e142DocumentToJson. Covers: MapType=Coordinate, X/Y-addressed entries, one entry carrying BOTH X/Y and LID (placement must follow X/Y), and three LID-only entries that cannot be placed and are carried with an aggregated warning. BinDefinitions here carry BinDescription and NO BinQuality, which is the asymmetric case.",
+  "$format": "semi-e142",
+  "$version": 1,
+  "$namespace": "urn:semi-org:xsd.E142-1.V0125.SubstrateMap",
+  "Layouts": [
+    {
+      "LayoutId": "LidCoord",
+      "DefaultUnits": "mm",
+      "TopLevel": true,
+      "Dimension": { "X": 4, "Y": 3 },
+      "StepSize": { "X": 1.0, "Y": 1.0 }
+    }
+  ],
+  "Substrates": [
+    { "SubstrateType": "Wafer", "SubstrateId": "LIDMIX001" }
+  ],
+  "SubstrateMaps": [
+    {
+      "SubstrateType": "Wafer",
+      "SubstrateId": "LIDMIX001",
+      "LayoutSpecifier": "LidCoord",
+      "SubstrateSide": "TopSide",
+      "Orientation": 0,
+      "OriginLocation": "LowerLeft",
+      "AxisDirection": "UpRight",
+      "Overlay": [
+        {
+          "MapName": "Sort",
+          "MapVersion": "1",
+          "BinCodeMap": {
+            "BinType": "Ascii",
+            "NullBin": ".",
+            "MapType": "Coordinate",
+            "BinDefinitions": [
+              { "BinCode": "1", "BinDescription": "Pass" },
+              { "BinCode": "9", "BinDescription": "Fail" }
+            ],
+            "BinCode": [
+              { "X": 0, "Y": 0, "$text": "1" },
+              { "X": 1, "Y": 0, "$text": "1" },
+              { "X": 2, "Y": 0, "$text": "9" },
+              { "X": 0, "Y": 1, "$text": "1" },
+              { "X": 3, "Y": 1, "LID": "DIE-0301", "$text": "1" },
+              { "LID": "DIE-SPARE-A", "$text": "9" },
+              { "LID": "DIE-SPARE-B", "$text": "1" },
+              { "LID": "DIE-SPARE-C", "$text": "1" }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "$comment": "HAND-AUTHORED from v0125-substrate-carrier.xml (Rule 10, D-030). CarrierId is LotIdType (maxLength 80) and NOT MaterialIdType (32), which sits two lines away in the same xs:sequence and is easy to conflate. The value here is EXACTLY 80 characters - the inclusive boundary of LotIdType, and two and a half times the 32 - so a parser that applied the wrong facet would warn where it must not.",
+  "$format": "semi-e142",
+  "$version": 1,
+  "$namespace": "urn:semi-org:xsd.E142-1.V0125.SubstrateMap",
+  "Layouts": [
+    {
+      "LayoutId": "Carrier",
+      "DefaultUnits": "mm",
+      "TopLevel": true,
+      "Dimension": {
+        "X": 2,
+        "Y": 2
+      },
+      "StepSize": {
+        "X": 1.0,
+        "Y": 1.0,
+        "Units": "mm"
+      }
+    }
+  ],
+  "Substrates": [
+    {
+      "SubstrateType": "Wafer",
+      "SubstrateId": "CARRIER-01",
+      "LotId": "LOT-CARRIER",
+      "CarrierType": "FOUP",
+      "CarrierId": "CARRIER-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC-END",
+      "GoodDevices": 4
+    }
+  ],
+  "SubstrateMaps": [
+    {
+      "SubstrateType": "Wafer",
+      "SubstrateId": "CARRIER-01",
+      "LayoutSpecifier": "Carrier",
+      "OriginLocation": "LowerLeft",
+      "AxisDirection": "UpRight",
+      "Overlay": [
+        {
+          "MapName": "Sort",
+          "MapVersion": "1",
+          "BinCodeMap": {
+            "BinType": "Ascii",
+            "NullBin": ".",
+            "MapType": "2DArray",
+            "BinCode": [
+              "ef",
+              "gh"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

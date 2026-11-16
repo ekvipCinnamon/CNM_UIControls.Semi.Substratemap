@@ -1,0 +1,239 @@
+{
+  "$schema": "../../.hmiframework/Schema/ControlDescription.Schema.json",
+  "apiVersion": 1,
+  "name": "SubstrateMapBinChart",
+  "namespace": "TcHmi.Controls.CNM_UIControls.SEMI",
+  "displayName": "Substrate map bin chart",
+  "version": {
+    "full": "5.0.0.0",
+    "major": 5,
+    "minor": 0,
+    "revision": 0,
+    "build": 0
+  },
+  "visible": true,
+  "themeable": "Standard",
+  "base": "TcHmi.Controls.CNM_UIControls.SEMI.SubstrateMapBase",
+  "description": "A bin chart for a substrate map, in either of two presentations: ChartStyle 'Bars' or 'Share'. ONE CONTROL FOR BOTH: the two styles consume identical data, share palette resolution, the empty state, the remainder bucket and the sort order, and differ only in geometry - fillRect against arc. Two controls would be two copies of everything except the drawing call. Splitting later is a migration and merging later is not. It takes THE SAME MAP ATTRIBUTES the map does, not a reference to a sibling control: an id coupling points silently at nothing the moment someone moves the map to another page, and the failure looks like 'the chart is empty'. A binding of its own degrades by parsing twice rather than corrupting. It extends SubstrateMapBase for the canvas, the device-pixel sizing, the ResizeObserver, the theme and the teardown. No lattice, no aggregation, no cell hit test - a chart counts bins, it does not draw a wafer.",
+  "properties": {
+    "containerControl": false,
+    "geometry": {
+      "width": 320,
+      "height": 220
+    }
+  },
+  "icons": [
+    {
+      "name": "Icons/16x16.png",
+      "width": 16,
+      "height": 16
+    }
+  ],
+  "template": "Template.html",
+  "dependencyFiles": [
+    {
+      "name": "SubstrateMapBinChart.js",
+      "type": "EsModule",
+      "description": "The bin chart."
+    },
+    {
+      "name": "../SubstrateMapBase/SubstrateMapBase.js",
+      "type": "EsModule",
+      "description": "The base it extends: canvas sizing, theme, empty state and teardown."
+    },
+    {
+      "name": "Style.css",
+      "type": "Stylesheet",
+      "description": "Chart layout."
+    }
+  ],
+  "functions": [
+    {
+      "name": "readBinStatistics",
+      "displayName": "Read bin statistics",
+      "visible": true,
+      "category": "Chart",
+      "description": "The whole lattice counted by bin code, in the shape SubstrateMap returns. UNTRUNCATED - the chart truncates for drawing, this does not, because a caller asking for the counts wants the counts.",
+      "type": "tchmi:framework#/definitions/SubstrateMapBinStatistics",
+      "heritable": false,
+      "waitMode": "Synchronous",
+      "params": []
+    },
+    {
+      "name": "readCategories",
+      "displayName": "Read categories",
+      "visible": true,
+      "category": "Chart",
+      "description": "The categories currently drawn, in draw order: code, count, color, and how many bin codes each covers. The remainder bucket appears as \"Other\" with covers > 1. This is what is on screen; readBinStatistics is what the map holds.",
+      "type": "tchmi:general#/definitions/Any",
+      "heritable": false,
+      "waitMode": "Synchronous",
+      "params": []
+    },
+    {
+      "name": "readNoBinsText",
+      "displayName": "Read no-bins text",
+      "visible": true,
+      "category": "Chart",
+      "description": "The line the chart draws when a map arrived and holds nothing to count - every cell carries the null bin. Distinct from having no map at all, which shows the no-data image instead: a map that arrived and is empty is an operator problem, and \"no map bound\" would hide it.",
+      "type": "tchmi:general#/definitions/String",
+      "heritable": false,
+      "waitMode": "Synchronous",
+      "params": []
+    },
+    {
+      "name": "readAge",
+      "displayName": "Read age",
+      "visible": true,
+      "category": "Chart",
+      "description": "The age line the chart shows: local time, timezone abbreviation, whether it came from a bound MapTimestamp or from the receive clock, and the age in seconds. Same shape as the tile returns.",
+      "type": "tchmi:general#/definitions/Any",
+      "heritable": false,
+      "waitMode": "Synchronous",
+      "params": []
+    }
+  ],
+  "attributes": [
+    {
+      "name": "data-tchmi-grid-data",
+      "propertyName": "GridData",
+      "propertySetterName": "setGridData",
+      "propertyGetterName": "getGridData",
+      "displayName": "Grid data (JSON)",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 100,
+      "type": "tchmi:framework#/definitions/SubstrateMapGridData",
+      "category": "Data",
+      "description": "Identical to the SubstrateMap attribute of the same name, in type, schema and meaning - a chart and the map it counts must agree about what they were given. Compact GridData v1 document (the PLC-friendly single-map JSON contract).",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": null,
+      "defaultValueInternal": null
+    },
+    {
+      "name": "data-tchmi-e142-map-data",
+      "propertyName": "E142MapData",
+      "propertySetterName": "setE142MapData",
+      "propertyGetterName": "getE142MapData",
+      "displayName": "E142 map data (XML)",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 101,
+      "type": "tchmi:general#/definitions/String",
+      "category": "Data",
+      "description": "Identical to the SubstrateMap attribute of the same name, in type, schema and meaning - a chart and the map it counts must agree about what they were given. SEMI E142.",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": null,
+      "defaultValueInternal": null
+    },
+    {
+      "name": "data-tchmi-e142-map-data-json",
+      "propertyName": "E142MapDataJson",
+      "propertySetterName": "setE142MapDataJson",
+      "propertyGetterName": "getE142MapDataJson",
+      "displayName": "E142 map data (JSON)",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 102,
+      "type": "tchmi:framework#/definitions/SubstrateMapE142MapDataJson",
+      "category": "Data",
+      "description": "Identical to the SubstrateMap attribute of the same name, in type, schema and meaning - a chart and the map it counts must agree about what they were given. SEMI E142.",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": null,
+      "defaultValueInternal": null
+    },
+    {
+      "name": "data-tchmi-chart-style",
+      "propertyName": "ChartStyle",
+      "propertySetterName": "setChartStyle",
+      "propertyGetterName": "getChartStyle",
+      "displayName": "ChartStyle",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 200,
+      "type": "tchmi:framework#/definitions/SubstrateMapChartStyle",
+      "category": "Chart",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": "Bars",
+      "defaultValueInternal": "Bars",
+      "description": "Which presentation to draw. 'Bars' is one bar per bin category with the count above it; 'Share' is the same data as proportions. ONE CONTROL FOR BOTH: they consume identical data and share palette resolution, the empty state, the remainder bucket and the sort order, differing only in geometry."
+    },
+    {
+      "name": "data-tchmi-chart-sort",
+      "propertyName": "ChartSort",
+      "propertySetterName": "setChartSort",
+      "propertyGetterName": "getChartSort",
+      "displayName": "ChartSort",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 201,
+      "type": "tchmi:framework#/definitions/SubstrateMapChartSort",
+      "category": "Chart",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": "CountDescending",
+      "defaultValueInternal": "CountDescending",
+      "description": "The category order. 'CountDescending' puts the biggest first, which is what a chart is for - ordering by code is ordering by an accident of the sort program's numbering. 'Code' is available for comparing two charts side by side, where the bars need to line up. 'Other' is always last either way: it is not a category with a code, it is what is left."
+    },
+    {
+      "name": "data-tchmi-category-cap",
+      "propertyName": "CategoryCap",
+      "propertySetterName": "setCategoryCap",
+      "propertyGetterName": "getCategoryCap",
+      "displayName": "CategoryCap",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 202,
+      "type": "tchmi:general#/definitions/Number",
+      "category": "Chart",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": 10,
+      "defaultValueInternal": 10,
+      "description": "How many categories to draw before the rest become 'Other'. The default matches the categorical palette's own cap, so a chart never shows a bar in a color the map could not have used. A legend longer than a dozen entries is a table, and a table is a different control."
+    },
+    {
+      "name": "data-tchmi-map-timestamp",
+      "propertyName": "MapTimestamp",
+      "propertySetterName": "setMapTimestamp",
+      "propertyGetterName": "getMapTimestamp",
+      "displayName": "Map timestamp",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 203,
+      "type": "tchmi:general#/definitions/String",
+      "category": "Chart",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": null,
+      "defaultValueInternal": null,
+      "description": "Identical to the SubstrateMapWidget attribute of the same name, so ONE SYMBOL can drive a tile and a chart showing the same wafer. When the map was MEASURED, if you can supply it. Bind it and the tile labels its age 'measured'; leave it and the tile labels the age 'received' instead, which is when the payload arrived here. The two are different facts - a map that arrived a second ago may describe a wafer tested this morning - so the tile always says which one it is showing. AN E142 DOCUMENT CARRIES NO TIMESTAMP OF ITS OWN. The ITEMVERSION value the SEMI standard defines belongs to the Stream 21 message that transports the item, not to the map, so a control that only sees the document cannot know when it was made. Bind it from wherever your transport keeps it. Accepts the SEMI form YYYYMMDDhhmmsscc and ISO 8601; a value with no timezone is read as local time, because a tester writes the time on its own clock."
+    }
+  ],
+  "events": [],
+  "attributeCategories": [
+    {
+      "name": "Data",
+      "displayPriority": 100
+    },
+    {
+      "name": "Chart",
+      "displayPriority": 200
+    }
+  ],
+  "languages": {
+    "en-US": "en-US.localization",
+    "de-DE": "de-DE.localization"
+  }
+}

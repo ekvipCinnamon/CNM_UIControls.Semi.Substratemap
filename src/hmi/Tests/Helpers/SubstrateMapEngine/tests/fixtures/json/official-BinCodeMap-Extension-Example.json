@@ -1,0 +1,26 @@
+{
+  "$comment": "HAND-AUTHORED from official-BinCodeMap-Extension-Example.xml (Rule 10, D-030). SEMI's own extension example, and the corpus's only document with NO SubstrateMaps at all - MapData's three children are each minOccurs=\"0\", so a document carrying Substrates alone is legal. It also carries a vendor subtree, sme:SupplierData, hung off Substrate through xsi:type. NEITHER path round-trips that subtree (observation 19): the XML parser counts it, warns E142_XML_FOREIGN_NAMESPACE_SKIPPED and drops it, because E142Document has no slot for extension content. The JSON representation has no namespaces at all, so the same content is an unknown MEMBER and warns E142_JSON_UNKNOWN_MEMBER instead - the same fate, reported by a different mechanism, which is why this fixture is in WARNING_CODES_DIFFER rather than compared for warning equality. The BASE-schema fields - SubstrateType, SubstrateId, GoodDevices, SupplierName, Status - are what both paths keep, and those must match exactly.",
+  "$format": "semi-e142",
+  "$version": 1,
+  "$namespace": "urn:semi-org:xsd.E142-1.V0211.SubstrateMap",
+  "Substrates": [
+    {
+      "SubstrateType": "Wafer",
+      "SubstrateId": "Wafer1",
+      "GoodDevices": 148,
+      "SupplierName": "XDFG",
+      "Status": "Version 001",
+      "SupplierData": {
+        "$comment": "The vendor subtree, verbatim in shape. Dropped on read, exactly as the XML one is.",
+        "SetupFile": "58501AP",
+        "TestSystem": "TA99K04",
+        "TestProgram": "VW550CMG_151",
+        "Prober": "PRBRP05",
+        "Operator": "supeq4",
+        "ProbeCard": "PRBRB04",
+        "TestStartTime": "2004052118000000",
+        "TestEndTime": "2004052157000000"
+      }
+    }
+  ]
+}

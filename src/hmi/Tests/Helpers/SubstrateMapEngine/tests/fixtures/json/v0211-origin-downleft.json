@@ -1,0 +1,16 @@
+{
+  "$comment": "HAND-AUTHORED from v0211-origin-downleft.xml (Rule 10, D-030). OriginLocation=UpperRight with AxisDirection=DownLeft on a NON-SQUARE 5x3 lattice - the asymmetry matters, because a frame transform that transposes rather than flips produces a 3x5 map and a square fixture would hide it. The two fail cells sit at different rows and columns for the same reason.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0211.SubstrateMap",
+  "Layouts": [{ "LayoutId": "DownLeft", "DefaultUnits": "mm", "TopLevel": true,
+    "Dimension": { "X": 5, "Y": 3 }, "StepSize": { "X": 1.0, "Y": 1.0 } }],
+  "Substrates": [{ "SubstrateType": "Wafer", "SubstrateId": "DOWNLEFT01" }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "DOWNLEFT01", "LayoutSpecifier": "DownLeft",
+    "OriginLocation": "UpperRight", "AxisDirection": "DownLeft",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+        "BinDefinitions": [{ "BinCode": "1", "BinDescription": "Pass" },
+                           { "BinCode": "9", "BinDescription": "Fail" }],
+        "BinCode": ["11191", "19111", "11111"] } }]
+  }]
+}

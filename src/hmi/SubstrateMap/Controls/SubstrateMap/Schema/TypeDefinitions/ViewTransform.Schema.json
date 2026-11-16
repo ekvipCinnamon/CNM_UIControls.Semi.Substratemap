@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapViewTransform": {
+      "$schema": "http://json-schema.org/draft-04/schema",
+      "title": "SubstrateMapViewTransform",
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "number"
+      },
+      "description": "An affine transform as the six components [a, b, c, d, e, f], POST-multiplied onto the world matrix. Null is identity. GEOMETRY ONLY: it moves, scales, rotates, shears or mirrors what is drawn, and cannot express a per-cell value - for a measurement per die, carry it as an E142 overlay and give it the valueField role instead. Six numbers rather than a DOMMatrix because an HMI attribute is JSON; the control builds the matrix. Because it is post-multiplied, e and f are in MILLIMETERS of the substrate frame, not in pixels, and scaling is anchored at the canvas center. Read MapScale to convert: millimeters = pixels / MapScale. A transform with zero determinant is refused with E142_VIEW_TRANSFORM_DEGENERATE and identity is used, because a collapsed matrix draws nothing and would look like a data fault."
+    }
+  }
+}

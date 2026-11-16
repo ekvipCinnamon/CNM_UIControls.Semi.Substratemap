@@ -1,0 +1,15 @@
+{
+  "$schema": "../../Packages/Beckhoff.TwinCAT.HMI.Framework.14.5.1/runtimes/native1.12-tchmi/Schema/LocalizationDescription.Schema.json",
+  "scope": "Control",
+  "locale": "en-US",
+  "order": 0,
+  "localizedText": {
+    "SubstrateMapWidget.displayName": "Substrate map tile",
+    "SubstrateMapWidget.description": "A dashboard tile showing one substrate at a glance, with its identity, its yield and a marking when the data stops arriving.",
+    "age.measured": "measured",
+    "age.received": "received",
+    "category.Data": "Data",
+    "category.Tile": "Tile",
+    "category.Selection": "Selection"
+  }
+}

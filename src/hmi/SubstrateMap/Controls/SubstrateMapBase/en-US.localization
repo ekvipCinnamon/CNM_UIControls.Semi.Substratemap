@@ -1,0 +1,11 @@
+{
+  "$schema": "../../Packages/Beckhoff.TwinCAT.HMI.Framework.14.5.1/runtimes/native1.12-tchmi/Schema/LocalizationDescription.Schema.json",
+  "scope": "Control",
+  "locale": "en-US",
+  "order": 0,
+  "localizedText": {
+    "SubstrateMapBase.displayName": "Substrate map base (abstract)",
+    "SubstrateMapBase.description": "Abstract base for the substrate map controls. Not placeable; it provides the canvas, the resize handling and the render path its subclasses share.",
+    "category.No-data": "No data"
+  }
+}

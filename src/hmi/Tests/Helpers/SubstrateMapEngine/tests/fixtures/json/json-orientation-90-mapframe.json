@@ -1,0 +1,23 @@
+{
+  "_fixtureNote": "orientation 90 with the payload in the MAP frame, which is what E142-0225 Table 2/12 asks for: \"The length of each row and number of rows should correspond with the product of the dimensions of the layouts defined by the LayoutSpecifier attribute, ROTATED TO THE COORDINATE SYSTEM OF THE SUBSTRATEMAP.\" Layout dimension is 3x2; orientation 90 transposes the map frame to 2 cols x 3 rows, so the payload is 3 rows of 2 tokens. This fixture is the conforming counter-example to the gridToGridData defect, which emits 2 rows of 3 for the same map and is therefore rejected on re-import.",
+  "dimension": {
+    "x": 3,
+    "y": 2
+  },
+  "units": "mm",
+  "stepSize": {
+    "x": 2,
+    "y": 3
+  },
+  "orientation": 90,
+  "originLocation": "LowerLeft",
+  "axisDirection": "UpRight",
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "2DArray",
+  "bins": [
+    "ab",
+    "cd",
+    "ef"
+  ]
+}

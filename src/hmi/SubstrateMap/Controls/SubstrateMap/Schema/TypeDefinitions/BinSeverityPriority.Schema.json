@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapBinSeverityPriority": {
+      "$schema": "http://json-schema.org/draft-04/schema",
+      "title": "SubstrateMapBinSeverityPriority",
+      "type": "array",
+      "description": "Bin codes in severity order, MOST SEVERE FIRST. Orders the bins the ladder cannot distinguish - it knows pass, fail and unknown, and nothing finer. A code the document gives a BinQuality resolving to 'pass' is NEVER promoted by this list and the control warns: the list is most-severe-first, so writing out a whole vocabulary would otherwise put the passing code at the top and let a tile holding one passing and one failing die reduce to the passing bin. A code not present in the bound map is reported and ignored.",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapGroupBinCount": {
+      "$schema": "http://json-schema.org/draft-04/schema",
+      "title": "SubstrateMapGroupBinCount",
+      "type": "object",
+      "description": "One named bin in a group's histogram.",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The bin code, as the document spells it."
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Cells of the group carrying it."
+        }
+      },
+      "required": [
+        "code",
+        "count"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapGroupSelection": {
+      "$schema": "http://json-schema.org/draft-04/schema",
+      "title": "SubstrateMapGroupSelection",
+      "type": "object",
+      "description": "A summary of the cells one tap covers on an aggregated map. NEVER a materialized list: a 48x48 group on a 1.5 M map holds about 12 900 cells, and a per-cell selection list of that size is a multi-hundred-millisecond stall on every tap. This is fixed-size - counts, a truncated histogram and a remainder - and cellsInGroup remains available for a caller who genuinely wants the indices.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The group's lattice-space origin, \"col,row\". Stable within a render."
+        },
+        "corners": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 4,
+          "items": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "number"
+            }
+          },
+          "description": "The group quad's four corners in LATTICE coordinates, in the device order top-left, top-right, bottom-left, bottom-right. Lattice rather than device, because a device rectangle means nothing once the view has moved."
+        },
+        "cellCount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Cells in the group, excluding the null bin."
+        },
+        "severity": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The worst severity rank present: 0 none, 1 pass, 2 unknown, 3 fail or worse."
+        },
+        "bins": {
+          "type": "array",
+          "maxItems": 10,
+          "items": {
+            "$ref": "#/definitions/SubstrateMapGroupBinCount"
+          },
+          "description": "The most common bins, descending by count then by code, at most ten. Truncated because Integer2 permits 65 536 codes and an unbounded histogram cannot honor a size budget."
+        },
+        "otherCount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Cells in bins the histogram did not name. bins + this equals cellCount exactly."
+        },
+        "otherBins": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "How many distinct bins the remainder covers."
+        },
+        "decorated": {
+          "type": "boolean",
+          "description": "Whether any cell in the group carries a decoration layer."
+        }
+      },
+      "required": [
+        "id",
+        "corners",
+        "cellCount",
+        "severity",
+        "bins",
+        "otherCount",
+        "otherBins",
+        "decorated"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

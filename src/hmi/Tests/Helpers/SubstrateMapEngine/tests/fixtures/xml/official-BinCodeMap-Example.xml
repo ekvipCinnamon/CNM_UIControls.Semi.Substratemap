@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+    <SubstrateMaps>
+        <SubstrateMap SubstrateType="Wafer" SubstrateId="Wafer1" LayoutSpecifier="WaferLayout/Devices">
+            <Overlay MapName="SortGrade" MapVersion="1">
+                <ReferenceDevices>
+                    <ReferenceDevice Name="FirstDevice">
+                        <Coordinates X="1" Y="2" />
+                    </ReferenceDevice>
+                </ReferenceDevices>
+                <BinCodeMap BinType="Ascii" NullBin=".">
+                    <BinDefinitions>
+                        <BinDefinition BinCode="1" BinDescription="3.5GHz Ok" />
+                        <BinDefinition BinCode="2" BinDescription="2.7GHz Ok" />
+                        <BinDefinition BinCode="8" BinDescription="Inspection Failed" />
+                        <BinDefinition BinCode="9" BinDescription="Test Failed" />
+                    </BinDefinitions>
+                    <BinCode>...112111...</BinCode>
+                    <BinCode>..18111111..</BinCode>
+                    <BinCode>.9111111811.</BinCode>
+                    <BinCode>111111111111</BinCode>
+                    <BinCode>111111111111</BinCode>
+                    <BinCode>121111111211</BinCode>
+                    <BinCode>111111111111</BinCode>
+                    <BinCode>911111111119</BinCode>
+                    <BinCode>.1111811221.</BinCode>
+                    <BinCode>..11111111..</BinCode>
+                    <BinCode>...111111...</BinCode>
+                </BinCodeMap>
+            </Overlay>
+        </SubstrateMap>
+    </SubstrateMaps>
+</MapData>

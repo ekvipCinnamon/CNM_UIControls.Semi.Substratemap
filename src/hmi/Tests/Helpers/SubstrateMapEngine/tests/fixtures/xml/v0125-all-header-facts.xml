@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-all-header-facts.xml
+  Covers: the INTEGRATION case Task 15 wires - every fact the control has to
+          carry from a parsed document through to an export, present at once in
+          one document: SubstrateSide, Orientation, a non-default frame,
+          MapVersion, and a complete Substrate record.
+          Each of those survives on its own in an earlier fixture. This one
+          exists because the control retains them in a single `__lastBuilt`
+          record and passes them as a single options object, so a field can be
+          dropped, transposed or shadowed only when its neighbours are also
+          populated. A document that exercises one fact at a time cannot catch
+          that.
+  Grid: 3 cols x 2 rows, all tokens distinct, non-square pitch (2.0 x 3.0) so a
+        spurious axis swap would be visible.
+  Frame: UpperRight / DownLeft -> logical (0,0) is serialization (col 2, row 0);
+         +x runs left, +y runs down. Orientation 180 does NOT transpose.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="AllFacts" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="3" Y="2"/>
+      <DeviceSize X="1.5" Y="2.5" Units="mm"/>
+      <StepSize X="2.0" Y="3.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Panel" SubstrateId="ALLFACTS-01">
+      <LotId>LOT-ALL</LotId>
+      <GoodDevices>6</GoodDevices>
+      <SupplierName>Integration Supplier</SupplierName>
+      <Status>Tested</Status>
+    </Substrate>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Panel" SubstrateId="ALLFACTS-01" LayoutSpecifier="AllFacts"
+        SubstrateSide="BottomSide" Orientation="180"
+        OriginLocation="UpperRight" AxisDirection="DownLeft">
+      <Overlay MapName="Sort" MapVersion="3">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>MNO</BinCode>
+          <BinCode>PQR</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

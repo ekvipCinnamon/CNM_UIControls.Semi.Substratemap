@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapItemStatusAssignmentList": {
+      "$schema": "http://json-schema.org/draft-04/schema",
+      "title": "SubstrateMapItemStatusAssignmentList",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "type": "integer",
+            "description": "Primary key/identifier of the item to update."
+          },
+          "status": {
+            "type": "string",
+            "description": "Free-form status / bin string (e.g. BIN_42) to assign to that item. Mapped to a color via StatusColorMapping."
+          }
+        },
+        "required": [
+          "item_id",
+          "status"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}

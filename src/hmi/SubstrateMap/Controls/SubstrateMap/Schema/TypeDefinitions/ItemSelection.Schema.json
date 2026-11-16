@@ -1,0 +1,234 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapItemSelection": {
+      "type": "object",
+      "title": "SubstrateMapItemSelection",
+      "description": "The payload of the .onItemSelected event. Derived from what __raiseSelected BUILDS, not from SelectionList: the event and the SelectedItems attribute are close relatives and not the same shape, and README section 'onItemSelected versus SelectedItems' lists every difference with its reason. The six always-present fields describe the LAST INTERACTED element; the cell fields are present only for kind 'cell'. A payload with itemId null, every other single value null and an empty selection is a CLEAR - under SelectionMode multi an empty click raises one, so a consumer binding this event must expect it.",
+      "properties": {
+        "itemId": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Id of the last interacted element: the item_id for an item, the row-major cell index for a cell. Null after a clear."
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Effective status of the last interacted element - an item's status resolved through StatusColorMapping, or a cell's canonical bin code (a cell's bin IS its status; the status resolver is an item concern and is deliberately not consulted). Null after a clear, and for an item whose status does not resolve."
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Name of the last interacted item. Always null for a cell - a lattice cell carries no name - and null after a clear."
+        },
+        "userData": {
+          "type": [
+            "string",
+            "number",
+            "null"
+          ],
+          "description": "Opaque user_data of the last interacted item, passed through unchanged. Always null for a cell and after a clear. NOTE the spelling: this event says userData, the SelectedItems attribute says user_data."
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "item",
+            "cell"
+          ],
+          "description": "Kind of the last interacted element. A clear reports 'item' with null values, because a clear has no kind of its own and the item shape is the one without cell fields."
+        },
+        "selection": {
+          "type": "array",
+          "minItems": 0,
+          "description": "The full current selection, as identity only. Items in selection order, then cells in selection order. These entries carry NO status, name or user data - the SelectedItems attribute carries those. Grouped by kind because the two kinds live in kind-specific collections, which is what keeps ring-marking membership O(1) for a large cell selection.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "item",
+                  "cell"
+                ],
+                "description": "Kind of this selected element."
+              },
+              "itemId": {
+                "type": "integer",
+                "description": "Id of this selected element. Spelled itemId here and item_id in the SelectedItems attribute."
+              }
+            },
+            "required": [
+              "kind",
+              "itemId"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "column": {
+          "type": "integer",
+          "description": "Column of the last interacted CELL, in Row/Column SERIALIZATION indices. Present only for kind 'cell'. The SelectedItems attribute does NOT carry column or row - it identifies a cell by its linear item_id."
+        },
+        "row": {
+          "type": "integer",
+          "description": "Row of the last interacted cell, in serialization indices. Present only for kind 'cell'. See column."
+        },
+        "binCode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Canonical bin code of the last interacted cell, or null when it has no bin. Equal to this payload's status, repeated under its own name so a consumer need not know that. Present only for kind 'cell'; the SelectedItems attribute omits it for the same reason - there, status IS the bin code."
+        },
+        "binQuality": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Bin quality of the last interacted cell as the source declared it (a FREE string, not an enumeration), null when the source declared none. Present only for kind 'cell'."
+        },
+        "mapX": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Signed logical E142 map X of the last interacted cell, null when no map frame is known. Present only for kind 'cell'. On this event the field is present-and-null when unknown; in a SelectedItems entry it is ABSENT when unknown."
+        },
+        "mapY": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Signed logical E142 map Y of the last interacted cell. See mapX."
+        },
+        "deviceId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Device id of the last interacted CELL, from a DeviceIdMap overlay. Null when the map carries none or that cell has no Id. This is the identifier of the DEVICE, which moves; see lid for the identifier of the LOCATION, which does not."
+        },
+        "lid": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Location identifier of the last interacted CELL, from E142 BinCode/@LID. Null when the map names no location for that cell. E142 13.4 makes it distinct from the DeviceId and it survives the device being removed, so lid names the socket and deviceId names whatever is in it. Opaque: never trimmed or case-folded, because it is a join key. An EMPTY STRING is a legal zero-length LID and is not null."
+        },
+        "fromSubstrateType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "SubstrateType of the substrate this cell's device came from (E142 TransferMap/@FromSubstrateType). Null when no transfer covers the cell. Reported with fromSubstrateId because an id alone is half a key: SubstrateMapKey is (SubstrateType, SubstrateId, LayoutSpecifier)."
+        },
+        "fromSubstrateId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "SubstrateId of the substrate this cell's device came from - the R2-3 traceability path. Null when no transfer covers the cell."
+        },
+        "fromX": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Logical X on the SOURCE substrate (E142 T/@FX). Null when no transfer covers the cell, or when that transfer addressed its source end by identifier rather than coordinate. Exactly one of (fromX, fromY) and fromLid is non-null for a covered cell."
+        },
+        "fromY": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Logical Y on the source substrate (E142 T/@FY). See fromX."
+        },
+        "fromLid": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Location identifier on the SOURCE substrate (E142 T/@FID) - a tape pocket, in the R2-3.2.2 case. Null when no transfer covers the cell, or when that transfer addressed its source end by coordinate."
+        },
+        "deviceData": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "Parameter readings for the last interacted CELL, from a DeviceDataMap overlay. Null when the map carries none or none covers the cell. Names join to values BY INDEX (E142 Table 19); an empty name means the document's Parameter list was shorter than its value list. THIS EVENT DROPS the raw E138 PvValue that a SelectedItems entry keeps - see the README section for why the two differ here.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Parameter/@Name; empty when the document supplied none."
+              },
+              "value": {
+                "type": "string",
+                "description": "The value rendered for a human. '(nil)' for xsi:nil, '(reason: text)' for NoValue, '(a, b)' for a structure, '[a, b]' for an array."
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "overlays": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "Every composed overlay's bin for the last interacted CELL, base first, in the E142Overlays order. Null when the map is not composed. binCode on the payload itself remains the BASE overlay's, unchanged. A layer that says nothing about the cell is LISTED with binCode null rather than omitted - omitting would be ambiguous with 'no such overlay'.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "mapName": {
+                "type": "string",
+                "description": "Overlay/@MapName."
+              },
+              "mapVersion": {
+                "type": "string",
+                "description": "Overlay/@MapVersion. With mapName this is OverlayKey, so the pair identifies the overlay."
+              },
+              "binCode": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "This overlay's bin code for the cell, or null when it names no bin there."
+              },
+              "binQuality": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "The bin's declared quality, or null."
+              }
+            },
+            "required": [
+              "mapName",
+              "mapVersion"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "itemId",
+        "status",
+        "name",
+        "userData",
+        "kind",
+        "selection"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

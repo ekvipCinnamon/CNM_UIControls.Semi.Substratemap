@@ -1,0 +1,14 @@
+/*
+ * SubstrateMapBinChart - layout only.
+ *
+ * The canvas, its sizing and every colour come from SubstrateMapBase and
+ * its --substratemap-* variables, so a chart and the map beside it cannot
+ * end up on different palettes - which is the whole point of a bin chart.
+ * Deliberately almost empty; the themes carry the colours.
+ */
+
+.TcHmi_Controls_CNM_UIControls_SEMI_SubstrateMapBinChart-Template {
+    display: block;
+    width: 100%;
+    height: 100%;
+}

@@ -100,7 +100,7 @@ blob_storage/
 # =========================================
 # TypeScript Compilation Artifacts
 # =========================================
-tsconfig.json
+# tsconfig.json # I had to add `tsconfig.json` again because the build process does not create it reproducibly.
 **/*.d.ts
 **/*.js.map
 /common/PopupUtil.js
@@ -109,6 +109,7 @@ tsconfig.json
 /common/SymbolUtil.js
 /common/Types.js
 /Controls/*/**/*.js
+*.tsbuildinfo
 
 # =========================================
 # Visual Studio & TwinCAT 3 Core
@@ -127,3 +128,12 @@ tsconfig.json
 *.tcproj.bak
 *.tsproj.bak
 _Boot/
+
+#---------------------------------------------------------
+#					project specific
+#---------------------------------------------------------
+src/hmi/Tests/tools/hit-oracle.html
+#include the stup for the tests
+!/src/hmi/Tests/FrameworkStub/Packages/
+!/src/hmi/Tests/FrameworkStub/Packages/*
+!/src/hmi/Tests/FrameworkStub/Packages/**/*

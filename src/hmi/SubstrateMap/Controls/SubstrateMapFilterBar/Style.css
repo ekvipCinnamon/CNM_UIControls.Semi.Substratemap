@@ -1,0 +1,27 @@
+/*
+ * SubstrateMapFilterBar - layout only.
+ *
+ * The bar takes its colours from the SAME --substratemap-* variables the map
+ * reads, so a bar and the map it drives cannot end up on different themes.
+ * W-25b fills this in; the scaffold declares the file so the descriptor and
+ * the project agree from the start.
+ */
+
+.TcHmi_Controls_CNM_UIControls_SEMI_SubstrateMapFilterBar-Template {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--substratemap-label-font-family, inherit);
+}
+
+/*
+ * The radius' value readout (F-9b). Reserved width so the bar does not reflow as
+ * the operator drags: "off" and "8 cells" are different lengths, and a field that
+ * jumps under the pointer is a field that is hard to set.
+ */
+.substratemap-filterbar-radius-value {
+    display: inline-block;
+    min-width: 4.5em;
+    text-align: left;
+    color: var(--substratemap-label-font-color, inherit);
+}

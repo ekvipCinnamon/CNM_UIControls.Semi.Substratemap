@@ -1,0 +1,130 @@
+{
+  "$schema": "../../.hmiframework/Schema/ControlDescription.Schema.json",
+  "apiVersion": 1,
+  "name": "SubstrateMapBase",
+  "namespace": "TcHmi.Controls.CNM_UIControls.SEMI",
+  "displayName": "SubstrateMapBase (abstract)",
+  "version": {
+    "full": "5.0.0.0",
+    "major": 5,
+    "minor": 0,
+    "revision": 0,
+    "build": 0
+  },
+  "visible": false,
+  "themeable": "None",
+  "base": "TcHmi.Controls.System.TcHmiControl",
+  "description": "Abstract, non-placeable shell for substrate-map style controls: template root, canvas, devicePixelRatio bitmap sizing, ResizeObserver, one engine instance and the render request path. Declares no attributes and no events; concrete subclasses own those.",
+  "properties": {
+    "containerControl": false,
+    "geometry": {
+      "width": 150,
+      "height": 150
+    }
+  },
+  "icons": [
+    {
+      "name": "Icons/16x16.png",
+      "width": 16,
+      "height": 16
+    }
+  ],
+  "template": "Template.html",
+  "dependencyFiles": [
+    {
+      "name": "../../Helpers/SubstrateMapEngine/Engine.js",
+      "type": "EsModule",
+      "description": "Shared SubstrateMapEngine library. Registered here so the project webserver serves it and preloads it; the ES module cache guarantees a single evaluation even though SubstrateMapBase.js imports the same file."
+    },
+    {
+      "name": "SubstrateMapBase.js",
+      "type": "EsModule",
+      "description": "Contains all the main logic as ES module."
+    },
+    {
+      "name": "Style.css",
+      "type": "Stylesheet",
+      "description": "Theme independent style"
+    }
+  ],
+  "functions": [
+    {
+      "name": "readEmptyState",
+      "displayName": "Read empty state",
+      "visible": true,
+      "category": "No data",
+      "description": "Which of the four empty states this control is in: 'data' when real data is bound, 'stale' when a last known state is shown with an age label, 'demo' when the demo is drawn, 'nodata' when the no-data image is. REAL DATA means something to draw - a grid with cells, or items - so a bound document that produced nothing answers 'nodata', and an outline alone does too, because an empty substrate body is a frame around nothing. Useful for driving a surrounding layout from what the control is actually showing rather than from what was bound to it.",
+      "type": "tchmi:general#/definitions/String",
+      "heritable": true,
+      "waitMode": "Synchronous",
+      "params": []
+    }
+  ],
+  "attributes": [
+    {
+      "name": "data-tchmi-no-data-image",
+      "propertyName": "NoDataImage",
+      "propertySetterName": "setNoDataImage",
+      "propertyGetterName": "getNoDataImage",
+      "displayName": "No data image",
+      "visible": true,
+      "themeable": "Standard",
+      "displayPriority": 500,
+      "type": "tchmi:general#/definitions/String",
+      "category": "No data",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": true,
+      "defaultValue": null,
+      "defaultValueInternal": null,
+      "description": "Image shown when the control has nothing to show. Any format the browser renders; null uses the shipped NoData.svg. Scaled to CONTAIN the drawing area and centered - an image whose aspect ratio differs from the area's is letterboxed, never stretched. Recommended at least 512 px on the long edge at a ratio near 6:5, because the shipped SVG is 252 x 213.3 and a raster rendered larger than its own size looks soft on a 4K panel. WHEN it is shown is decided by the precedence in the README: real data wins, then a last known state, then the demo, then this."
+    },
+    {
+      "name": "data-tchmi-no-data-image-dark",
+      "propertyName": "NoDataImageDark",
+      "propertySetterName": "setNoDataImageDark",
+      "propertyGetterName": "getNoDataImageDark",
+      "displayName": "No data image (dark)",
+      "visible": true,
+      "themeable": "Standard",
+      "displayPriority": 501,
+      "type": "tchmi:general#/definitions/String",
+      "category": "No data",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": true,
+      "defaultValue": null,
+      "defaultValueInternal": null,
+      "description": "The same image for the Base-Dark theme; null uses the shipped dark variant. A separate file rather than a CSS filter, because filter: invert() rotates hue and turns a blue accent orange, while the shipped variant mirrors lightness in OKLCH and keeps every hue."
+    },
+    {
+      "name": "data-tchmi-no-data-text",
+      "propertyName": "NoDataText",
+      "propertySetterName": "setNoDataText",
+      "propertyGetterName": "getNoDataText",
+      "displayName": "No data text",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 502,
+      "type": "tchmi:general#/definitions/String",
+      "category": "No data",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": true,
+      "defaultValue": null,
+      "defaultValueInternal": null,
+      "description": "One line under the no-data image. null draws no line at all rather than an empty one, so a control that says nothing occupies no vertical space for it."
+    }
+  ],
+  "events": [],
+  "attributeCategories": [
+    {
+      "name": "No data",
+      "displayPriority": 500
+    }
+  ],
+  "languages": {
+    "en-US": "en-US.localization",
+    "de-DE": "de-DE.localization"
+  }
+}

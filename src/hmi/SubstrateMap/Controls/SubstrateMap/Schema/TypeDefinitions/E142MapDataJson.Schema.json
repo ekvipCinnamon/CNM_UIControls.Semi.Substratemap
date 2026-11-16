@@ -1,0 +1,1281 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapE142LogicalCoordinates": {
+      "type": "object",
+      "description": "E142 LogicalCoordinatesType: X and Y as integers. Used for Dimension (counts) and for ReferenceDevice/Coordinates, which are LOGICAL coordinates in the OriginLocation x AxisDirection frame and may legitimately be negative.",
+      "properties": {
+        "X": {
+          "type": "integer",
+          "description": "Logical X."
+        },
+        "Y": {
+          "type": "integer",
+          "description": "Logical Y."
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "X",
+        "Y"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142PhysicalCoordinates": {
+      "type": "object",
+      "description": "E142 PhysicalCoordinatesType: X and Y as doubles plus an optional Units token. Units are not resolved here; an absent Units means the owning Layout's DefaultUnits.",
+      "properties": {
+        "X": {
+          "type": "number",
+          "description": "Physical X."
+        },
+        "Y": {
+          "type": "number",
+          "description": "Physical Y."
+        },
+        "Units": {
+          "type": "string",
+          "description": "Unit token; absent means the Layout DefaultUnits.",
+          "minLength": 1
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "X",
+        "Y"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142ZDimensions": {
+      "type": "object",
+      "description": "E142 ZDimensionsType. Both numeric members carry the XSD default 0 when absent.",
+      "properties": {
+        "Order": {
+          "type": "integer",
+          "description": "Stacking order; XSD default 0."
+        },
+        "Height": {
+          "type": "number",
+          "description": "Height in Units; XSD default 0."
+        },
+        "Units": {
+          "type": "string",
+          "description": "Unit token; absent means the Layout DefaultUnits.",
+          "minLength": 1
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "additionalProperties": false
+    },
+    "SubstrateMapE142AliasId": {
+      "type": "object",
+      "description": "E142 AliasIdType. Both attributes are use=\"required\". @Type is an OPEN vocabulary - Table 7 gives examples (FrontsideId, BacksideId, WaferId, FrameId) and no restriction - so no value is rejected. An empty @Value is schema-legal and prose-invalid; the parser warns rather than refusing, so it is admitted here too.",
+      "properties": {
+        "Type": {
+          "type": "string",
+          "description": "Alias kind; open vocabulary."
+        },
+        "Value": {
+          "type": "string",
+          "description": "The alias, MaterialIdType; maxLength 32 is warned about, not enforced."
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "Type",
+        "Value"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142Layout": {
+      "type": "object",
+      "description": "E142 LayoutType. Dimension is the only required child. ChildLayouts flattens the XML container to an array of LayoutId strings: ChildLayout carries exactly one optional attribute, so nothing is lost.",
+      "properties": {
+        "LayoutId": {
+          "type": "string",
+          "description": "Unique across the document; the LayoutKey xs:key.",
+          "minLength": 1
+        },
+        "DefaultUnits": {
+          "type": "string",
+          "description": "Units every physical child of this layout defaults to.",
+          "minLength": 1
+        },
+        "TopLevel": {
+          "type": "boolean",
+          "description": "XSD default false. A top-level layout is the substrate; Table 2 requires its Dimension to be 1x1, which no XSD facet enforces."
+        },
+        "Package": {
+          "type": "boolean",
+          "description": "XSD default false."
+        },
+        "Dimension": {
+          "$ref": "#/definitions/SubstrateMapE142LogicalCoordinates",
+          "description": "Column and row counts. Required."
+        },
+        "LowerLeft": {
+          "$ref": "#/definitions/SubstrateMapE142PhysicalCoordinates",
+          "description": "E142 Layout/LowerLeft - a PARENT-LAYOUT-RELATIVE offset. NOT GridData's `lowerLeft`, which is control-defined against the substrate frame. The two are not interchangeable; a converter must transform, never copy."
+        },
+        "DeviceSize": {
+          "$ref": "#/definitions/SubstrateMapE142PhysicalCoordinates",
+          "description": "Drawn device extent. Absent means it falls back to StepSize, so an absent DeviceSize asserts a street width of zero."
+        },
+        "StepSize": {
+          "$ref": "#/definitions/SubstrateMapE142PhysicalCoordinates",
+          "description": "Full pitch, street included."
+        },
+        "Z": {
+          "$ref": "#/definitions/SubstrateMapE142ZDimensions"
+        },
+        "TopImage": {
+          "type": "string",
+          "description": "Carry-only URI; never fetched, never rendered."
+        },
+        "BottomImage": {
+          "type": "string",
+          "description": "Carry-only URI; never fetched, never rendered."
+        },
+        "ProductId": {
+          "type": "string",
+          "description": "Carry-only."
+        },
+        "ChildLayouts": {
+          "type": "array",
+          "description": "LayoutIds of child layouts; each must resolve (the ChildLayoutRef xs:keyref).",
+          "items": {
+            "type": "string",
+            "description": "A LayoutId declared elsewhere in Layouts.",
+            "minLength": 1
+          }
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "LayoutId",
+        "DefaultUnits",
+        "Dimension"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142Substrate": {
+      "type": "object",
+      "description": "E142 SubstrateType (the element). Members follow the XSD's xs:sequence order. Every child is minOccurs=0, so any subset is valid. SlotNumber, SubstrateNumber and GoodDevices are xs:nonNegativeInteger: ZERO IS A VALUE, not an absence, although Table 6 calls them \"Positive Integer\" - the standard disagrees with its own schema and the schema wins.",
+      "properties": {
+        "SubstrateType": {
+          "type": "string",
+          "description": "SubstrateTypeEnum, or any other token: the enumeration has grown twice and an unknown value is carried with a warning rather than rejected.",
+          "minLength": 1
+        },
+        "SubstrateId": {
+          "type": "string",
+          "description": "MaterialIdType; maxLength 32 is warned about, not enforced."
+        },
+        "LotId": {
+          "type": "string",
+          "description": "LotIdType; maxLength 80 is warned about, not enforced."
+        },
+        "AliasIds": {
+          "type": "array",
+          "description": "One or more aliases. The XML container may not be empty, so neither may this.",
+          "items": {
+            "$ref": "#/definitions/SubstrateMapE142AliasId"
+          },
+          "minItems": 1
+        },
+        "CarrierType": {
+          "type": "string",
+          "description": "Unconstrained xs:string."
+        },
+        "CarrierId": {
+          "type": "string",
+          "description": "LotIdType (maxLength 80) - NOT MaterialIdType (32), which sits two lines away in the same sequence and is easy to conflate."
+        },
+        "SlotNumber": {
+          "type": "integer",
+          "description": "xs:nonNegativeInteger; 0 is a real slot.",
+          "minimum": 0
+        },
+        "SubstrateNumber": {
+          "type": "integer",
+          "description": "xs:nonNegativeInteger.",
+          "minimum": 0
+        },
+        "GoodDevices": {
+          "type": "integer",
+          "description": "xs:nonNegativeInteger; 0 means \"none good\", not \"unknown\".",
+          "minimum": 0
+        },
+        "SupplierName": {
+          "type": "string",
+          "description": "Unconstrained xs:string."
+        },
+        "Status": {
+          "type": "string",
+          "description": "Unconstrained xs:string; free-form, no enumeration."
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "SubstrateType",
+        "SubstrateId"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142BinCodeEntry": {
+      "type": "object",
+      "description": "One sparse BinCode entry, for MapType Coordinate and Row/Column. $text carries the element's token content, which JSON has no other name for; the four attributes are the XSD's. For Coordinate, X and Y are both required unless the entry is addressed by LID alone. For Row/Column, X and Y are the run's start and the token count is its length.",
+      "properties": {
+        "X": {
+          "type": "integer",
+          "description": "Logical X."
+        },
+        "Y": {
+          "type": "integer",
+          "description": "Logical Y."
+        },
+        "LID": {
+          "type": "string",
+          "description": "V0125 location id, xs:string with NO facet in the one revision that declares it - a LID is an opaque join key and is never normalized. Clause 13.3 addresses a position by the X/Y coordinate, the location identifier, or BOTH. A LID-only entry takes the next FREE cell in document order and is not reported; only when the lattice is full does it become unplaceable, and it is then excluded and reported once via E142_XML_LID_ONLY_EXCLUDED. It is retained in sparseBinCodes either way."
+        },
+        "Number": {
+          "type": "integer",
+          "description": "Carried and ignored for placement; no official example uses it."
+        },
+        "$text": {
+          "type": "string",
+          "description": "The entry's token text."
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "$text"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142BinCodeMap": {
+      "type": "object",
+      "description": "E142 BinCodeMapType. BinCode carries the SAME token text the XML carries - the payload is normative and must survive the round trip byte-for-byte, so it is never serialized decoded. Its JSON shape is decided by MapType: 2DArray -> string[] (one row each); Array -> one string, row-major; Coordinate and Row/Column -> BinCodeEntry[]. EXACTLY ONE of BinCode and $binary must be present: they are two encodings of one payload, so neither is required on its own and carrying both is a defect. draft-04 cannot express \"exactly one\" over property PRESENCE without oneOf, which is what the two branches below do.",
+      "properties": {
+        "BinType": {
+          "type": "string",
+          "description": "BinTypeEnum. Note the schema's spelling of HexaDecimal.",
+          "enum": [
+            "Ascii",
+            "Decimal",
+            "HexaDecimal",
+            "Integer2"
+          ]
+        },
+        "NullBin": {
+          "type": "string",
+          "description": "The token meaning \"no device\". An attribute of BinCodeMap; there is no mandatory fail bin."
+        },
+        "MapType": {
+          "type": "string",
+          "description": "Serialization form. OPTIONAL WITH NO XSD DEFAULT: the prose says an omitted MapType means 2DArray, and no inspected revision declares it, so the default is applied application-side.",
+          "enum": [
+            "2DArray",
+            "Row/Column",
+            "Array",
+            "Coordinate"
+          ]
+        },
+        "BinDefinitions": {
+          "type": "array",
+          "description": "Flattens the XML container.",
+          "items": {
+            "$ref": "#/definitions/SubstrateMapE142BinDefinition"
+          }
+        },
+        "BinCode": {
+          "description": "The payload, in the shape MapType demands.",
+          "oneOf": [
+            {
+              "type": "array",
+              "description": "MapType 2DArray: one entry per row.",
+              "items": {
+                "type": "string",
+                "description": "One row of token text."
+              },
+              "minItems": 1
+            },
+            {
+              "type": "string",
+              "description": "MapType Array: the whole map in one row-major token stream."
+            },
+            {
+              "type": "array",
+              "description": "MapType Coordinate or Row/Column: sparse entries.",
+              "items": {
+                "$ref": "#/definitions/SubstrateMapE142BinCodeEntry"
+              },
+              "minItems": 1
+            }
+          ]
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        },
+        "$binary": {
+          "$ref": "#/definitions/SubstrateMapE142BinaryPayload",
+          "description": "The payload as bin indices instead of BinCode token text. Envelope version 2. Mutually exclusive with BinCode; defined for MapType 2DArray, Array or absent only."
+        }
+      },
+      "required": [
+        "BinType",
+        "NullBin"
+      ],
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "description": "The token form: BinCode present, $binary absent.",
+          "required": [
+            "BinCode"
+          ],
+          "properties": {
+            "$binary": {
+              "not": {}
+            }
+          }
+        },
+        {
+          "description": "The binary form (envelope version 2): $binary present, BinCode absent.",
+          "required": [
+            "$binary"
+          ],
+          "properties": {
+            "BinCode": {
+              "not": {}
+            }
+          }
+        }
+      ]
+    },
+    "SubstrateMapE142BinDefinition": {
+      "type": "object",
+      "description": "E142 BinDefinitionType. BinQuality is a FREE STRING, not an enumeration: the schema declares no facet, and Pass/Fail/Edge/Skip/Reference are convention only.",
+      "properties": {
+        "BinCode": {
+          "type": "string",
+          "description": "The token this definition describes."
+        },
+        "BinQuality": {
+          "type": "string",
+          "description": "Free string; XSD declares no facet."
+        },
+        "BinDescription": {
+          "type": "string",
+          "description": "Free string."
+        },
+        "BinCount": {
+          "type": "integer",
+          "description": "xs:nonNegativeInteger.",
+          "minimum": 0
+        },
+        "Pick": {
+          "type": "boolean",
+          "description": "XSD default false."
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "BinCode"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142ReferenceDevice": {
+      "type": "object",
+      "description": "E142 ReferenceDeviceType. Coordinates is LOGICAL and required; Position is physical and optional. Reference devices are carried, never folded into the placement math.",
+      "properties": {
+        "Name": {
+          "type": "string",
+          "description": "XSD default \"\"."
+        },
+        "Coordinates": {
+          "$ref": "#/definitions/SubstrateMapE142LogicalCoordinates"
+        },
+        "Position": {
+          "$ref": "#/definitions/SubstrateMapE142PhysicalCoordinates"
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "Coordinates"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142DeviceIdEntry": {
+      "type": "object",
+      "description": "E142 DeviceIdType: the device identifier as $text plus optional addressing.",
+      "properties": {
+        "X": {
+          "type": "integer",
+          "description": "Logical X."
+        },
+        "Y": {
+          "type": "integer",
+          "description": "Logical Y."
+        },
+        "LID": {
+          "type": "string",
+          "description": "V0125 location id, xs:string with NO facet in the one revision that declares it - a LID is an opaque join key and is never normalized. Clause 13.3 addresses a position by the X/Y coordinate, the location identifier, or BOTH. A LID-only entry takes the next FREE cell in document order and is not reported; only when the lattice is full does it become unplaceable, and it is then excluded and reported once via E142_XML_LID_ONLY_EXCLUDED. It is retained in sparseBinCodes either way."
+        },
+        "$text": {
+          "type": "string",
+          "description": "The device identifier."
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "$text"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142DeviceIdMap": {
+      "type": "object",
+      "description": "E142 DeviceIdMapType: a flat, sparse list of Id entries.",
+      "properties": {
+        "Id": {
+          "type": "array",
+          "description": "The entries, in document order.",
+          "items": {
+            "$ref": "#/definitions/SubstrateMapE142DeviceIdEntry"
+          }
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "Id"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142Transfer": {
+      "type": "object",
+      "description": "E142 TransferType. Every attribute is optional and none is coupled to another: each END is addressed independently, by a coordinate pair or by an identifier. An entry carrying none of them records no movement and is reported.",
+      "properties": {
+        "FX": {
+          "type": "integer",
+          "description": "Source logical X."
+        },
+        "FY": {
+          "type": "integer",
+          "description": "Source logical Y."
+        },
+        "FID": {
+          "type": "string",
+          "description": "Source identifier."
+        },
+        "TX": {
+          "type": "integer",
+          "description": "Target logical X."
+        },
+        "TY": {
+          "type": "integer",
+          "description": "Target logical Y."
+        },
+        "TID": {
+          "type": "string",
+          "description": "Target identifier."
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "additionalProperties": false
+    },
+    "SubstrateMapE142TransferMap": {
+      "type": "object",
+      "description": "E142 TransferMapType. The element is T, NOT Transfer - the TYPE is TransferType and the standard's figures label the arrows Transfer(...), which is exactly the trap that makes a reader find an empty map instead of failing. The three From* attributes are an xs:keyref onto a SubstrateMap in the same document.",
+      "properties": {
+        "FromSubstrateType": {
+          "type": "string",
+          "description": "Source substrate type."
+        },
+        "FromSubstrateId": {
+          "type": "string",
+          "description": "Source substrate id."
+        },
+        "FromSubstrateLayoutSpecifier": {
+          "type": "string",
+          "description": "Source layout specifier; \"\" is the layoutless form."
+        },
+        "T": {
+          "type": "array",
+          "description": "The transfers, in document order.",
+          "items": {
+            "$ref": "#/definitions/SubstrateMapE142Transfer"
+          }
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "FromSubstrateType",
+        "FromSubstrateId",
+        "FromSubstrateLayoutSpecifier",
+        "T"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142Parameter": {
+      "type": "object",
+      "description": "E142 ParameterType. Table 18 marks @Name required; ParameterType declares it with no use=, so the XSD default is optional and a nameless Parameter validates. Required here, because the engineering schema may be stricter than the runtime parser and a nameless parameter labels nothing. @Name has NO `use` in any revision of ParameterType, so it is optional: a nameless <Parameter/> is XSD-valid, the parser carries it with an empty name and warns, and this schema must not reject what both the standard and the parser accept.",
+      "properties": {
+        "Name": {
+          "type": "string",
+          "description": "Parameter name; position binds it to a value."
+        },
+        "Description": {
+          "type": "string",
+          "description": "Free string."
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "additionalProperties": false
+    },
+    "SubstrateMapE142PvValue": {
+      "description": "One E138 PVSet value: a single-key object named for the PVType choice element that carries it. Sixteen kinds, two of them recursive.",
+      "oneOf": [
+        {
+          "type": "object",
+          "description": "E138 F8: IEEE double.",
+          "properties": {
+            "F8": {
+              "description": "IEEE double.",
+              "oneOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null",
+                  "description": "xsi:nil - the value is absent."
+                }
+              ]
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "F8"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "E138 F4: IEEE single.",
+          "properties": {
+            "F4": {
+              "description": "IEEE single.",
+              "oneOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null",
+                  "description": "xsi:nil - the value is absent."
+                }
+              ]
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "F4"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "E138 I8: 64-bit integer; beyond 2^53 it must travel as a string.",
+          "properties": {
+            "I8": {
+              "description": "64-bit integer; beyond 2^53 it must travel as a string.",
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null",
+                  "description": "xsi:nil - the value is absent."
+                }
+              ]
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "I8"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "E138 I4: 32-bit integer.",
+          "properties": {
+            "I4": {
+              "description": "32-bit integer.",
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null",
+                  "description": "xsi:nil - the value is absent."
+                }
+              ]
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "I4"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "E138 I2: 16-bit integer.",
+          "properties": {
+            "I2": {
+              "description": "16-bit integer.",
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null",
+                  "description": "xsi:nil - the value is absent."
+                }
+              ]
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "I2"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "E138 I1: 8-bit integer.",
+          "properties": {
+            "I1": {
+              "description": "8-bit integer.",
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null",
+                  "description": "xsi:nil - the value is absent."
+                }
+              ]
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "I1"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "E138 S: Text.",
+          "properties": {
+            "S": {
+              "description": "Text.",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null",
+                  "description": "xsi:nil - the value is absent."
+                }
+              ]
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "S"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "E138 D: Date-time, ISO 8601.",
+          "properties": {
+            "D": {
+              "description": "Date-time, ISO 8601.",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null",
+                  "description": "xsi:nil - the value is absent."
+                }
+              ]
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "D"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "E138 URI: URI.",
+          "properties": {
+            "URI": {
+              "description": "URI.",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null",
+                  "description": "xsi:nil - the value is absent."
+                }
+              ]
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "URI"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "E138 B64: Base64-encoded binary.",
+          "properties": {
+            "B64": {
+              "description": "Base64-encoded binary.",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null",
+                  "description": "xsi:nil - the value is absent."
+                }
+              ]
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "B64"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "E138 EI: Enumeration, by index.",
+          "properties": {
+            "EI": {
+              "description": "Enumeration, by index.",
+              "oneOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null",
+                  "description": "xsi:nil - the value is absent."
+                }
+              ]
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "EI"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "E138 ES: Enumeration, by symbol.",
+          "properties": {
+            "ES": {
+              "description": "Enumeration, by symbol.",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null",
+                  "description": "xsi:nil - the value is absent."
+                }
+              ]
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "ES"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "E138 B: boolean.",
+          "properties": {
+            "B": {
+              "description": "Boolean.",
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null",
+                  "description": "xsi:nil - the value is absent."
+                }
+              ]
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "B"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "E138 Su: a structure. Its fields are POSITIONAL - parsePvSet recurses and returns PvValue[] - so this is an array, not a map of named members.",
+          "properties": {
+            "Su": {
+              "type": "array",
+              "description": "Field values, in order.",
+              "items": {
+                "$ref": "#/definitions/SubstrateMapE142PvValue"
+              }
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "Su"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "E138 Arr: an ordered array of values.",
+          "properties": {
+            "Arr": {
+              "type": "array",
+              "description": "Ordered values.",
+              "items": {
+                "$ref": "#/definitions/SubstrateMapE142PvValue"
+              }
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "Arr"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "E138 NoValue: an object, because @reasonCode is use=\"required\" and <Description> is a required child. A bare null loses both and warns on every document.",
+          "properties": {
+            "NoValue": {
+              "type": "object",
+              "description": "The reason there is no value.",
+              "properties": {
+                "reasonCode": {
+                  "type": "string",
+                  "description": "NoValueReasonEnumType; an unlisted value is carried through with a warning.",
+                  "enum": [
+                    "ValueNotAvailable",
+                    "NoSuchSource",
+                    "NoSuchParameter"
+                  ]
+                },
+                "Description": {
+                  "type": "string",
+                  "description": "Human-readable detail."
+                },
+                "$comment": {
+                  "type": "string",
+                  "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+                }
+              },
+              "required": [
+                "reasonCode"
+              ],
+              "additionalProperties": false
+            },
+            "$comment": {
+              "type": "string",
+              "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+            }
+          },
+          "required": [
+            "NoValue"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "SubstrateMapE142DeviceData": {
+      "type": "object",
+      "description": "E142 DeviceDataType. PVSet is an ARRAY because order is normative here and nowhere else: Table 19 states the order of values shall match the order of parameters, and the values carry no names of their own.",
+      "properties": {
+        "X": {
+          "type": "integer",
+          "description": "Logical X."
+        },
+        "Y": {
+          "type": "integer",
+          "description": "Logical Y."
+        },
+        "LID": {
+          "type": "string",
+          "description": "V0125 location id, xs:string with NO facet in the one revision that declares it - a LID is an opaque join key and is never normalized. Clause 13.3 addresses a position by the X/Y coordinate, the location identifier, or BOTH. A LID-only entry takes the next FREE cell in document order and is not reported; only when the lattice is full does it become unplaceable, and it is then excluded and reported once via E142_XML_LID_ONLY_EXCLUDED. It is retained in sparseBinCodes either way."
+        },
+        "PVSet": {
+          "type": "array",
+          "description": "Values, positionally bound to Parameter.",
+          "items": {
+            "$ref": "#/definitions/SubstrateMapE142PvValue"
+          }
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "PVSet"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142DeviceDataMap": {
+      "type": "object",
+      "description": "E142 DeviceDataMapType. Both children are minOccurs=1 maxOccurs=unbounded.",
+      "properties": {
+        "Parameter": {
+          "type": "array",
+          "description": "The value schema: position binds a value to a parameter.",
+          "items": {
+            "$ref": "#/definitions/SubstrateMapE142Parameter"
+          },
+          "minItems": 1
+        },
+        "DeviceData": {
+          "type": "array",
+          "description": "One record per device.",
+          "items": {
+            "$ref": "#/definitions/SubstrateMapE142DeviceData"
+          },
+          "minItems": 1
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "Parameter",
+        "DeviceData"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142Overlay": {
+      "type": "object",
+      "description": "E142 OverlayType. The XSD is an xs:choice: one overlay carries ONE kind of map. JSON cannot enforce that and a document carrying two is a defect the parser reports. MapVersion is omitted when empty - absent and \"\" are the same OverlayKey value, so writing \"\" asserts nothing and invites a reader to think it does.",
+      "properties": {
+        "MapName": {
+          "type": "string",
+          "description": "Half of the OverlayKey."
+        },
+        "MapVersion": {
+          "type": "string",
+          "description": "The other half; XSD default \"\"."
+        },
+        "ReferenceDevices": {
+          "type": "array",
+          "description": "Carried, never folded into placement.",
+          "items": {
+            "$ref": "#/definitions/SubstrateMapE142ReferenceDevice"
+          }
+        },
+        "BinCodeMap": {
+          "$ref": "#/definitions/SubstrateMapE142BinCodeMap"
+        },
+        "DeviceIdMap": {
+          "$ref": "#/definitions/SubstrateMapE142DeviceIdMap"
+        },
+        "TransferMap": {
+          "type": "array",
+          "description": "maxOccurs=\"unbounded\": a substrate that received devices from two sources carries two maps, since the source is named per map.",
+          "items": {
+            "$ref": "#/definitions/SubstrateMapE142TransferMap"
+          }
+        },
+        "DeviceDataMap": {
+          "type": "array",
+          "description": "maxOccurs=\"unbounded\".",
+          "items": {
+            "$ref": "#/definitions/SubstrateMapE142DeviceDataMap"
+          }
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "MapName"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142SubstrateMap": {
+      "type": "object",
+      "description": "E142 SubstrateMapType: the header's seven attributes plus its overlays. SubstrateSide should be written whenever known, TopSide included - its ABSENCE is an assertion, not a silence, because the XSD declares default=\"TopSide\", and it is a coordinate-system attribute so that assertion propagates into how every coordinate is read.",
+      "properties": {
+        "SubstrateType": {
+          "type": "string",
+          "description": "SubstrateTypeEnum or any other token; see Substrate.",
+          "minLength": 1
+        },
+        "SubstrateId": {
+          "type": "string",
+          "description": "MaterialIdType."
+        },
+        "LayoutSpecifier": {
+          "type": "string",
+          "description": "Path into Layouts. \"\" is the layoutless form and is a VALUE, not an absence. No xs:keyref covers it, so a dangling specifier warns and falls back to dimensions from the payload."
+        },
+        "SubstrateSide": {
+          "type": "string",
+          "description": "XSD default TopSide.",
+          "enum": [
+            "TopSide",
+            "BottomSide"
+          ]
+        },
+        "Orientation": {
+          "type": "integer",
+          "description": "Degrees, OrientationType facets 0..359. Out of range is an ERROR, not a tolerated value: clamping or normalizing would be a guess about which way the substrate physically sits.",
+          "maximum": 359,
+          "minimum": 0
+        },
+        "OriginLocation": {
+          "type": "string",
+          "description": "XSD default LowerLeft.",
+          "enum": [
+            "LowerLeft",
+            "UpperLeft",
+            "LowerRight",
+            "UpperRight",
+            "Center"
+          ]
+        },
+        "AxisDirection": {
+          "type": "string",
+          "description": "XSD default UpRight.",
+          "enum": [
+            "UpRight",
+            "DownRight",
+            "UpLeft",
+            "DownLeft"
+          ]
+        },
+        "Overlay": {
+          "type": "array",
+          "description": "Overlays, in document order. minOccurs=\"0\" in EVERY revision, so a SubstrateMap with NO overlay is legal and occurs in the corpus - the source substrates of a transfer chain carry none. maxOccurs=\"unbounded\", so this is an array even with one entry. Which overlay to RENDER is the control's decision: no schema revision defines a default overlay.",
+          "items": {
+            "$ref": "#/definitions/SubstrateMapE142Overlay"
+          }
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "SubstrateType",
+        "SubstrateId",
+        "LayoutSpecifier"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142MapDataJson": {
+      "type": "object",
+      "description": "The SEMI E142.1 MapData document as JSON - one more input and output encoding for the engine's E142Document, not a second data model. Member names are the XSD's element and attribute names verbatim, PascalCase; GridData's are camelCase, and that case difference is the boundary between the two vocabularies. See Schema/E142/JSON-FORMAT.md, which is the contract this file encodes.\n\nNOTE ON STRICTNESS: additionalProperties is false throughout, while parseE142Json warns about an unknown member and parses on. That is deliberate and matches GridData: the schema is the engineering-time contract and may be strict, the runtime parser reads other producers' documents and may never be stricter than the schema.",
+      "properties": {
+        "$format": {
+          "type": "string",
+          "description": "Mandatory discriminator, and the FIRST member. A document whose first member is anything else is not an E142 JSON document. No GridData key is named $format, so the two are distinguishable without parsing either further.",
+          "enum": [
+            "semi-e142"
+          ]
+        },
+        "$version": {
+          "type": "integer",
+          "description": "Mandatory. Versions THIS envelope, not SEMI's schema - that travels in $namespace. 1 is the token form; 2 adds the optional $binary payload member. A document should declare the LOWEST version whose features it uses, so a version-1 reader is not refused a document it could read.",
+          "minimum": 1,
+          "maximum": 2
+        },
+        "$namespace": {
+          "type": "string",
+          "description": "The E142.1 namespace URI verbatim, so a round trip reproduces it instead of promoting every document to V0125. Absent means the serializer default.",
+          "pattern": "^urn:semi-org:xsd\\.E142-1\\.V[0-9]{4}\\.SubstrateMap$"
+        },
+        "Layouts": {
+          "type": "array",
+          "description": "The layout tree. LayoutId is unique across the document.",
+          "items": {
+            "$ref": "#/definitions/SubstrateMapE142Layout"
+          }
+        },
+        "Substrates": {
+          "type": "array",
+          "description": "Substrate records. (SubstrateType, SubstrateId) is unique.",
+          "items": {
+            "$ref": "#/definitions/SubstrateMapE142Substrate"
+          }
+        },
+        "SubstrateMaps": {
+          "type": "array",
+          "description": "The maps. (SubstrateType, SubstrateId, LayoutSpecifier) is unique. minOccurs=\"0\" in EVERY revision, like Layouts and Substrates - SEMI's own BinCodeMap-Extension-Example carries Substrates and nothing else, so a MapData with no map at all is legal and occurs in the corpus.",
+          "items": {
+            "$ref": "#/definitions/SubstrateMapE142SubstrateMap"
+          }
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely: never read into the model, never written by the serializer, never warned about. JSON has no comment syntax and the corpus needs one."
+        }
+      },
+      "required": [
+        "$format",
+        "$version"
+      ],
+      "additionalProperties": false
+    },
+    "SubstrateMapE142BinaryPayload": {
+      "type": "object",
+      "description": "A payload as bin indices. An ENCODING of the token text, expanded back to BinCode before anything else reads the document, so it can mean nothing the token form cannot. See JSON-FORMAT.md.",
+      "properties": {
+        "Codes": {
+          "type": "array",
+          "description": "The code table IN INDEX ORDER; Codes[0] is the null bin. Index i means Codes[i], so re-sorting renumbers every cell.",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "Data": {
+          "type": "string",
+          "description": "Base64 of little-endian uint16 cell indices, row-major."
+        },
+        "Cols": {
+          "type": "integer",
+          "description": "Lattice columns. Stated because an index stream cannot say where a row ends.",
+          "minimum": 0
+        },
+        "Rows": {
+          "type": "integer",
+          "description": "Lattice rows.",
+          "minimum": 0
+        },
+        "$comment": {
+          "type": "string",
+          "description": "Free provenance note. Ignored entirely."
+        }
+      },
+      "required": [
+        "Codes",
+        "Data",
+        "Cols",
+        "Rows"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

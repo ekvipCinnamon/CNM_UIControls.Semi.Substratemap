@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-decimal-bintype.xml
+ Covers: BinType=Decimal (3-digit, 000-255, mandatory space separator
+ between devices per the standard / standard footnote #1 quoted
+ in 6.5.2: "there must be spaces added between each device").
+ Grid: 5 cols x 4 rows.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Dec" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="5" Y="4"/>
+      <StepSize X="1.0" Y="1.0"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="DECIMAL001"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="DECIMAL001" LayoutSpecifier="Dec">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Decimal" NullBin="255" MapType="2DArray">
+          <BinDefinitions>
+            <BinDefinition BinCode="001" BinDescription="Pass"/>
+            <BinDefinition BinCode="009" BinDescription="Fail"/>
+          </BinDefinitions>
+          <BinCode>001 001 001 001 001</BinCode>
+          <BinCode>001 009 001 009 001</BinCode>
+          <BinCode>001 001 001 001 001</BinCode>
+          <BinCode>255 001 001 001 255</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

@@ -1,0 +1,209 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapOutlinePreset": {
+      "type": "string",
+      "title": "SubstrateMapOutlinePreset",
+      "description": "Built-in SEMI substrate outline preset key. \"none\" selects no preset (a bound Outline or the demo is used instead). All other keys are the built-in SEMI substrate presets.",
+      "enum": [
+        "none",
+        "si-2in-p111",
+        "si-2in-n111",
+        "si-2in-p100",
+        "si-2in-n100",
+        "si-3in-p111",
+        "si-3in-n111",
+        "si-3in-p100",
+        "si-3in-n100",
+        "si-4in-p111",
+        "si-4in-n111",
+        "si-4in-p100",
+        "si-4in-n100",
+        "si-5in-p111",
+        "si-5in-n111",
+        "si-5in-p100",
+        "si-5in-n100",
+        "si-6in-p111",
+        "si-6in-n111",
+        "si-6in-p100",
+        "si-6in-n100",
+        "si-8in",
+        "si-12in",
+        "si-18in",
+        "sic-4in",
+        "sic-6in-flat",
+        "sic-6in-notch",
+        "gaas-4in",
+        "sapphire-2in",
+        "sapphire-4in",
+        "solar-m0",
+        "solar-m2",
+        "solar-g1",
+        "solar-m6",
+        "solar-m10",
+        "solar-g12",
+        "glass-gen2.5",
+        "glass-gen4",
+        "ceramic-100x100"
+      ],
+      "options": [
+        {
+          "value": "none",
+          "label": null
+        },
+        {
+          "value": "si-2in-p111",
+          "label": null
+        },
+        {
+          "value": "si-2in-n111",
+          "label": null
+        },
+        {
+          "value": "si-2in-p100",
+          "label": null
+        },
+        {
+          "value": "si-2in-n100",
+          "label": null
+        },
+        {
+          "value": "si-3in-p111",
+          "label": null
+        },
+        {
+          "value": "si-3in-n111",
+          "label": null
+        },
+        {
+          "value": "si-3in-p100",
+          "label": null
+        },
+        {
+          "value": "si-3in-n100",
+          "label": null
+        },
+        {
+          "value": "si-4in-p111",
+          "label": null
+        },
+        {
+          "value": "si-4in-n111",
+          "label": null
+        },
+        {
+          "value": "si-4in-p100",
+          "label": null
+        },
+        {
+          "value": "si-4in-n100",
+          "label": null
+        },
+        {
+          "value": "si-5in-p111",
+          "label": null
+        },
+        {
+          "value": "si-5in-n111",
+          "label": null
+        },
+        {
+          "value": "si-5in-p100",
+          "label": null
+        },
+        {
+          "value": "si-5in-n100",
+          "label": null
+        },
+        {
+          "value": "si-6in-p111",
+          "label": null
+        },
+        {
+          "value": "si-6in-n111",
+          "label": null
+        },
+        {
+          "value": "si-6in-p100",
+          "label": null
+        },
+        {
+          "value": "si-6in-n100",
+          "label": null
+        },
+        {
+          "value": "si-8in",
+          "label": null
+        },
+        {
+          "value": "si-12in",
+          "label": null
+        },
+        {
+          "value": "si-18in",
+          "label": null
+        },
+        {
+          "value": "sic-4in",
+          "label": null
+        },
+        {
+          "value": "sic-6in-flat",
+          "label": null
+        },
+        {
+          "value": "sic-6in-notch",
+          "label": null
+        },
+        {
+          "value": "gaas-4in",
+          "label": null
+        },
+        {
+          "value": "sapphire-2in",
+          "label": null
+        },
+        {
+          "value": "sapphire-4in",
+          "label": null
+        },
+        {
+          "value": "solar-m0",
+          "label": null
+        },
+        {
+          "value": "solar-m2",
+          "label": null
+        },
+        {
+          "value": "solar-g1",
+          "label": null
+        },
+        {
+          "value": "solar-m6",
+          "label": null
+        },
+        {
+          "value": "solar-m10",
+          "label": null
+        },
+        {
+          "value": "solar-g12",
+          "label": null
+        },
+        {
+          "value": "glass-gen2.5",
+          "label": null
+        },
+        {
+          "value": "glass-gen4",
+          "label": null
+        },
+        {
+          "value": "ceramic-100x100",
+          "label": null
+        }
+      ]
+    }
+  }
+}

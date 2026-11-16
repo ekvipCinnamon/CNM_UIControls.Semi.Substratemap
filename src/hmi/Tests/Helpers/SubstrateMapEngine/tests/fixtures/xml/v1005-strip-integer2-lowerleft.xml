@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Fixture: v1005-strip-integer2-lowerleft.xml
+ Basis: the standard (GitHub se7ensenze/XtraLibrary strip-map reference),
+ namespace V1005.
+ Covers: BinType=Integer2; Layout/LowerLeft set on a child layout; Z element
+ (Order/Height/Units); BinDefinition/Pick; Orientation=180;
+ MapType omitted (defaults to 2DArray per prose, the standard).
+ Grid: 7 cols x 5 rows (<=12x12).
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:semi-org:xsd.E142-1.V1005.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="StripLayout" DefaultUnits="mm" TopLevel="True">
+      <Dimension X="1" Y="1" />
+      <DeviceSize X="170" Y="200" />
+      <ChildLayouts>
+        <ChildLayout LayoutId="ChipLayout" />
+      </ChildLayouts>
+    </Layout>
+    <Layout LayoutId="ChipLayout" DefaultUnits="mm">
+      <Dimension X="7" Y="5" />
+      <LowerLeft X="4.5" Y="42" />
+      <StepSize X="50" Y="15" />
+      <Z Order="0" Height="500" Units="um" />
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Strip" SubstrateId="P1AAA0003" />
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Strip" SubstrateId="P1AAA0003" LayoutSpecifier="StripLayout/ChipLayout" Orientation="180">
+      <Overlay MapName="BinCodeMap" MapVersion="1">
+        <BinCodeMap BinType="Integer2" NullBin="FFFF">
+          <BinDefinitions>
+            <BinDefinition BinCode="0002" BinCount="0" BinQuality="Pass" BinDescription="Good" Pick="false" />
+            <BinDefinition BinCode="0008" BinCount="0" BinQuality="Fail" BinDescription="Chipping bottom" Pick="false" />
+            <BinDefinition BinCode="0001" BinCount="0" BinQuality="Fail" BinDescription="Missing Reference" Pick="false" />
+            <BinDefinition BinCode="0009" BinCount="0" BinQuality="Fail" BinDescription="Scrap" Pick="false" />
+          </BinDefinitions>
+          <BinCode>FFFFFFFFFFFFFFFFFFFFFFFFFFFF</BinCode>
+          <BinCode>0002000200020002000200020002</BinCode>
+          <BinCode>0002000800020002000100020002</BinCode>
+          <BinCode>0002000200020002000200020002</BinCode>
+          <BinCode>FFFFFFFFFFFFFFFFFFFFFFFFFFFF</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-substrate-aliasids.xml
+  Covers: Substrate/AliasIds (Task 18) - the NORMAL case and the two boundaries
+          the schema and the prose disagree about.
+    - Three AliasId children, so document order and the multi-entry path are
+      exercised; a one-child fixture cannot tell an array from a scalar.
+    - @Type uses an OPEN vocabulary. Table 7 gives examples (FrontsideId,
+      BacksideId, WaferId, FrameId) and no restriction, so 'CustomerBarcode'
+      below must be carried verbatim with NO warning.
+    - @Value at exactly 32 characters, the MaterialIdType maxLength. One more
+      warns (E142_XML_ID_TOO_LONG) and is still carried, never truncated.
+  Not covered here on purpose: an EMPTY @Value. It is XSD-valid and Table 7
+  -invalid ("Text 1-32 characters"), so the parser warns rather than rejects -
+  but a corpus fixture that always warns would make "zero warnings" useless as
+  a corpus-wide assertion. That case lives in the Task 18 gate script.
+  Grid: 2 cols x 2 rows, all tokens distinct. LowerLeft / UpRight.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Alias" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="2"/>
+      <StepSize X="1.0" Y="1.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Frame" SubstrateId="ALIAS-01">
+      <LotId>LOT-ALIAS</LotId>
+      <AliasIds>
+        <AliasId Type="FrontsideId" Value="FRONT-0001"/>
+        <AliasId Type="FrameId" Value="FRAME-0001"/>
+        <AliasId Type="CustomerBarcode" Value="VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"/>
+      </AliasIds>
+      <GoodDevices>3</GoodDevices>
+    </Substrate>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Frame" SubstrateId="ALIAS-01" LayoutSpecifier="Alias"
+        OriginLocation="LowerLeft" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>ab</BinCode>
+          <BinCode>cd</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

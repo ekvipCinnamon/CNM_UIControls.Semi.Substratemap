@@ -1,0 +1,15 @@
+{
+  "$schema": "../../Packages/Beckhoff.TwinCAT.HMI.Framework.14.5.1/runtimes/native1.12-tchmi/Schema/LocalizationDescription.Schema.json",
+  "scope": "Control",
+  "locale": "de-DE",
+  "order": 2,
+  "localizedText": {
+    "SubstrateMapWidget.displayName": "Substratemap-Kachel",
+    "SubstrateMapWidget.description": "Eine Dashboard-Kachel, die ein Substrat auf einen Blick zeigt - mit ID, Yield und einer Markierung, sobald keine Daten mehr eintreffen.",
+    "age.measured": "gemessen",
+    "age.received": "empfangen",
+    "category.Data": "Daten",
+    "category.Tile": "Kachel",
+    "category.Selection": "Auswahl"
+  }
+}

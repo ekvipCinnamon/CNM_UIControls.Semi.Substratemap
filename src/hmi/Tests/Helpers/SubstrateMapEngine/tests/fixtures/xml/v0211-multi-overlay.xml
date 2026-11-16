@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-multi-overlay.xml
+ Covers: a multi-overlay file - one SubstrateMap with THREE Overlay
+ elements (SortGrade, Retest, FinalTest), each with its own BinCodeMap.
+ Default-overlay convention: no schema-level "default overlay" attribute
+ exists in any inspected XSD revision (V0211/V0921/V0224/V0125); the
+ OverlayKey constraint only enforces MapName+MapVersion
+ uniqueness, it does not designate a default. This fixture's expectation
+ card documents, as an application-level convention (not schema-normative),
+ that the FIRST Overlay element in document order ("SortGrade") is treated
+ as the default overlay absent any other signal - see REPORT.md.
+ Grid: 3 cols x 3 rows (all three overlays share the same layout).
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="MultiOv" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="3" Y="3"/>
+      <StepSize X="1.0" Y="1.0"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="MULTIOV01"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="MULTIOV01" LayoutSpecifier="MultiOv">
+      <Overlay MapName="SortGrade" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinDescription="Pass"/>
+            <BinDefinition BinCode="9" BinDescription="Fail"/>
+          </BinDefinitions>
+          <BinCode>111</BinCode>
+          <BinCode>191</BinCode>
+          <BinCode>111</BinCode>
+        </BinCodeMap>
+      </Overlay>
+      <Overlay MapName="Retest" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinDescription="Pass"/>
+            <BinDefinition BinCode="9" BinDescription="Fail"/>
+          </BinDefinitions>
+          <BinCode>111</BinCode>
+          <BinCode>111</BinCode>
+          <BinCode>111</BinCode>
+        </BinCodeMap>
+      </Overlay>
+      <Overlay MapName="FinalTest" MapVersion="2">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinDescription="Pass"/>
+            <BinDefinition BinCode="9" BinDescription="Fail"/>
+          </BinDefinitions>
+          <BinCode>1.1</BinCode>
+          <BinCode>.9.</BinCode>
+          <BinCode>1.1</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-substrate-alias-degenerate.xml
+  Covers: the AliasIdType edge the task text names, and its neighbours.
+    - @Value="" . Both attributes are use="required", so an empty one is
+      SCHEMA-VALID and PROSE-INVALID: the element is present and addresses
+      nothing. E142_XML_ID_EMPTY, carried rather than dropped, because a reader
+      must be able to see that the producer emitted an empty alias.
+    - @Value of 33 characters, one past MaterialIdType's maxLength 32.
+      E142_XML_ID_TOO_LONG, and the value is carried through UNTRUNCATED - an
+      alias is a join key and a shortened one silently joins to nothing.
+    - @Type="" . The type vocabulary is OPEN - Table 7 gives examples and
+      declares no restriction - so there is nothing to check it against and
+      nothing is reported. That asymmetry with @Value is the point: one has a
+      facet, the other has not.
+    - one well-formed alias, so the degenerate ones are seen not to poison it.
+  Grid: 1x1, rendered by a Sort overlay.
+-->
+<MapData xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="AlDeg" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="1" Y="1"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="ALDEG-01">
+      <AliasIds>
+        <AliasId Type="FrontsideId" Value="GOOD-0001"/>
+        <AliasId Type="BacksideId" Value=""/>
+        <AliasId Type="CustomerBarcode" Value="LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"/>
+        <AliasId Type="" Value="NO-TYPE-0001"/>
+      </AliasIds>
+      <GoodDevices>1</GoodDevices>
+    </Substrate>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="ALDEG-01" LayoutSpecifier="AlDeg">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>a</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

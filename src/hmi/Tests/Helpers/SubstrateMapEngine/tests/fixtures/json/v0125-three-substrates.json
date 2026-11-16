@@ -1,0 +1,30 @@
+{
+  "$comment": "HAND-AUTHORED from v0125-three-substrates.xml (Rule 10, D-030). Three substrates, three maps, two layouts - the multi-substrate document shape. Each Substrate carries only SlotNumber, so a reader that assumed LotId is present would find nothing; each SubstrateMap has a distinct payload token, and the third points at a DIFFERENT layout, so a map resolved by position rather than by its (SubstrateType, SubstrateId, LayoutSpecifier) triple would render the wrong lattice pitch and still parse.",
+  "$format": "semi-e142", "$version": 1,
+  "$namespace": "urn:semi-org:xsd.E142-1.V0125.SubstrateMap",
+  "Layouts": [
+    { "LayoutId": "L", "DefaultUnits": "mm", "TopLevel": true,
+      "Dimension": { "X": 2, "Y": 2 }, "StepSize": { "X": 1.0, "Y": 1.0, "Units": "mm" } },
+    { "LayoutId": "L2", "DefaultUnits": "mm", "TopLevel": true,
+      "Dimension": { "X": 2, "Y": 2 }, "StepSize": { "X": 2.0, "Y": 2.0, "Units": "mm" } }
+  ],
+  "Substrates": [
+    { "SubstrateType": "Wafer", "SubstrateId": "W-001", "SlotNumber": 1 },
+    { "SubstrateType": "Wafer", "SubstrateId": "W-002", "SlotNumber": 2 },
+    { "SubstrateType": "Wafer", "SubstrateId": "W-003", "SlotNumber": 3 }
+  ],
+  "SubstrateMaps": [
+    { "SubstrateType": "Wafer", "SubstrateId": "W-001", "LayoutSpecifier": "L",
+      "OriginLocation": "LowerLeft", "AxisDirection": "UpRight",
+      "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+        "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray", "BinCode": ["aa", "aa"] } }] },
+    { "SubstrateType": "Wafer", "SubstrateId": "W-002", "LayoutSpecifier": "L",
+      "OriginLocation": "LowerLeft", "AxisDirection": "UpRight",
+      "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+        "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray", "BinCode": ["bb", "bb"] } }] },
+    { "SubstrateType": "Wafer", "SubstrateId": "W-003", "LayoutSpecifier": "L2",
+      "OriginLocation": "LowerLeft", "AxisDirection": "UpRight",
+      "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+        "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray", "BinCode": ["cc", "cc"] } }] }
+  ]
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-bottomside-orientation-180.xml
+  Covers: the COMBINATION that no single-variable fixture reaches -
+          SubstrateSide="BottomSide" together with a non-zero Orientation and a
+          non-default frame. Side, orientation and frame are three independent
+          coordinate-system attributes; a serializer can preserve each of them
+          alone and still lose one when they appear together.
+  Grid: 4 cols x 2 rows, all tokens distinct.
+  Frame: UpperRight / DownLeft, Orientation 180.
+  Zero-cell: UpperRight -> serialization (col 3, row 0); DownLeft -> +x left,
+             +y down.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Combo" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="4" Y="2"/>
+      <DeviceSize X="1.5" Y="1.5" Units="mm"/>
+      <StepSize X="2.0" Y="2.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="COMBO01"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="COMBO01" LayoutSpecifier="Combo"
+        SubstrateSide="BottomSide" Orientation="180"
+        OriginLocation="UpperRight" AxisDirection="DownLeft">
+      <Overlay MapName="Sort" MapVersion="2">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>1234</BinCode>
+          <BinCode>5678</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

@@ -1,0 +1,24 @@
+{
+  "$comment": "HAND-AUTHORED from v0211-defaultunits-microns.xml (Rule 10, D-030). DefaultUnits=\"microns\" on both layouts, and a LayoutSpecifier containing a SPACE - \"FDI Target/DeviceLayout\" - which is legal because LayoutId is xs:string with no pattern and the specifier is a path built from those ids. DeviceSize is 0,0 on both, which asserts a street width equal to the whole pitch rather than saying nothing. LowerLeft is present and zero: a parent-relative offset of zero is a value, not an absence.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0211.SubstrateMap",
+  "Layouts": [
+    { "LayoutId": "FDI Target", "DefaultUnits": "microns", "TopLevel": true,
+      "Dimension": { "X": 1, "Y": 1 },
+      "LowerLeft": { "X": 0, "Y": 0 }, "DeviceSize": { "X": 0, "Y": 0 },
+      "ChildLayouts": ["DeviceLayout"] },
+    { "LayoutId": "DeviceLayout", "DefaultUnits": "microns",
+      "Dimension": { "X": 4, "Y": 1 },
+      "LowerLeft": { "X": 0, "Y": 0 }, "DeviceSize": { "X": 0, "Y": 0 },
+      "ProductId": "Product1" }
+  ],
+  "Substrates": [{ "SubstrateType": "Wafer", "SubstrateId": "MICRONS001" }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "MICRONS001",
+    "LayoutSpecifier": "FDI Target/DeviceLayout",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+        "BinDefinitions": [{ "BinCode": "1", "BinDescription": "Pass" },
+                           { "BinCode": "9", "BinDescription": "Fail" }],
+        "BinCode": ["1911"] } }]
+  }]
+}

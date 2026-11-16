@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v1005-wafer-2darray-ascii.xml
+ Basis: the standard (classic vendor wafer-map example), namespace V1005.
+ Covers: namespace V1005; MapType=2DArray; BinType=Ascii; Orientation=180;
+ OriginLocation=UpperRight; AxisDirection=DownLeft; multi-layout
+ (top-level "WaferMap" + child "LAYOUT"); ProductId.
+ Grid: 10 cols x 8 rows (<=12x12).
+-->
+<MapData xmlns="urn:semi-org:xsd.E142-1.V1005.SubstrateMap">
+
+  <Layouts>
+    <Layout LayoutId="WaferMap" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="1" Y="1"/>
+      <DeviceSize X="200.0" Y="200.0"/>
+      <ChildLayouts>
+        <ChildLayout LayoutId="LAYOUT"/>
+      </ChildLayouts>
+    </Layout>
+
+    <Layout LayoutId="LAYOUT" DefaultUnits="mm">
+      <Dimension X="10" Y="8"/>
+      <StepSize X="0.630000" Y="0.640000"/>
+      <ProductId>TESTDEVICE_00</ProductId>
+    </Layout>
+  </Layouts>
+
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="XXX555ABCD">
+      <LotId>NNN014506</LotId>
+      <SlotNumber>1</SlotNumber>
+      <GoodDevices>68</GoodDevices>
+    </Substrate>
+  </Substrates>
+
+  <SubstrateMaps>
+    <SubstrateMap
+      SubstrateType="Wafer"
+      SubstrateId="XXX555ABCD"
+      LayoutSpecifier="WaferMap/LAYOUT"
+      Orientation="180"
+      OriginLocation="UpperRight"
+      AxisDirection="DownLeft"
+      SubstrateSide="TopSide">
+
+      <Overlay MapName="SortGrade" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinDefinitions>
+            <BinDefinition BinCode="P" BinDescription="Pass_Grade_A" BinQuality="Pass"/>
+            <BinDefinition BinCode="X" BinDescription="Pass_Grade_B" BinQuality="Pass"/>
+            <BinDefinition BinCode="F" BinDescription="First_Fail" BinQuality="Fail"/>
+            <BinDefinition BinCode="E" BinDescription="Edge_Die" BinQuality="Edge"/>
+          </BinDefinitions>
+          <BinCode>..EEEEEE..</BinCode>
+          <BinCode>.EPPPPPPE.</BinCode>
+          <BinCode>EPPPPPPPPE</BinCode>
+          <BinCode>PPPPXXPPPP</BinCode>
+          <BinCode>PPPPXXPPPP</BinCode>
+          <BinCode>EPPPPPPPPE</BinCode>
+          <BinCode>.EPPPFPPE.</BinCode>
+          <BinCode>..EEEEEE..</BinCode>
+        </BinCodeMap>
+      </Overlay>
+
+    </SubstrateMap>
+  </SubstrateMaps>
+
+</MapData>

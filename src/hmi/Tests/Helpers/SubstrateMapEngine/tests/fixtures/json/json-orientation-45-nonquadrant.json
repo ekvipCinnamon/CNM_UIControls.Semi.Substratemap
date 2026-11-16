@@ -1,0 +1,22 @@
+{
+  "_fixtureNote": "orientation 45 - non-quadrant. Per (grade C) there is NO dimension/pitch swap off-quadrant; the angle only rotates the physical placement. Asserts that the payload lattice stays layout-aligned.",
+  "dimension": {
+    "x": 3,
+    "y": 2
+  },
+  "units": "mm",
+  "stepSize": {
+    "x": 2,
+    "y": 3
+  },
+  "orientation": 45,
+  "originLocation": "LowerLeft",
+  "axisDirection": "UpRight",
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "2DArray",
+  "bins": [
+    "pqr",
+    "stu"
+  ]
+}

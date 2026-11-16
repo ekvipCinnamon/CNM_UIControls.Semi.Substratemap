@@ -1,0 +1,72 @@
+{
+  "$comment": "HAND-AUTHORED from v0125-transfer-chain.xml, transcribed element by element from the XML bytes - NOT produced by e142DocumentToJson (Rule 10, D-030). The E142-0225 Figure R2-22 lifecycle: wafer -> tape -> target. Covers: TransferMap maxOccurs=\"unbounded\", so the TARGET carries TWO of them because the source is named per MAP and not per transfer; the child element is T, NOT Transfer - the TYPE is TransferType and the standard's figures label the arrows Transfer(...), which is the trap that makes a reader find an empty map instead of failing; all three From* are use=\"required\" and form an intra-document keyref onto a SubstrateMap, which is why the two source substrates are declared and are not decoration; each END of a transfer is addressed independently - the first map is Transfer(FX,FY,TID), coordinates in and IDENTIFIER out, the second is Transfer(FID,TX,TY), identifier in and COORDINATES out; and two SubstrateMaps carry NO Overlay at all, which is legal because Overlay is minOccurs=\"0\".",
+  "$format": "semi-e142",
+  "$version": 1,
+  "$namespace": "urn:semi-org:xsd.E142-1.V0125.SubstrateMap",
+  "Layouts": [
+    {
+      "LayoutId": "Tgt",
+      "DefaultUnits": "mm",
+      "TopLevel": true,
+      "Dimension": { "X": 2, "Y": 2 },
+      "StepSize": { "X": 1.0, "Y": 1.0, "Units": "mm" }
+    }
+  ],
+  "SubstrateMaps": [
+    {
+      "SubstrateType": "Wafer",
+      "SubstrateId": "SRC-WAFER",
+      "LayoutSpecifier": "",
+      "OriginLocation": "LowerLeft",
+      "AxisDirection": "UpRight"
+    },
+    {
+      "SubstrateType": "TnR",
+      "SubstrateId": "SRC-TAPE",
+      "LayoutSpecifier": "",
+      "OriginLocation": "LowerLeft",
+      "AxisDirection": "UpRight"
+    },
+    {
+      "SubstrateType": "Wafer",
+      "SubstrateId": "TARGET-01",
+      "LayoutSpecifier": "Tgt",
+      "OriginLocation": "LowerLeft",
+      "AxisDirection": "UpRight",
+      "Overlay": [
+        {
+          "MapName": "Sort",
+          "MapVersion": "1",
+          "BinCodeMap": {
+            "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+            "BinCode": ["ab", "cd"]
+          }
+        },
+        {
+          "MapName": "Provenance",
+          "MapVersion": "1",
+          "TransferMap": [
+            {
+              "FromSubstrateType": "Wafer",
+              "FromSubstrateId": "SRC-WAFER",
+              "FromSubstrateLayoutSpecifier": "",
+              "T": [
+                { "FX": 3, "FY": 7, "TID": "PKT-0042" },
+                { "FX": 4, "FY": 7, "TID": "PKT-0043" }
+              ]
+            },
+            {
+              "FromSubstrateType": "TnR",
+              "FromSubstrateId": "SRC-TAPE",
+              "FromSubstrateLayoutSpecifier": "",
+              "T": [
+                { "FID": "PKT-0042", "TX": 0, "TY": 0 },
+                { "FID": "PKT-0043", "TX": 1, "TY": 0 }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

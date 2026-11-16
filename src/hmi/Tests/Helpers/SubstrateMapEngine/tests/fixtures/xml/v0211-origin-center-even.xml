@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-origin-center-even.xml
+ Covers: OriginLocation=Center with EVEN Columns and EVEN Rows (4x4) -
+ the case the standard documents only via the A4-1 range formulas, never
+ in plain prose ("keine Quelle formuliert dies in erzaehlender Prosa").
+ AxisDirection=UpRight (default, explicit here for clarity).
+ Formula :
+ zero-cell (visual, from_left, from_bottom) = ((C-1)//2, (R-1)//2)
+ For C=4, R=4: zero-cell = (1,1) i.e. the visual cell one-right/one-up
+ from the lower-left visual corner is logical (0,0).
+ Grid: 4 cols x 4 rows (even x even, the case under test).
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="CenterEven" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="4" Y="4"/>
+      <StepSize X="1.0" Y="1.0"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="CENTEREVN"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="CENTEREVN" LayoutSpecifier="CenterEven"
+        OriginLocation="Center" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinDescription="Pass"/>
+            <BinDefinition BinCode="9" BinDescription="Fail"/>
+          </BinDefinitions>
+          <BinCode>1111</BinCode>
+          <BinCode>1911</BinCode>
+          <BinCode>1191</BinCode>
+          <BinCode>1111</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

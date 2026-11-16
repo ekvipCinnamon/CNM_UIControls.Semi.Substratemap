@@ -1,0 +1,21 @@
+{
+  "$schema": "../../Packages/Beckhoff.TwinCAT.HMI.Framework.14.5.1/runtimes/native1.12-tchmi/Schema/LocalizationDescription.Schema.json",
+  "scope": "Control",
+  "locale": "de-DE",
+  "order": 2,
+  "localizedText": {
+    "SubstrateMap.displayName": "Substratemap",
+    "SubstrateMap.description": "Zeichnet ein Substrat: Umriss, nach Status eingefärbte Dies und die Beschriftungen darüber. Liest SEMI-E142-XML, Stream-21-Transferdaten oder kompaktes GridData.",
+    "age.measured": "gemessen",
+    "age.received": "empfangen",
+    "category.Data": "Daten",
+    "category.Substrate": "Substrat",
+    "category.Origin": "Ursprung",
+    "category.View": "Ansicht",
+    "category.Common": "Allgemein",
+    "category.Selection": "Auswahl",
+    "category.Spatial-filter": "Spatial Filter",
+    "category.Channel": "Kanal",
+    "category.Reference": "Referenz"
+  }
+}

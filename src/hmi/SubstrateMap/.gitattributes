@@ -1,0 +1,62 @@
+# Line endings: git converts NOTHING. The producer decides, and git stores what it
+# wrote.
+#
+# WHY, because "-text everywhere" looks like giving up and is not.
+#
+# This tree has two legitimate producers with different conventions, and neither is
+# wrong:
+#
+#   *.ts, *.hmiextproj, Description.json, README.md   authored in Visual Studio  -> CRLF
+#   *.js, *.d.ts                                      emitted by tsc             -> LF
+#   specs, STATE.md, JSON fixtures, most of tools/    authored here              -> LF
+#
+# Normalising would break both ends. Forcing CRLF makes every `tsc` emit rewrite
+# files that did not change; forcing LF fights the toolchain that opens the .ts.
+# And a `text` attribute of any kind would make the index disagree with the 260
+# files already committed, so adding one would queue the whole tree for rewriting
+# on the next checkout - which is the one thing this must not do.
+#
+# `-text` also protects against the real hazard, which is not this machine: a
+# contributor on Windows has `core.autocrlf=true` by default, and without this file
+# git would rewrite every LF file on checkout and every CRLF file on commit. With
+# it, the committed bytes are the bytes, everywhere.
+#
+# The authoring rule that goes with this lives in SubstrateMap-Working-Protocol.md:
+# match the file you are editing, and DETECT rather than assume.
+
+*                   -text
+
+# Explicit, so no future `text=auto` heuristic reaches them.
+*.ts                -text
+*.js                -text
+*.d.ts              -text
+*.mjs               -text
+*.json              -text
+*.md                -text
+*.xml               -text
+*.xsd               -text
+*.css               -text
+*.html              -text
+*.view              -text
+*.nuspec            -text
+*.hmiextproj        -text
+*.sln               -text
+# THE ONE EXCEPTION (F-3, D-224). A shell script does not have an author's
+# convention, it has an interpreter's requirement: the kernel reads the shebang
+# byte for byte, so `#!/usr/bin/env bash\r` sends it looking for `bash\r`, and
+# `set -u\r` is an invalid option. `-text` faithfully preserved the CRLF that a
+# Windows editor wrote into typecheck.sh, and it shipped broken.
+#
+# The comment above warns that a `text` attribute queues the tree for rewriting.
+# That argument is about `*`. This one matches a single tracked file, which this
+# task rewrites to LF anyway, so the index and the working tree already agree.
+*.sh                text eol=lf
+
+# Binary: never converted, never diffed as text.
+*.png               binary
+*.pdf               binary
+*.tar               binary
+*.tar.gz            binary
+*.gz                binary
+*.zip               binary
+*.nupkg             binary

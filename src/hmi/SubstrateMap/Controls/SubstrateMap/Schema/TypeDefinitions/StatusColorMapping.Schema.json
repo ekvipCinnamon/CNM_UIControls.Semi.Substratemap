@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapStatusColorMapping": {
+      "$schema": "http://json-schema.org/draft-04/schema",
+      "title": "SubstrateMapStatusColorMapping",
+      "type": "object",
+      "description": "Maps a status string to a CSS color string. Keys are unconstrained; values are CSS colors.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}

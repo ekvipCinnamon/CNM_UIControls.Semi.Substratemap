@@ -1,0 +1,17 @@
+{
+  "$comment": "HAND-AUTHORED from v0125-substrate-full-record.xml (Rule 10, D-030). The NORMAL case for the Substrates block: one Substrate carrying every modelled child at once, in the XSD's xs:sequence order - LotId, GoodDevices, SupplierName, Status. SupplierName and Status are unconstrained xs:string with no enumeration, so \"Sorted\" is free text and not a status token.",
+  "$format": "semi-e142", "$version": 1,
+  "$namespace": "urn:semi-org:xsd.E142-1.V0125.SubstrateMap",
+  "Layouts": [{ "LayoutId": "Full", "DefaultUnits": "mm", "TopLevel": true,
+    "Dimension": { "X": 3, "Y": 2 }, "StepSize": { "X": 1.0, "Y": 1.0, "Units": "mm" } }],
+  "Substrates": [{
+    "SubstrateType": "Wafer", "SubstrateId": "FULL-REC-01", "LotId": "LOT-42",
+    "GoodDevices": 5, "SupplierName": "ACME Substrates GmbH", "Status": "Sorted"
+  }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "FULL-REC-01", "LayoutSpecifier": "Full",
+    "OriginLocation": "LowerLeft", "AxisDirection": "UpRight",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray", "BinCode": ["abc", "d.f"] } }]
+  }]
+}

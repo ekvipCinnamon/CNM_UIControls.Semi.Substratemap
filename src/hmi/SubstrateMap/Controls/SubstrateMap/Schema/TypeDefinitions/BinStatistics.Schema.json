@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapBinStatistics": {
+      "type": "object",
+      "title": "SubstrateMapBinStatistics",
+      "description": "What readBinStatistics() returns: the whole lattice counted by bin code. UNTRUNCATED, unlike a SubstrateMapGroupSelection histogram, which is capped at ten because an event payload is O(K) in something the document controls and is rebuilt on every tap, and neither is true of a function asked for once per binding. sum(bins[].count) + nullCount === totalCells, exactly and always. A control with nothing bound returns totalCells 0 and an empty list, never null: an empty chart is a state a chart can draw, and null is a state every caller has to branch on.",
+      "properties": {
+        "totalCells": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Every cell in the lattice, cols * rows. Zero when no map is bound."
+        },
+        "nullCount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Cells holding the reserved null bin - the map named no code there, or the cell is off the substrate. Counted separately rather than listed as a bin, because the null bin is never painted and a chart that gave it a bar would give it a color it does not have."
+        },
+        "bins": {
+          "type": "array",
+          "minItems": 0,
+          "description": "One entry per code that OCCURS, descending by count then by code. A code declared in BinDefinitions but present in no cell is absent - the list describes the map, not its vocabulary. The order is the one describeGroup uses, so two readings of the same map serialize identically and a chart's bars do not reorder themselves.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "The canonical bin code token."
+              },
+              "count": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Cells holding it. Never zero - a code with no cells is not listed."
+              },
+              "quality": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "The BinQuality the DOCUMENT declared, verbatim, or null when it declared none. The declared token rather than the resolved one, because severity already carries the resolution and this is the only field here that cannot be recovered from the others. E142 reserves Pass and Fail; anything else is a free string and is passed through unchanged."
+              },
+              "severity": {
+                "type": "integer",
+                "description": "Rank in the declared order, from the same table the aggregate render path uses. Comparable across entries of one reading and meaningless between two maps with different BinSeverityPriority lists."
+              },
+              "color": {
+                "type": "string",
+                "description": "The color the RENDER PATH paints for this code, resolved exactly as buildGridPaint resolves it: StatusColorMapping first, then the quality fallback, then the unknown color. Not the raw StatusColorMapping value - a chart built from that disagrees with the map for every code the mapping does not name, and two independent palettes disagreeing is the one failure this function could introduce that nothing else would catch."
+              }
+            },
+            "required": [
+              "code",
+              "count",
+              "quality",
+              "severity",
+              "color"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "totalCells",
+        "nullCount",
+        "bins"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

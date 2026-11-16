@@ -1,0 +1,11 @@
+{
+  "$schema": "../../Packages/Beckhoff.TwinCAT.HMI.Framework.14.5.1/runtimes/native1.12-tchmi/Schema/LocalizationDescription.Schema.json",
+  "scope": "Control",
+  "locale": "de-DE",
+  "order": 2,
+  "localizedText": {
+    "SubstrateMapBase.displayName": "Substratemap-Basis (abstrakt)",
+    "SubstrateMapBase.description": "Abstrakte Basis der Substratemap-Steuerelemente. Nicht platzierbar; sie stellt Canvas, Größenanpassung und Renderpfad für die abgeleiteten Steuerelemente bereit.",
+    "category.No-data": "Keine Daten"
+  }
+}

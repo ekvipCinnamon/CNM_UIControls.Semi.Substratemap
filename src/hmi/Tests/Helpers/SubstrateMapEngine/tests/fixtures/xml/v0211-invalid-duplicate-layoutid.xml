@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-invalid-duplicate-layoutid.xml
+ INVALID FIXTURE - expected failure class: XSD key constraint violation
+ (cvc-identity-constraint.4.2.2, "Duplicate key value ['Dup'] declared for
+ identity constraint \"LayoutKey\"..."). Two <Layout> elements both use
+ LayoutId="Dup", violating the LayoutKey xs:key (selector
+ sm:Layouts/sm:Layout, field @LayoutId) that is confirmed identical across
+ all four inspected schema revisions. This document
+ is well-formed XML and would even be structurally navigable, but MUST be
+ rejected by any XSD-validating parser.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Dup" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="2"/>
+    </Layout>
+    <Layout LayoutId="Dup" DefaultUnits="mm">
+      <Dimension X="3" Y="3"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="DUPLAYOUT1"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="DUPLAYOUT1" LayoutSpecifier="Dup">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>11</BinCode>
+          <BinCode>11</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

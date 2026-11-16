@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-invalid-unknown-substratetype.xml
+ INVALID FIXTURE - expected failure class: XSD enumeration constraint
+ violation (cvc-enumeration-valid / cvc-attribute.3, "Value 'Puck' is not
+ facet-valid with respect to enumeration '[Wafer, Frame, Strip, Tray]'
+ for type 'SubstrateTypeEnum'..."). SubstrateTypeEnum in the V0211 schema
+ restricts SubstrateType to exactly {Wafer, Frame, Strip, Tray}. "Puck" is not
+ a member of this enumeration in ANY inspected schema revision including
+ V0224/V0125, so this fixture fails identically regardless of which
+ namespace/schema version it is validated against.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Puck" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="2"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Puck" SubstrateId="UNKNOWNTYP"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Puck" SubstrateId="UNKNOWNTYP" LayoutSpecifier="Puck">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>11</BinCode>
+          <BinCode>11</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

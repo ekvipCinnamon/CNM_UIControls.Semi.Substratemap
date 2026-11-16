@@ -1,0 +1,22 @@
+{
+  "_fixtureNote": "orientation 180 - a quadrant that does NOT transpose the map frame (dimsInMapFrame swaps only for orientation mod 180 == 90). The JSON corpus previously contained orientation 0 and nothing else. Non-square pitch so a spurious swap would be visible.",
+  "dimension": {
+    "x": 4,
+    "y": 2
+  },
+  "units": "mm",
+  "stepSize": {
+    "x": 2,
+    "y": 3
+  },
+  "orientation": 180,
+  "originLocation": "LowerLeft",
+  "axisDirection": "UpRight",
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "2DArray",
+  "bins": [
+    "wxyz",
+    "stuv"
+  ]
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Minimal MapData document, hand-written for the Task 3 gate.
+  Deliberately mirrors the shape gridToE142Xml() emits today: one TopLevel
+  layout carrying the device grid directly, one SubstrateMap, one Overlay,
+  one 2DArray BinCodeMap. If the vendored schema validates this, it validates
+  the control's own export.
+-->
+<MapData xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="L0" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="2"/>
+      <StepSize X="1.5" Y="1.5" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="MINIMAL-1" LayoutSpecifier="L0">
+      <Overlay MapName="SortGrade">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinQuality="Pass" Pick="true"/>
+          </BinDefinitions>
+          <BinCode>11</BinCode>
+          <BinCode>1.</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

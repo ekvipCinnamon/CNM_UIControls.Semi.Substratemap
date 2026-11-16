@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "SubstrateMapOverlayList": {
+      "type": "array",
+      "minItems": 1,
+      "title": "SubstrateMapOverlayList",
+      "description": "An ordered list of the E142 overlays to compose, one base plus any number of decorations. THE ORDER IS YOURS, not the document's: OverlayKey is (MapName, MapVersion), a set rather than a sequence, so E142 declares no z-order and one must not be inferred from element order. Decorations draw in list order, after the grid and before the origin marker. Null - not an empty array - selects today's single-overlay behavior via E142OverlayName / E142OverlayVersion; those two are ignored with a warning when this list is bound, because a document cannot have two answers to 'which overlay renders'.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Overlay/@MapName. Required - it is half of OverlayKey and there is no default. Table 9 gives the intended examples: 'CellStatus', 'DefectCode', 'MarkGrade', 'PackageGrade', 'SortGrade', 'DeviceId', 'Transfer' - parallel judgements about the same die, which is why several may be shown at once."
+          },
+          "version": {
+            "type": "string",
+            "description": "Overlay/@MapVersion. OMIT to match any version and warn if several exist; supply it to pin one. The EMPTY STRING is not the same as omitting: MapVersion has an XSD default of \"\", so version:\"\" selects overlays that state no version, while an absent key does not filter on version at all. R2-1.2's lifecycle - the same MapName downloaded as version 1 and uploaded as version 2 - is exactly why this must be pinnable."
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "base",
+              "decoration",
+              "valueField"
+            ],
+            "description": "'base' owns the geometry, the selection and the bin codes a tap reports; 'decoration' contributes per-cell marks only; 'valueField' REPLACES the fill with a lightness-ordered ramp over that overlay's own BinDefinitions, in document order. Exactly one entry may be 'base' and at most one 'valueField'. A value field is for a per-cell measurement the bin palette cannot express - an LRP relevance map, a thermal field, a probe result - carried as an ordinary E142 overlay whose MapName describes its purpose, exactly as Table 9 intends. It replaces rather than blends for the same reason decorations never take a fill: blending two bin colors yields a color that maps back to no bin code at all. If no entry states a role, the FIRST is the base and the rest are decorations - the common case written the short way. See ws/notes/DECISION-overlay-composition.md for why decorations never take a fill: blending two bin colors produces a color that maps back to no bin code at all."
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}

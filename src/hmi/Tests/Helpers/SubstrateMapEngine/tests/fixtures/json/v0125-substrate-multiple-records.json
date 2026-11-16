@@ -1,0 +1,19 @@
+{
+  "$comment": "HAND-AUTHORED from v0125-substrate-multiple-records.xml (Rule 10, D-030). Two Substrate records, only one of which the SubstrateMap refers to. The DECOY carries deliberately wrong values in every field, so anything that resolves a substrate by position rather than by the (SubstrateType, SubstrateId) key reads WRONG-LOT and 99 good devices and still parses cleanly.",
+  "$format": "semi-e142", "$version": 1,
+  "$namespace": "urn:semi-org:xsd.E142-1.V0125.SubstrateMap",
+  "Layouts": [{ "LayoutId": "Multi", "DefaultUnits": "mm", "TopLevel": true,
+    "Dimension": { "X": 2, "Y": 2 }, "StepSize": { "X": 1.0, "Y": 1.0, "Units": "mm" } }],
+  "Substrates": [
+    { "SubstrateType": "Wafer", "SubstrateId": "DECOY-01", "LotId": "WRONG-LOT",
+      "GoodDevices": 99, "SupplierName": "Not This One", "Status": "Ignored" },
+    { "SubstrateType": "Wafer", "SubstrateId": "TARGET-02", "LotId": "RIGHT-LOT",
+      "GoodDevices": 3, "SupplierName": "Correct Supplier", "Status": "Probed" }
+  ],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "TARGET-02", "LayoutSpecifier": "Multi",
+    "OriginLocation": "LowerLeft", "AxisDirection": "UpRight",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray", "BinCode": ["wx", "yz"] } }]
+  }]
+}

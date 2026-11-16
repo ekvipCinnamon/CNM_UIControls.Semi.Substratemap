@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapBinQualityAliases": {
+      "$schema": "http://json-schema.org/draft-04/schema",
+      "title": "SubstrateMapBinQualityAliases",
+      "type": "object",
+      "description": "Maps an author-defined BinQuality token onto one of the two values SEMI E142-0225 reserves. The standard reserves only 'Pass' and 'Fail' and states that other values are defined by an application, so a document may legally carry any token; this is where the author says what theirs mean. Keys are matched case-insensitively and trimmed. A value that is not 'pass' or 'fail' is ignored.",
+      "additionalProperties": {
+        "type": "string",
+        "enum": [
+          "pass",
+          "fail",
+          "Pass",
+          "Fail",
+          "PASS",
+          "FAIL"
+        ]
+      }
+    }
+  }
+}

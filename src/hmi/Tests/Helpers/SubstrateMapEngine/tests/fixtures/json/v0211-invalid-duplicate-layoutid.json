@@ -1,0 +1,15 @@
+{
+  "$comment": "HAND-AUTHORED from v0211-invalid-duplicate-layoutid.xml (Rule 10, D-030). NEGATIVE CASE: two Layouts share LayoutId \"Dup\", which violates the LayoutKey xs:key - an identity constraint, not a facet, so no per-attribute check can catch it and only a document-wide pass can. xmllint rejects the document; this parser reports it. The two layouts declare DIFFERENT dimensions, 2x2 and 3x3, so silently taking either one produces a map that renders and is wrong.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0211.SubstrateMap",
+  "Layouts": [
+    { "LayoutId": "Dup", "DefaultUnits": "mm", "TopLevel": true, "Dimension": { "X": 2, "Y": 2 } },
+    { "LayoutId": "Dup", "DefaultUnits": "mm", "Dimension": { "X": 3, "Y": 3 } }
+  ],
+  "Substrates": [{ "SubstrateType": "Wafer", "SubstrateId": "DUPLAYOUT1" }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "DUPLAYOUT1", "LayoutSpecifier": "Dup",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+        "BinCode": ["11", "11"] } }]
+  }]
+}

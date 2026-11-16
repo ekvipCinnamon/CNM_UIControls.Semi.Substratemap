@@ -1,0 +1,12 @@
+{
+  "name": "wafermap-framework-stub",
+  "private": true,
+  "description": "Type-level test harness for the WaferMap TwinCAT HMI controls (Framework 14.5.1 d.ts subset, tsc 5.9.2)",
+  "scripts": {
+    "typecheck": "bash typecheck.sh",
+    "build": "bash typecheck.sh --emit"
+  },
+  "devDependencies": {
+    "typescript": "5.9.2"
+  }
+}

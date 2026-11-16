@@ -1,0 +1,15 @@
+{
+  "$schema": "../../Packages/Beckhoff.TwinCAT.HMI.Framework.14.5.1/runtimes/native1.12-tchmi/Schema/LocalizationDescription.Schema.json",
+  "scope": "Control",
+  "locale": "en-US",
+  "order": 0,
+  "localizedText": {
+    "SubstrateMapBinChart.displayName": "Substrate map bin chart",
+    "SubstrateMapBinChart.description": "Counts the bins of one substrate and shows them as bars or as shares of the whole.",
+    "chart.other": "Other",
+    "age.measured": "measured",
+    "age.received": "received",
+    "category.Data": "Data",
+    "category.Chart": "Chart"
+  }
+}

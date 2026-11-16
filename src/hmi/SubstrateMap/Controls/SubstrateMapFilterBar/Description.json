@@ -1,0 +1,143 @@
+{
+  "$schema": "../../.hmiframework/Schema/ControlDescription.Schema.json",
+  "apiVersion": 1,
+  "name": "SubstrateMapFilterBar",
+  "namespace": "TcHmi.Controls.CNM_UIControls.SEMI",
+  "displayName": "Substrate map filter bar",
+  "version": {
+    "full": "5.0.0.0",
+    "major": 5,
+    "minor": 0,
+    "revision": 0,
+    "build": 0
+  },
+  "visible": true,
+  "themeable": "None",
+  "base": "TcHmi.Controls.System.TcHmiControl",
+  "description": "A bar of selectors that DRIVES a SubstrateMap's filter attributes. It renders no map: it has no canvas, no aggregation and no ResizeObserver, and it extends TcHmiControl rather than SubstrateMapBase for exactly that reason - inheriting canvas sizing for a handful of buttons would be paying for machinery it never uses. It is separate from the map so that ONE bar can drive TWO maps through the same binding - unfiltered on the left, filtered on the right - which is the comparison that makes a filter worth having. A control holding both would mean every map on a page needs its own bar or gets none.",
+  "properties": {
+    "containerControl": false,
+    "geometry": {
+      "width": 480,
+      "height": 40
+    }
+  },
+  "icons": [
+    {
+      "name": "Icons/16x16.png",
+      "width": 16,
+      "height": 16
+    }
+  ],
+  "template": "Template.html",
+  "dependencyFiles": [
+    {
+      "name": "SubstrateMapFilterBar.js",
+      "type": "EsModule",
+      "description": "The filter bar control."
+    },
+    {
+      "name": "Style.css",
+      "type": "Stylesheet",
+      "description": "Layout and theming for the bar."
+    }
+  ],
+  "functions": [
+    {
+      "name": "readSurface",
+      "displayName": "Read surface",
+      "visible": true,
+      "category": "Filter",
+      "description": "What the bar currently holds: the spatial filter, its radius, the channel and the highlight threshold, as one object. Useful for a view action that wants to record or restore a bar's state without reading four attributes separately.",
+      "type": "tchmi:general#/definitions/Any",
+      "heritable": false,
+      "waitMode": "Synchronous",
+      "params": []
+    }
+  ],
+  "attributes": [
+    {
+      "name": "data-tchmi-spatial-filter",
+      "propertyName": "SpatialFilter",
+      "propertySetterName": "setSpatialFilter",
+      "propertyGetterName": "getSpatialFilter",
+      "displayName": "Spatial filter",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 100,
+      "type": "tchmi:framework#/definitions/SubstrateMapSpatialFilter",
+      "category": "Filter",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": "None",
+      "defaultValueInternal": "None",
+      "description": "Drives the map attribute of the same name through a binding the author places on both controls. Type and schema are identical to the map's, because one symbol cannot bind to two attributes that disagree about their type. Which spatial filter runs over the aggregated tile, in SCREEN space, after the render and before the blit."
+    },
+    {
+      "name": "data-tchmi-spatial-filter-radius",
+      "propertyName": "SpatialFilterRadius",
+      "propertySetterName": "setSpatialFilterRadius",
+      "propertyGetterName": "getSpatialFilterRadius",
+      "displayName": "Spatial filter Radius",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 101,
+      "type": "tchmi:general#/definitions/Number",
+      "category": "Filter",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": 1,
+      "defaultValueInternal": 1,
+      "description": "Drives the map attribute of the same name through a binding the author places on both controls. Type and schema are identical to the map's, because one symbol cannot bind to two attributes that disagree about their type. Filter radius in DEVICE pixels, 0 to 8."
+    },
+    {
+      "name": "data-tchmi-field-view",
+      "propertyName": "FieldView",
+      "propertySetterName": "setFieldView",
+      "propertyGetterName": "getFieldView",
+      "displayName": "Field View",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 102,
+      "type": "tchmi:framework#/definitions/SubstrateMapFieldView",
+      "category": "Filter",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": "Bins",
+      "defaultValueInternal": "Bins",
+      "description": "Drives the map attribute of the same name through a binding the author places on both controls. Type and schema are identical to the map's, because one symbol cannot bind to two attributes that disagree about their type. Which channel the tile shows."
+    },
+    {
+      "name": "data-tchmi-highlight-from-severity",
+      "propertyName": "HighlightFromSeverity",
+      "propertySetterName": "setHighlightFromSeverity",
+      "propertyGetterName": "getHighlightFromSeverity",
+      "displayName": "Highlight FromSeverity",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 103,
+      "type": "tchmi:general#/definitions/Number",
+      "category": "Filter",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": null,
+      "defaultValueInternal": null,
+      "description": "Drives the map attribute of the same name through a binding the author places on both controls. Type and schema are identical to the map's, because one symbol cannot bind to two attributes that disagree about their type. Keep the color of every bin at or above this severity rank; everything below drops to the lightness of its own color at chroma 0."
+    }
+  ],
+  "events": [],
+  "attributeCategories": [
+    {
+      "name": "Filter",
+      "displayPriority": 100
+    }
+  ],
+  "languages": {
+    "en-US": "en-US.localization",
+    "de-DE": "de-DE.localization"
+  }
+}

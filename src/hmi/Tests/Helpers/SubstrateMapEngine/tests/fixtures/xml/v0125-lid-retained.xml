@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-lid-retained.xml
+  Covers: LID retention on BOTH element types that carry one and are modelled
+          (Task 39) - BinCodeType and DeviceIdType. DeviceDataType also carries a
+          LID but is Phase 10 and is not in this document.
+  §13.3 is explicit that a position is addressed by "either the X and Y
+  coordinate, or the location identifier, OR BOTH", so all three forms appear
+  here in one document and must all survive parsing:
+    X/Y only        - placeable, no LID
+    X/Y AND LID     - placeable, LID retained as an alias for the same cell
+    LID only        - not placeable; retained in sparseBinCodes and reported by
+                      one aggregate E142_XML_LID_ONLY_EXCLUDED warning
+  The DeviceIdMap repeats all three, with a LID-only entry in the shape
+  R2-3.2.2 describes for a tape pocket carrying a PI but no pocket number.
+  LIDs are deliberately awkward: mixed case, a separator, and one that looks
+  numeric. All are xs:string with no facet, so none may be normalised - a LID
+  addresses a location and is a join key (see notes/DECISION-lid.md).
+  Grid: 2 cols x 2 rows, Coordinate form. LowerLeft / UpRight.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Lid" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="2"/>
+      <StepSize X="1.0" Y="1.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="LID-01"><LotId>LOT-LID</LotId></Substrate>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="LID-01" LayoutSpecifier="Lid"
+        OriginLocation="LowerLeft" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="Coordinate">
+          <BinCode X="0" Y="0">a</BinCode>
+          <BinCode X="1" Y="0" LID="pkt-0042">b</BinCode>
+          <BinCode X="0" Y="1" LID="P/0007">c</BinCode>
+          <BinCode X="1" Y="1">d</BinCode>
+          <BinCode LID="0007">e</BinCode>
+        </BinCodeMap>
+      </Overlay>
+      <Overlay MapName="DeviceIds" MapVersion="1">
+        <DeviceIdMap>
+          <Id X="0" Y="0">DEV-A</Id>
+          <Id X="1" Y="0" LID="pkt-0042">DEV-B</Id>
+          <Id LID="PI-9F3C">DEV-C</Id>
+        </DeviceIdMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

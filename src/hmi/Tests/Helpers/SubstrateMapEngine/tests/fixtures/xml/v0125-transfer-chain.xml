@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-transfer-chain.xml
+  Covers: TransferMap (Tasks 44-46). No corpus document carried one before -
+          a grep for "TransferMap" matched only an overlay NAME in
+          v0921-array-integer2-csdn.xml, never an element.
+  SHAPE: the E142-0225 Figure R2-22 lifecycle, wafer -> tape -> target.
+    - the TARGET substrate carries TWO TransferMaps, because a substrate that
+      received devices from two sources MUST: the source is named per MAP, not
+      per transfer, and OverlayType declares TransferMap maxOccurs="unbounded".
+    - the first arrow is Transfer(FX,FY,TID) - coordinates in, IDENTIFIER out,
+      the device leaving wafer (x,y) for a named tape pocket.
+    - the second is Transfer(FID,TX,TY) - identifier in, COORDINATES out.
+      Each END of a transfer is addressed independently; all six attributes are
+      optional and none is coupled.
+  KEYREF: the three From* attributes are an intra-document reference -
+    <xs:keyref name="FromSubstrateMapRef" refer="sm:SubstrateMapKey"> covers
+    (FromSubstrateType, FromSubstrateId, FromSubstrateLayoutSpecifier) - so both
+    source substrates MUST be declared here. A document whose TransferMap points
+    at an absent substrate is rejected by xmllint AND by this parser
+    (E142_XML_INTEGRITY). That is why the two sources below are not decoration.
+  The child element is <T>, not <Transfer>.
+  Grid: the target renders 2x2; the two sources carry no overlay at all, which
+  is legal (Overlay is minOccurs="0").
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Tgt" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="2"/>
+      <StepSize X="1.0" Y="1.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="SRC-WAFER" LayoutSpecifier=""
+        OriginLocation="LowerLeft" AxisDirection="UpRight"/>
+    <SubstrateMap SubstrateType="TnR" SubstrateId="SRC-TAPE" LayoutSpecifier=""
+        OriginLocation="LowerLeft" AxisDirection="UpRight"/>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="TARGET-01" LayoutSpecifier="Tgt"
+        OriginLocation="LowerLeft" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>ab</BinCode>
+          <BinCode>cd</BinCode>
+        </BinCodeMap>
+      </Overlay>
+      <Overlay MapName="Provenance" MapVersion="1">
+        <TransferMap FromSubstrateType="Wafer" FromSubstrateId="SRC-WAFER" FromSubstrateLayoutSpecifier="">
+          <T FX="3" FY="7" TID="PKT-0042"/>
+          <T FX="4" FY="7" TID="PKT-0043"/>
+        </TransferMap>
+        <TransferMap FromSubstrateType="TnR" FromSubstrateId="SRC-TAPE" FromSubstrateLayoutSpecifier="">
+          <T FID="PKT-0042" TX="0" TY="0"/>
+          <T FID="PKT-0043" TX="1" TY="0"/>
+        </TransferMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

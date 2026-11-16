@@ -1,0 +1,13 @@
+{
+  "_fixtureNote": "defaults-omitted file: only the fields the GridData v1 contract marks Pflicht (dimension, units, stepSize, binType, nullBin, bins) are present. orientation/originLocation/axisDirection/mapType/deviceSize/lowerLeft/binDefinitions/substrateId/lotId/goodDevices are all absent and must resolve to their XSD/contract defaults (orientation=0, originLocation=LowerLeft, axisDirection=UpRight, mapType=2DArray, deviceSize=stepSize, lowerLeft absent -> grid centered on substrate origin).",
+  "dimension": { "x": 3, "y": 3 },
+  "units": "mm",
+  "stepSize": { "x": 1.0, "y": 1.0 },
+  "binType": "Ascii",
+  "nullBin": ".",
+  "bins": [
+    "1.1",
+    ".9.",
+    "1.1"
+  ]
+}

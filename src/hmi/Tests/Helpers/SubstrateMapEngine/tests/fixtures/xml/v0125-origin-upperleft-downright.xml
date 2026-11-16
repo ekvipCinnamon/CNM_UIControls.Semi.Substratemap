@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-origin-upperleft-downright.xml
+  Covers: OriginLocation="UpperLeft" and AxisDirection="DownRight" - two enum
+          members no fixture in the corpus used. Together with
+          v0125-origin-lowerright-upleft.xml this closes both enums:
+          OriginLocation {LowerLeft, UpperLeft, LowerRight, UpperRight, Center}
+          and AxisDirection {UpRight, DownRight, UpLeft, DownLeft}.
+  Grid: 3 x 3, all tokens distinct.
+  Frame: the corner and the axes are chosen to point INTO the grid. UpperLeft
+         with UpLeft would place every cell but one at negative logical
+         coordinates - legal, but it tests off-grid handling rather than the
+         mapping.
+  Zero-cell: UpperLeft -> serialization (col 0, row 0); DownRight -> +x right,
+             +y down, so logical (x,y) == serialization (col x, row y).
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="UpperLeft" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="3" Y="3"/>
+      <StepSize X="1.0" Y="1.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Panel" SubstrateId="ULDR01" LayoutSpecifier="UpperLeft"
+        OriginLocation="UpperLeft" AxisDirection="DownRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>ABC</BinCode>
+          <BinCode>DEF</BinCode>
+          <BinCode>GHI</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

@@ -1,0 +1,9 @@
+{
+  "$schema": "../../Packages/Beckhoff.TwinCAT.HMI.Framework.14.5.1/runtimes/native1.12-tchmi/Schema/LocalizationDescription.Schema.json",
+  "scope": "Control",
+  "locale": "en-UK",
+  "order": 1,
+  "localizedText": {
+    "SubstrateMap.description": "Draws one substrate: its outline, its dies coloured by status, and the labels over them. Reads SEMI E142 XML, Stream-21 transfer data or compact GridData."
+  }
+}

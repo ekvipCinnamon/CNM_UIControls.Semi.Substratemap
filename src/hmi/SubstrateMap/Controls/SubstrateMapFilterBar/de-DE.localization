@@ -1,0 +1,20 @@
+{
+  "$schema": "../../Packages/Beckhoff.TwinCAT.HMI.Framework.14.5.1/runtimes/native1.12-tchmi/Schema/LocalizationDescription.Schema.json",
+  "scope": "Control",
+  "locale": "de-DE",
+  "order": 2,
+  "localizedText": {
+    "SubstrateMapFilterBar.displayName": "Substratemap-Filterleiste",
+    "SubstrateMapFilterBar.description": "Eine Reihe von Auswahlfeldern, die die Filtereinstellungen einer oder mehrerer Substratemaps steuert. Zeichnet selbst keine Substratemap.",
+    "bar.filter": "Spatial Filter",
+    "bar.channel": "Kanal",
+    "bar.highlight": "Hervorheben",
+    "bar.radius.off": "aus",
+    "bar.radius.one": "1 Zelle",
+    "bar.radius.many": "{0} Zellen",
+    "bar.highlight.none": "keine",
+    "bar.highlight.1": "1 · Pass und schlechter",
+    "bar.highlight.2": "2 · Unknown und schlechter",
+    "bar.highlight.3": "3 · nur Fail"
+  }
+}

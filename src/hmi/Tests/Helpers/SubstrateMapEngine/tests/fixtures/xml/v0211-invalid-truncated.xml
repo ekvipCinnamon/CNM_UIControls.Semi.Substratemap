@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-invalid-truncated.xml
+ INVALID FIXTURE - expected failure class: XML well-formedness error
+ (not-well-formed / unexpected end of file, e.g. "XMLSyntaxError:
+ Premature end of data in tag BinCodeMap line 21" or equivalent, depending
+ on parser). The document is deliberately cut off mid-element: the
+ <BinCodeMap> and its ancestor elements are never closed, and the file
+ ends abruptly inside a <BinCode> row. This simulates a truncated network
+ transfer or a partially-written file on disk (relevant to the E142.4
+ Stream-21 ITEMPART chunked-transfer scenario in the standard chapter 14, where
+ a dropped final chunk would produce exactly this shape of corruption).
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Trunc" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="4" Y="4"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="TRUNCATED1"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="TRUNCATED1" LayoutSpecifier="Trunc">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin=".">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinDescription="Pass"/>
+          </BinDefinitions>
+          <BinCode>1111</BinCode>
+          <BinCode>1.1

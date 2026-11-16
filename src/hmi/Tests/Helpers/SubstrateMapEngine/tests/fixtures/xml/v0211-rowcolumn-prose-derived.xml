@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-rowcolumn-prose-derived.xml
+ STATUS: PROSE-DERIVED - to be re-verified against the deferred PDF
+ verification pass later (see REPORT.md "Open questions"). No complete
+ official or third-party XML example of MapType="Row/Column" was found
+ anywhere in the reference material. This fixture is constructed purely from:
+ - the literal MapType='Row/Column' prose quoted in the standard:
+ "Alternatively, a starting XY coordinate and length may be
+ specified... See figure A1-1a Row/Column Format."
+ - the BinCodeType XSD attribute inventory (X, Y, Number all optional,
+ the standard) which is the only normative confirmation that X/Y
+ start-coordinates exist on <BinCode> elements.
+ - the the assumption noteseam A5 (SEAM-QUARANTINED, ):
+ each <BinCode> carries a starting X/Y (logical frame) and its text
+ content is the run's tokens, filling consecutive cells in the +X
+ logical direction; cells covered by no run are NullBin.
+ Namespace: V0211 (official schema, ground truth for attribute names).
+ Grid: 6 cols x 4 rows, defaults (LowerLeft/UpRight) so logical X in
+ [0,5], Y in [0,3]. Two runs per row, with an explicit gap in row Y=2 to
+ demonstrate the NullBin-fill-by-omission rule.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="RC" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="6" Y="4"/>
+      <StepSize X="1.0" Y="1.0"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="RCPROSE01"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="RCPROSE01" LayoutSpecifier="RC">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="Row/Column">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinDescription="Pass"/>
+            <BinDefinition BinCode="9" BinDescription="Fail"/>
+          </BinDefinitions>
+          <!-- Row Y=0: full run of 6 tokens starting at X=0 -->
+          <BinCode X="0" Y="0">111191</BinCode>
+          <!-- Row Y=1: two runs, cols 0-2 and 3-5 -->
+          <BinCode X="0" Y="1">111</BinCode>
+          <BinCode X="3" Y="1">911</BinCode>
+          <!-- Row Y=2: single run covering only cols 1-4; cols 0 and 5 are NullBin by omission -->
+          <BinCode X="1" Y="2">1111</BinCode>
+          <!-- Row Y=3: full run of 6 tokens -->
+          <BinCode X="0" Y="3">191119</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

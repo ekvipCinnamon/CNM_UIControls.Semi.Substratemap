@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-defaultunits-microns.xml
+ Covers: DefaultUnits="microns" - non-normative but observed value. Per the assumption note: tolerated
+ with a warning, mapped to "um" [B, observed in SEMI's own appendix].
+ Grid: 4 cols x 1 row (the Dimension="1x1"-style top-level layout from
+ the same appendix example, reproduced structurally, plus one addressable
+ child grid so the fixture has actual BinCode data to check).
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="FDI Target" DefaultUnits="microns" TopLevel="true">
+      <Dimension X="1" Y="1"/>
+      <LowerLeft X="0" Y="0"/>
+      <DeviceSize X="0" Y="0"/>
+      <ChildLayouts>
+        <ChildLayout LayoutId="DeviceLayout"/>
+      </ChildLayouts>
+    </Layout>
+    <Layout LayoutId="DeviceLayout" DefaultUnits="microns">
+      <Dimension X="4" Y="1"/>
+      <LowerLeft X="0" Y="0"/>
+      <DeviceSize X="0" Y="0"/>
+      <ProductId>Product1</ProductId>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="MICRONS001"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="MICRONS001" LayoutSpecifier="FDI Target/DeviceLayout">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinDescription="Pass"/>
+            <BinDefinition BinCode="9" BinDescription="Fail"/>
+          </BinDefinitions>
+          <BinCode>1911</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

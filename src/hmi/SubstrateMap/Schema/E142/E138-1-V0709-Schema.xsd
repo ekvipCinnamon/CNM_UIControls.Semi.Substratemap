@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns="urn:semi-org:xsd.E138.V0709.ccs" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ccs="urn:semi-org:xsd.E138.V0709.ccs" targetNamespace="urn:semi-org:xsd.E138.V0709.ccs" elementFormDefault="qualified">
+	<!--
+NOTICE: SEMI makes no warranties or representations as to the suitability of the standards set forth herein for any particular application. The determination of the suitability of the standard is solely the responsibility of the user. Users are cautioned to refer to manufacturer's instructions, product labels, product data sheets, and other relevant literature, respecting any materials or equipment mentioned herein. These standards are subject to change without notice.
+By publication of this standard, Semiconductor Equipment and Materials International (SEMI) takes no position respecting the validity of any patent rights or copyrights asserted in connection with any items mentioned in this standard. Users of this standard are expressly advised that determination of any such patent rights or copyrights, and the risk of infringement of such rights are entirely their own responsibility.
+-->
+	<!-- ERROR TYPE DEFINITION -->
+	<xsd:complexType name="ErrorType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all"/>
+			<xsd:element name="Extension" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:any processContents="lax"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="source" type="xsd:string" use="required"/>
+		<xsd:attribute name="code" type="xsd:int" use="required"/>
+	</xsd:complexType>
+	<xsd:element name="Error" type="ErrorType"/>
+	<!-- PARAMETER TYPE DEFINITION -->
+	<xsd:complexType name="EnumeratedIntegerType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+		</xsd:sequence>
+		<xsd:attribute name="value" type="xsd:int" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="EnumeratedStringType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+		</xsd:sequence>
+		<xsd:attribute name="value" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="VariableType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="TypeHint" type="TypeHintType" nillable="false" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TypeHintType" final="#all">
+		<xsd:attribute ref="typeNameRef" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="TypeDefinitionRef" type="TypeDefinitionReferenceType"/>
+		</xsd:sequence>
+		<xsd:attribute name="minElements" type="xsd:int" use="required"/>
+		<xsd:attribute name="maxElements" type="xsd:int" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="FieldType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" block="#all" nillable="false"/>
+			<xsd:element name="TypeDefinitionRef" type="TypeDefinitionReferenceType"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+		<xsd:attribute name="canBeNull" type="xsd:boolean" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="StructureType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Field" type="FieldType" nillable="false" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="SimpleTypeSpecifierType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="F8"/>
+			<xsd:enumeration value="F4"/>
+			<xsd:enumeration value="I8"/>
+			<xsd:enumeration value="I4"/>
+			<xsd:enumeration value="I2"/>
+			<xsd:enumeration value="I1"/>
+			<xsd:enumeration value="S"/>
+			<xsd:enumeration value="D"/>
+			<xsd:enumeration value="B"/>
+			<xsd:enumeration value="URI"/>
+			<xsd:enumeration value="B64"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="EnumerationType">
+		<xsd:choice>
+			<xsd:element name="EnumeratedInteger" type="EnumeratedIntegerType" nillable="false" maxOccurs="unbounded"/>
+			<xsd:element name="EnumeratedString" type="EnumeratedStringType" nillable="false" maxOccurs="unbounded"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="TypeDefinitionType" final="#all">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" nillable="false"/>
+			<xsd:choice>
+				<xsd:element name="SimpleTypeSpecifier" type="SimpleTypeSpecifierType" nillable="false"/>
+				<xsd:element name="Array" type="ArrayType" nillable="false"/>
+				<xsd:element name="Structure" type="StructureType" nillable="false"/>
+				<xsd:element name="Enumeration" type="EnumerationType"/>
+				<xsd:element name="Variable" type="VariableType" nillable="false"/>
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attribute name="typeName" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:attribute name="typeNameRef" type="xsd:string"/>
+	<xsd:complexType name="TypeDefinitionReferenceType">
+		<xsd:attribute ref="typeNameRef" use="required"/>
+	</xsd:complexType>
+	<xsd:element name="ParameterTypes" type="ParameterTypesType">
+		<xsd:key name="UniqueTypesKey">
+			<xsd:selector xpath=".//TypeDefinition"/>
+			<xsd:field xpath="@typeName"/>
+		</xsd:key>
+	</xsd:element>
+	<xsd:complexType name="ParameterTypesType">
+		<xsd:sequence>
+			<xsd:element name="TypeDefinition" type="TypeDefinitionType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- UNIT TYPE DEFINITION -->
+	<xsd:complexType name="UnitType">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="symbol" type="xsd:string" use="required"/>
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="UnitSetType">
+		<xsd:sequence>
+			<xsd:element name="Unit" type="UnitType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Units" type="UnitSetType"/>
+	<!-- VALUE TYPE DEFINITION -->
+	<xsd:simpleType name="NoValueReasonEnumType" final="#all">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ValueNotAvailable"/>
+			<xsd:enumeration value="NoSuchSource"/>
+			<xsd:enumeration value="NoSuchParameter"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="NoValueType">
+		<xsd:sequence>
+			<xsd:element name="Description" type="xsd:string" nillable="false"/>
+		</xsd:sequence>
+		<xsd:attribute name="reasonCode" type="NoValueReasonEnumType" use="required"/>
+	</xsd:complexType>
+	<xsd:group name="PVType">
+		<xsd:choice>
+			<xsd:element name="F8" type="xsd:double" block="#all" nillable="true"/>
+			<xsd:element name="F4" type="xsd:float" block="#all" nillable="true"/>
+			<xsd:element name="I8" type="xsd:long" block="#all" nillable="true"/>
+			<xsd:element name="I4" type="xsd:int" block="#all" nillable="true"/>
+			<xsd:element name="I2" type="xsd:short" block="#all" nillable="true"/>
+			<xsd:element name="I1" type="xsd:byte" block="#all" nillable="true"/>
+			<xsd:element name="S" type="xsd:string" block="#all" nillable="true"/>
+			<xsd:element name="D" type="xsd:dateTime" block="#all" nillable="true"/>
+			<xsd:element name="B" type="xsd:boolean" block="#all" nillable="true"/>
+			<xsd:element name="URI" type="xsd:anyURI" block="#all" nillable="true"/>
+			<xsd:element name="B64" type="xsd:base64Binary" block="#all" nillable="true"/>
+			<xsd:element name="EI" type="xsd:int" block="#all" nillable="true"/>
+			<xsd:element name="ES" type="xsd:string" block="#all" nillable="true"/>
+			<xsd:element name="Su" type="StructureValueType" nillable="true"/>
+			<xsd:element name="Arr" type="ArrayValueType" nillable="true"/>
+			<xsd:element name="NoValue" type="NoValueType" nillable="false"/>
+		</xsd:choice>
+	</xsd:group>
+	<xsd:complexType name="PVSetType">
+		<xsd:group ref="PVType" minOccurs="0" maxOccurs="unbounded"/>
+	</xsd:complexType>
+	<xsd:complexType name="ArrayValueType">
+		<xsd:complexContent>
+			<xsd:restriction base="PVSetType">
+				<xsd:group ref="PVType" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:restriction>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="StructureValueType">
+		<xsd:complexContent>
+			<xsd:restriction base="PVSetType">
+				<xsd:group ref="PVType" minOccurs="1" maxOccurs="unbounded"/>
+			</xsd:restriction>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="PVSet" type="PVSetType"/>
+</xsd:schema>

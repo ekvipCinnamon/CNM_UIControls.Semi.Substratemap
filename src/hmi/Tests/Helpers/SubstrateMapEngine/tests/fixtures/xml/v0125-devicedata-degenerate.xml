@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-devicedata-degenerate.xml
+  Covers: the E138 PVSet values that are well-formed XML and still say nothing
+          usable, each reported and none refused.
+
+  THE FIRST ONE IS THE STANDARD'S OWN. E142-0225 R1-2.1 writes the third value of
+  its DeviceDataMap example as
+
+      <F8>145.4 933.0 1727.1</F8>      <!-\- "Array of 3 elements" -\->
+
+  which is NOT schema-valid: ccs:F8 is xsd:double, a single atomic value, and
+  xmllint rejects it with "is not a valid value of the atomic type 'xs:double'".
+  E138's actual way to say "array of 3" is <Arr>, which the very next value of the
+  same example uses correctly - so the standard contradicts itself inside one
+  figure. v0125-devicedata.xml carries the CORRECTED form because every fixture in
+  the main corpus must validate; this fixture carries the standard's literal text,
+  because a consumer will meet it in the field and must not reject the document
+  over it. E138_PV_LEXICAL, value dropped to null, parse continues.
+
+  The others:
+    - <NoValue> with no @reasonCode. The attribute is use="required" and
+      <Description> is a required child, so an empty element loses both:
+      E138_PV_NOVALUE_REASON_MISSING and E138_PV_NOVALUE_DESCRIPTION_MISSING.
+    - <NoValue> with a reasonCode outside NoValueReasonEnumType. Carried through
+      verbatim with E138_PV_NOVALUE_REASON_UNKNOWN rather than normalised, so a
+      reader can see what the producer actually wrote.
+    - more values than Parameters. Table 19 makes the ordering a `shall` and the
+      values carry no names, so a count mismatch means the positional binding is
+      already broken: E142_XML_DEVICEDATA_VALUE_COUNT.
+  Grid: 1x1, rendered by a separate Sort overlay.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ccs="urn:semi-org:xsd.E138.V0709.ccs"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="DDeg" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="1" Y="1"/>
+    </Layout>
+  </Layouts>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Strip" SubstrateId="DDEG-01" LayoutSpecifier="DDeg">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>a</BinCode>
+        </BinCodeMap>
+      </Overlay>
+      <Overlay MapName="DeviceDataMap" MapVersion="1">
+        <DeviceDataMap>
+          <Parameter Name="Time series parameter"/>
+          <Parameter Name="Missing reason"/>
+          <Parameter Name="Unlisted reason"/>
+          <DeviceData X="0" Y="0">
+            <ccs:PVSet>
+              <ccs:F8>145.4 933.0 1727.1</ccs:F8>
+              <ccs:NoValue/>
+              <ccs:NoValue reasonCode="ProbeOffline"/>
+              <ccs:F8>1.0</ccs:F8>
+            </ccs:PVSet>
+          </DeviceData>
+        </DeviceDataMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

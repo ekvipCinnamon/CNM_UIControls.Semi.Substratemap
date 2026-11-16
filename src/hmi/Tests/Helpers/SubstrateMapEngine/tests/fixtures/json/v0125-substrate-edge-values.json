@@ -1,0 +1,18 @@
+{
+  "$comment": "HAND-AUTHORED from v0125-substrate-edge-values.xml (Rule 10, D-030). Both id facets at their INCLUSIVE boundary at once: SubstrateId is exactly 32 characters (MaterialIdType) and LotId exactly 80 (LotIdType). Neither may warn - an off-by-one in either direction is visible here and nowhere else - and GoodDevices is 0, which is a value and not an absence. The three are unrelated facets that a single careless comparison could break together.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0125.SubstrateMap",
+  "Layouts": [{ "LayoutId": "Edge", "DefaultUnits": "mm", "TopLevel": true,
+    "Dimension": { "X": 2, "Y": 2 }, "StepSize": { "X": 1.0, "Y": 1.0, "Units": "mm" } }],
+  "Substrates": [{
+    "SubstrateType": "Panel", "SubstrateId": "SUBSTRATE-ID-EXACTLY-32-CHARS-AB",
+    "LotId": "LOT-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA-END",
+    "GoodDevices": 0
+  }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Panel", "SubstrateId": "SUBSTRATE-ID-EXACTLY-32-CHARS-AB",
+    "LayoutSpecifier": "Edge", "OriginLocation": "LowerLeft", "AxisDirection": "UpRight",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+        "BinCode": ["pq", "rs"] } }]
+  }]
+}

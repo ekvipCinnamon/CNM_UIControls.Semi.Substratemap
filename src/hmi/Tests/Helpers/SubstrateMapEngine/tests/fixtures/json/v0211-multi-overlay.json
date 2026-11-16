@@ -1,0 +1,63 @@
+{
+  "$comment": "HAND-AUTHORED from v0211-multi-overlay.xml, transcribed element by element from the XML bytes - NOT produced by e142DocumentToJson (Rule 10, D-030). Covers three distinct overlays on ONE SubstrateMap, in document order - Overlay is maxOccurs=\"unbounded\" and is therefore a JSON array even when it has one entry. Each carries its own BinDefinitions, and the third has null cells where the first two have data, so an overlay read in the wrong ORDER would still parse and would show the wrong map. BinDefinitions here carry BinDescription and no BinQuality, which is the asymmetric case: the XSD declares no facet on either.",
+  "$format": "semi-e142",
+  "$version": 1,
+  "$namespace": "urn:semi-org:xsd.E142-1.V0211.SubstrateMap",
+  "Layouts": [
+    {
+      "LayoutId": "MultiOv",
+      "DefaultUnits": "mm",
+      "TopLevel": true,
+      "Dimension": { "X": 3, "Y": 3 },
+      "StepSize": { "X": 1.0, "Y": 1.0 }
+    }
+  ],
+  "Substrates": [
+    { "SubstrateType": "Wafer", "SubstrateId": "MULTIOV01" }
+  ],
+  "SubstrateMaps": [
+    {
+      "SubstrateType": "Wafer",
+      "SubstrateId": "MULTIOV01",
+      "LayoutSpecifier": "MultiOv",
+      "Overlay": [
+        {
+          "MapName": "SortGrade",
+          "MapVersion": "1",
+          "BinCodeMap": {
+            "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+            "BinDefinitions": [
+              { "BinCode": "1", "BinDescription": "Pass" },
+              { "BinCode": "9", "BinDescription": "Fail" }
+            ],
+            "BinCode": ["111", "191", "111"]
+          }
+        },
+        {
+          "MapName": "Retest",
+          "MapVersion": "1",
+          "BinCodeMap": {
+            "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+            "BinDefinitions": [
+              { "BinCode": "1", "BinDescription": "Pass" },
+              { "BinCode": "9", "BinDescription": "Fail" }
+            ],
+            "BinCode": ["111", "111", "111"]
+          }
+        },
+        {
+          "MapName": "FinalTest",
+          "MapVersion": "2",
+          "BinCodeMap": {
+            "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+            "BinDefinitions": [
+              { "BinCode": "1", "BinDescription": "Pass" },
+              { "BinCode": "9", "BinDescription": "Fail" }
+            ],
+            "BinCode": ["1.1", ".9.", "1.1"]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "_fixtureNote": "NORMAL case for the GridData substrate identity: substrateId + lotId + goodDevices together. The contract declares all three (GridData.Schema.json) and normalizeGridData reads them, but until now no JSON fixture carried lotId or goodDevices at all.",
+  "dimension": {
+    "x": 3,
+    "y": 2
+  },
+  "units": "mm",
+  "stepSize": {
+    "x": 1,
+    "y": 1
+  },
+  "orientation": 0,
+  "originLocation": "LowerLeft",
+  "axisDirection": "UpRight",
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "2DArray",
+  "bins": [
+    "abc",
+    "d.f"
+  ],
+  "substrateId": "FULL-REC-01",
+  "lotId": "LOT-42",
+  "goodDevices": 5
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Negative control. Identical to minimal-mapdata.xml except BinType="Nonsense",
+  which is outside BinTypeEnum {Ascii, Decimal, HexaDecimal, Integer2}.
+  A gate that only ever proves documents valid proves nothing; this one must
+  fail, or the validator is not actually validating. Also the fixture Task 4
+  names for its ok:false case.
+-->
+<MapData xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="L0" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="2"/>
+      <StepSize X="1.5" Y="1.5" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="MINIMAL-1" LayoutSpecifier="L0">
+      <Overlay MapName="SortGrade">
+        <BinCodeMap BinType="Nonsense" NullBin="." MapType="2DArray">
+          <BinCode>11</BinCode>
+          <BinCode>1.</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

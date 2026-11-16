@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-substrateid-whitespace.xml
+ Covers: whitespace-padded SubstrateId. SubstrateId is xs:string-derived
+ (MaterialIdType, maxLength=32, the standard/Anhang A) with no
+ whitespace-collapse facet, so leading/trailing spaces are schema-legal
+ and MUST be preserved verbatim by a spec-faithful parser (xs:string
+ default whiteSpace facet is "preserve"). The value here is
+ " PADDED01 " (two leading, two trailing spaces, 12 chars total,
+ well under the 32-char limit) and is used consistently on both
+ Substrate/@SubstrateId and SubstrateMap/@SubstrateId (SubstrateKey /
+ SubstrateMapKey both key on the literal string).
+ Grid: 3 cols x 2 rows.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="WsId" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="3" Y="2"/>
+      <StepSize X="1.0" Y="1.0"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="  PADDED01  "/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="  PADDED01  " LayoutSpecifier="WsId">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinDescription="Pass"/>
+          </BinDefinitions>
+          <BinCode>111</BinCode>
+          <BinCode>1.1</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

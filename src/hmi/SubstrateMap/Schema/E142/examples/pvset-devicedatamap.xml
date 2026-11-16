@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Exercises the cross-schema xs:import: DeviceDataType requires ccs:PVSet,
+  which lives in E138-1-V0709-Schema.xsd. This document only validates if the
+  E138 file is resolvable from beside the E142 schema. It is the reason the
+  two files must be vendored together.
+-->
+<MapData xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap"
+         xmlns:ccs="urn:semi-org:xsd.E138.V0709.ccs">
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="PVSET-1" LayoutSpecifier="L0">
+      <Overlay MapName="Probe" MapVersion="1">
+        <DeviceDataMap>
+          <Parameter Name="Vt" Description="threshold voltage"/>
+          <DeviceData X="0" Y="0">
+            <ccs:PVSet>
+              <ccs:F8>0.412</ccs:F8>
+              <ccs:S>nominal</ccs:S>
+              <ccs:NoValue reasonCode="ValueNotAvailable">
+                <ccs:Description>site skipped by recipe</ccs:Description>
+              </ccs:NoValue>
+            </ccs:PVSet>
+          </DeviceData>
+        </DeviceDataMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

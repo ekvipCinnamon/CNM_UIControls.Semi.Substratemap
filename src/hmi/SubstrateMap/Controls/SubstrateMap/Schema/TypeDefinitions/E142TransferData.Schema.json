@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapE142TransferData": {
+      "title": "SubstrateMapE142TransferData",
+      "description": "SEMI E142.4 (Stream-21) reassembled item content bound at the HMI boundary, in either of two forms: a base64-encoded string (the primary form) or an array of byte values 0..255 (the secondary, PLC-array-friendly form - a BYTE/USINT array marshalled straight through). The bytes are the complete E142.1 MapData XML document, per [E142.04-RQ-00008-00] and [E142.04-RQ-00009-00]; they are decoded to text by the engine's encoding sniff (BOM / XML declaration, UTF-8 default) and then parsed by the same E142Xml pipeline as E142MapData. Stream-21 reassembly (ITEMPART chunking / ordering / acknowledgement) is the host SECS/GEM stack's job and is not represented here. Unset (null) unbinds the input.",
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "Base64 encoding of the reassembled item bytes."
+        },
+        {
+          "type": "array",
+          "description": "The reassembled item bytes as an array of byte values.",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255,
+            "description": "A single byte value."
+          }
+        }
+      ]
+    }
+  }
+}

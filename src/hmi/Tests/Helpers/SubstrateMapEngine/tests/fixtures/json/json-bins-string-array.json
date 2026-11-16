@@ -1,0 +1,24 @@
+{
+  "_fixtureNote": "bins as string[]: one row per array element, mapType 2DArray, Ascii. Grid 5x3 (x=5, y=3). Kept intentionally small so the EXPECTATIONS.md card can be derived by direct visual inspection.",
+  "dimension": { "x": 5, "y": 3 },
+  "units": "mm",
+  "stepSize": { "x": 0.5, "y": 0.5 },
+  "orientation": 0,
+  "originLocation": "LowerLeft",
+  "axisDirection": "UpRight",
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "2DArray",
+  "binDefinitions": [
+    { "binCode": "1", "binQuality": "Pass", "binDescription": "Good" },
+    { "binCode": "9", "binQuality": "Fail", "binDescription": "Bad" }
+  ],
+  "bins": [
+    "11191",
+    "19111",
+    "11111"
+  ],
+  "substrateId": "JSONSTR001",
+  "lotId": "LOTJSON01",
+  "goodDevices": 13
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-orientation-45-nonquadrant.xml
+ Covers: Orientation=45 (non-quadrant value). Orientation is schema-legal
+ as any integer 0-359, even though
+ real files almost exclusively use 0/90/180/270. Per
+ the assumption note (, "undefined territory"):
+ for non-quadrant theta a rectangular serialization cannot be
+ "rotated 45 deg"; the assumption is NO dimension/pitch swap -
+ dims/pitch stay layout-aligned and theta only rotates the
+ physical placement. This fixture documents that open point
+ rather than silently resolving it; see REPORT.md.
+ Grid: 4 cols x 4 rows.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Orient45" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="4" Y="4"/>
+      <StepSize X="1.0" Y="1.0"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="ORIENT045"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="ORIENT045" LayoutSpecifier="Orient45" Orientation="45">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinDescription="Pass"/>
+            <BinDefinition BinCode="9" BinDescription="Fail"/>
+          </BinDefinitions>
+          <BinCode>1111</BinCode>
+          <BinCode>1911</BinCode>
+          <BinCode>1191</BinCode>
+          <BinCode>1111</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

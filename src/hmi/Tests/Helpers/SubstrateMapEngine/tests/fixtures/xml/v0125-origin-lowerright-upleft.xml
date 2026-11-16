@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-origin-lowerright-upleft.xml
+  Covers: OriginLocation="LowerRight" and AxisDirection="UpLeft" - the remaining
+          two enum members. See v0125-origin-upperleft-downright.xml.
+  Grid: 3 x 3, all tokens distinct.
+  Zero-cell: LowerRight -> serialization (col 2, row 2); UpLeft -> +x left,
+             +y up, so logical (x,y) == serialization (col 2-x, row 2-y) -
+             the exact reverse of the UpperLeft/DownRight fixture.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="LowerRight" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="3" Y="3"/>
+      <StepSize X="1.0" Y="1.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Panel" SubstrateId="LRUL01" LayoutSpecifier="LowerRight"
+        OriginLocation="LowerRight" AxisDirection="UpLeft">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>JKL</BinCode>
+          <BinCode>MNO</BinCode>
+          <BinCode>PQR</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

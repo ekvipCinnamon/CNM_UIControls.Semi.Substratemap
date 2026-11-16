@@ -1,0 +1,25 @@
+{
+  "_fixtureNote": "lowerLeft-anchored file: 'lowerLeft' physical anchor set (S-frame position of the grid's lower-left corner, +y up, origin = substrate center, per GridData-2.txt). Grid 4x4 (even x even, deliberately reused to allow cross-checking against the Center-even XML fixture's formula derivation if a future task compares JSON vs XML geometry semantics -- NOT itself a Center case since originLocation stays LowerLeft here).",
+  "dimension": { "x": 4, "y": 4 },
+  "units": "mm",
+  "stepSize": { "x": 0.63, "y": 0.64 },
+  "deviceSize": { "x": 0.60, "y": 0.60 },
+  "lowerLeft": { "x": -1.26, "y": -1.28 },
+  "orientation": 0,
+  "originLocation": "LowerLeft",
+  "axisDirection": "UpRight",
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "2DArray",
+  "binDefinitions": [
+    { "binCode": "1", "binQuality": "Pass" },
+    { "binCode": "9", "binQuality": "Fail" }
+  ],
+  "bins": [
+    "1111",
+    "1911",
+    "1191",
+    "1111"
+  ],
+  "substrateId": "JSONLL0001"
+}

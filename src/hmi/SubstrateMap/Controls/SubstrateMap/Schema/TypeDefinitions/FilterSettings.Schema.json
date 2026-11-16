@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapSpatialFilter": {
+      "$schema": "http://json-schema.org/draft-04/schema",
+      "title": "SubstrateMapSpatialFilter",
+      "type": "string",
+      "enum": [
+        "None",
+        "Median",
+        "Min",
+        "Max",
+        "Box",
+        "Gauss"
+      ],
+      "description": "Which spatial filter runs over the aggregated tile. The filter works in SCREEN space, after the render and before the blit, with its radius in device pixels - so the result is zoom-dependent by design. This is a fast indicator on a dashboard; it does not replace systematic quality management, and a reproducible geometrically exact tool works from the MES data where there is more than one record. 'Median' takes the most common PALETTE INDEX in the neighborhood, so the answer is always a real bin color - a per-channel median on RGB is forbidden, because the mean of green and red is brown and brown is not a bin category. 'Min' and 'Max' are morphological erosion and dilation over severity rank. 'Box' and 'Gauss' average a scalar field and produce a DENSITY MAP, not a bin map. Each filter requires a compatible FieldView: see SpatialFilterRadius and FieldView."
+    },
+    "SubstrateMapFieldView": {
+      "$schema": "http://json-schema.org/draft-04/schema",
+      "title": "SubstrateMapFieldView",
+      "type": "string",
+      "enum": [
+        "Bins",
+        "FailDensity",
+        "ValueField"
+      ],
+      "description": "Which channel the tile shows, and therefore what a filter would operate on. 'Bins' paints the bin color per pixel and is the categorical view. 'FailDensity' paints the fraction of failing dies per pixel and is a scalar field. 'ValueField' paints a bound relevance map and is also scalar. THE PAIRING MATTERS: Median, Min and Max are categorical and require Bins; Box and Gauss average and require FailDensity or ValueField. An illegal pairing does not filter and reports E142_FILTER_NOT_APPLICABLE naming both values - better to show nothing than to show something wrong."
+    },
+    "SubstrateMapReferenceMode": {
+      "$schema": "http://json-schema.org/draft-04/schema",
+      "title": "SubstrateMapReferenceMode",
+      "type": "string",
+      "enum": [
+        "Off",
+        "Difference",
+        "NewOnly"
+      ],
+      "description": "How ReferenceGridData is compared against the bound map. 'Off' ignores the reference entirely, so binding one costs nothing until a mode is chosen. 'Difference' shows every cell whose bin differs between the two. 'NewOnly' shows only cells that got WORSE, which is the question an operator asks after a rework step. The reference is an ordinary SubstrateMapGridData and is not re-schema'd for this purpose."
+    }
+  }
+}

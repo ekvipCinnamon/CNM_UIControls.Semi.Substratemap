@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-multi-layout-childpath.xml
+ Covers: a multi-layout file with LayoutSpecifier path "Top/Child"
+ (top-level layout "Top" with a ChildLayouts/ChildLayout reference to
+ "Child"; SubstrateMap/@LayoutSpecifier = "Top/Child", exercising the
+ path-segment addressing convention seen in the standard ("WaferMap/
+ LAYOUT") and 7.7.3 ("StripLayout/Device")). ChildLayoutRef keyref
+ is satisfied: ChildLayout/@LayoutId="Child" resolves
+ to an actual Layout/@LayoutId="Child" element.
+ Grid (on the Child layout): 4 cols x 3 rows.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Top" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="1" Y="1"/>
+      <ChildLayouts>
+        <ChildLayout LayoutId="Child"/>
+      </ChildLayouts>
+    </Layout>
+    <Layout LayoutId="Child" DefaultUnits="mm">
+      <Dimension X="4" Y="3"/>
+      <StepSize X="2.0" Y="2.0"/>
+      <ProductId>ChildProduct01</ProductId>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="TOPCHILD01"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="TOPCHILD01" LayoutSpecifier="Top/Child">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinDescription="Pass"/>
+            <BinDefinition BinCode="9" BinDescription="Fail"/>
+          </BinDefinitions>
+          <BinCode>1111</BinCode>
+          <BinCode>1911</BinCode>
+          <BinCode>1111</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

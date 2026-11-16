@@ -1,0 +1,178 @@
+{
+  "modules": [
+    {
+      "type": "Package",
+      "nugetId": "Beckhoff.TwinCAT.HMI.Framework"
+    },
+    {
+      "type": "Control",
+      "basePath": "./Controls/SubstrateMap",
+      "descriptionFile": "Description.json",
+      "toolboxCategory": "210"
+    },
+    {
+      "type": "Control",
+      "basePath": "./Controls/SubstrateMapBase",
+      "descriptionFile": "Description.json",
+      "toolboxCategory": ""
+    },
+    {
+      "type": "Control",
+      "basePath": "./Controls/SubstrateMapFilterBar",
+      "descriptionFile": "Description.json",
+      "toolboxCategory": "210"
+    },
+    {
+      "type": "Control",
+      "basePath": "./Controls/SubstrateMapWidget",
+      "descriptionFile": "Description.json",
+      "toolboxCategory": "210"
+    },
+    {
+      "type": "Control",
+      "basePath": "./Controls/SubstrateMapBinChart",
+      "descriptionFile": "Description.json",
+      "toolboxCategory": "210"
+    },
+    {
+      "type": "Language",
+      "locale": "de-DE",
+      "files": [
+        "./Controls/SubstrateMapBase/de-DE.localization",
+        "./Controls/SubstrateMapBinChart/de-DE.localization",
+        "./Controls/SubstrateMapFilterBar/de-DE.localization",
+        "./Controls/SubstrateMapWidget/de-DE.localization",
+        "./Controls/SubstrateMap/de-DE.localization"
+      ]
+    },
+    {
+      "type": "Language",
+      "locale": "en-US",
+      "files": [
+        "./Controls/SubstrateMapBase/en-US.localization",
+        "./Controls/SubstrateMapBinChart/en-US.localization",
+        "./Controls/SubstrateMapFilterBar/en-US.localization",
+        "./Controls/SubstrateMapWidget/en-US.localization",
+        "./Controls/SubstrateMap/en-US.localization"
+      ]
+    },
+    {
+      "type": "Language",
+      "locale": "en-UK",
+      "files": "./Controls/SubstrateMap/en-UK.localization"
+    }
+  ],
+  "provideMetadata": {
+    "toolbox": {
+      "cinnamonCategories": {
+        "210": {
+          "default": "Cinnamon SEMI",
+          "en-US": "Cinnamon SEMI",
+          "en-UK": "Cinnamon Semiconductor",
+          "de-DE": "Cinnamon Semiconductor"
+        }
+      }
+    }
+  },
+  "$schema": ".hmiframework/Schema/Manifest.Schema.json",
+  "apiVersion": 1,
+  "symbols": {
+    "internal": {},
+    "themedResources": {},
+    "timer": {},
+    "package": {}
+  },
+  "intervals": {},
+  "actionTemplates": [],
+  "themes": {
+    "Base-Dark": {
+      "resources": [
+        {
+          "name": "Themes/Base-Dark/Base-Dark.theme",
+          "description": "",
+          "type": "ThemedValues"
+        }
+      ]
+    },
+    "Base": {
+      "resources": [
+        {
+          "name": "Themes/Base/Base.theme",
+          "description": "",
+          "type": "ThemedValues"
+        }
+      ]
+    }
+  },
+  "dataTypes": [
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/ItemList.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/ItemStatusAssignmentList.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/LabelList.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/Outline.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/SelectionList.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/GroupSelection.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/ItemSelection.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/BinStatistics.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMapWidget/Schema/TypeDefinitions/TileSelection.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMapBinChart/Schema/TypeDefinitions/ChartSettings.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/FilterSettings.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/StatusColorMapping.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/GridData.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/OutlinePreset.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/E142TransferData.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/AliasIdList.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/E142OverlayList.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/AggregationMode.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/AggregationReducer.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/BinQualityAliases.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/BinSeverityPriority.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/ViewTransform.Schema.json"
+    },
+    {
+      "schema": "Controls/SubstrateMap/Schema/TypeDefinitions/E142MapDataJson.Schema.json"
+    }
+  ]
+}

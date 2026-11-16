@@ -1,0 +1,14 @@
+{
+  "$comment": "HAND-AUTHORED from v0211-substrateid-whitespace.xml (Rule 10, D-030). SubstrateId carries LEADING AND TRAILING SPACES - \"  PADDED01  \" - in both the Substrate record and the SubstrateMap header. The two must be trimmed the SAME way or the (SubstrateType, SubstrateId) key stops matching between them, and the whitespace is preserved on the JSON wire so the trimming happens in one place on both paths rather than being done by the transport.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0211.SubstrateMap",
+  "Layouts": [{ "LayoutId": "WsId", "DefaultUnits": "mm", "TopLevel": true,
+    "Dimension": { "X": 3, "Y": 2 }, "StepSize": { "X": 1.0, "Y": 1.0 } }],
+  "Substrates": [{ "SubstrateType": "Wafer", "SubstrateId": "  PADDED01  " }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "  PADDED01  ", "LayoutSpecifier": "WsId",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+        "BinDefinitions": [{ "BinCode": "1", "BinDescription": "Pass" }],
+        "BinCode": ["111", "1.1"] } }]
+  }]
+}

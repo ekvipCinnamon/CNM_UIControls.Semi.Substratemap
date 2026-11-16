@@ -1,0 +1,22 @@
+{
+  "$schema": "../../Packages/Beckhoff.TwinCAT.HMI.Framework.14.5.1/runtimes/native1.12-tchmi/Schema/LocalizationDescription.Schema.json",
+  "scope": "Control",
+  "locale": "en-US",
+  "order": 0,
+  "localizedText": {
+    "SubstrateMapFilterBar.displayName": "Substrate map filter bar",
+    "SubstrateMapFilterBar.description": "A row of selectors that drives the filter settings of one or more substrate maps. Draws no map itself.",
+    "bar.filter": "Spatial filter",
+    "bar.channel": "Channel",
+    "bar.highlight": "Highlight",
+    "bar.radius": "Radius",
+    "bar.radius.off": "off",
+    "bar.radius.one": "1 cell",
+    "bar.radius.many": "{0} cells",
+    "bar.highlight.none": "none",
+    "bar.highlight.1": "1 · pass and worse",
+    "bar.highlight.2": "2 · unknown and worse",
+    "bar.highlight.3": "3 · fail only",
+    "category.Filter": "Filter"
+  }
+}

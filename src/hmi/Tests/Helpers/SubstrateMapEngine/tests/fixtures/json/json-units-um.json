@@ -1,0 +1,33 @@
+{
+  "_fixtureNote": "units 'um' (normative alternate unit per GridData-2.txt /). Grid 3x2.",
+  "dimension": {
+    "x": 3,
+    "y": 2
+  },
+  "units": "um",
+  "stepSize": {
+    "x": 630.0,
+    "y": 640.0
+  },
+  "deviceSize": {
+    "x": 600.0,
+    "y": 600.0
+  },
+  "orientation": 0,
+  "originLocation": "LowerLeft",
+  "axisDirection": "UpRight",
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "2DArray",
+  "binDefinitions": [
+    {
+      "binCode": "1",
+      "binQuality": "Pass"
+    }
+  ],
+  "bins": [
+    "1.1",
+    "111"
+  ],
+  "substrateId": "JSONUM0001"
+}

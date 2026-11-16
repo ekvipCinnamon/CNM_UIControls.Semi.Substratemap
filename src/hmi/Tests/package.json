@@ -1,0 +1,39 @@
+{
+  "name": "wafermap-framework-stub",
+  "private": true,
+  "description": "Type-level test harness and gate commands for the SubstrateMap TwinCAT HMI controls (Framework 14.4.5 d.ts subset, tsc 5.9.2). NOT shipped with the control; it is what runs the tests and the checkers.",
+  "scripts": {
+    "typecheck": "bash typecheck.sh",
+    "build": "bash typecheck.sh --emit",
+    "test": "node --test Helpers/SubstrateMapEngine/tests/*.test.mjs",
+    "test:strict": "SUBSTRATEMAP_STRICT=1 node --test Helpers/SubstrateMapEngine/tests/*.test.mjs",
+    "coverage": "node --test --experimental-test-coverage --test-coverage-exclude='Helpers/SubstrateMapEngine/tests/**' --test-coverage-exclude='tools/**' --test-coverage-lines=93.73 --test-coverage-branches=83.85 --test-coverage-functions=87.46 Helpers/SubstrateMapEngine/tests/*.test.mjs",
+    "coverage:strict": "SUBSTRATEMAP_STRICT=1 node --test --experimental-test-coverage --test-coverage-exclude='Helpers/SubstrateMapEngine/tests/**' --test-coverage-exclude='tools/**' --test-coverage-lines=93.73 --test-coverage-branches=83.85 --test-coverage-functions=87.46 Helpers/SubstrateMapEngine/tests/*.test.mjs",
+    "lint": "eslint .",
+    "test:export": "node --test Helpers/SubstrateMapEngine/tests/e142-export.test.mjs",
+    "test:selection": "node --test Helpers/SubstrateMapEngine/tests/e142-selection.test.mjs",
+    "test:lid": "node --test Helpers/SubstrateMapEngine/tests/e142-lid.test.mjs",
+    "test:transfer": "node --test Helpers/SubstrateMapEngine/tests/e142-transfer.test.mjs",
+    "test:devicedata": "node --test Helpers/SubstrateMapEngine/tests/e142-devicedata.test.mjs",
+    "test:composition": "node --test Helpers/SubstrateMapEngine/tests/e142-composition.test.mjs",
+    "check": "node tools/check-spelling.mjs && node tools/check-templates.mjs && node tools/check-descriptors.mjs && node tools/check-manifest.mjs && node tools/check-readme.mjs && node tools/check-hmiextproj.mjs && node tools/check-schema-cardinality.mjs && node tools/check-state.mjs",
+    "check:strict": "node tools/check-spelling.mjs && node tools/check-templates.mjs --strict && node tools/check-descriptors.mjs --strict && node tools/check-manifest.mjs --strict && node tools/check-readme.mjs --strict && node tools/check-hmiextproj.mjs --strict && node tools/check-schema-cardinality.mjs --strict && node tools/check-state.mjs --strict",
+    "gate": "npx tsc -p tsconfig.json --noEmit && npx tsc -p Helpers/SubstrateMapEngine/tsconfig.json --noEmit && npx tsc -p Controls/SubstrateMapBase/tsconfig.json --noEmit && npx tsc -p Controls/SubstrateMap/tsconfig.json --noEmit && npx tsc -p Controls/SubstrateMapFilterBar/tsconfig.json --noEmit && npx tsc -p Controls/SubstrateMapWidget/tsconfig.json --noEmit && npx tsc -p Controls/SubstrateMapBinChart/tsconfig.json --noEmit && npm run lint && npm run coverage:strict && npm run check:strict",
+    "harness": "node tools/attach-harness.mjs",
+    "negatives": "node tools/check-negatives.mjs",
+    "recolor": "node tools/recolor-svg.mjs Controls/SubstrateMapBase/NoDataBase.svg Controls/SubstrateMapBase/NoDataBaseDark.svg",
+    "mutate": "node tools/mutate.mjs ./mutations.catalogue.mjs",
+    "contact-sheet": "node tools/contact-sheet.mjs",
+    "attr-effect": "node tools/check-attribute-effect.mjs",
+    "tsconfig": "node tools/tsconfig-from-templates.mjs",
+    "doctor": "node tools/check-framework.mjs",
+    "spelling": "node tools/check-spelling.mjs"
+  },
+  "devDependencies": {
+    "@xmldom/xmldom": "^0.9.10",
+    "ajv": "^8.20.0",
+    "ajv-draft-04": "^1.0.0",
+    "eslint": "10.9.0",
+    "typescript": "5.9.2"
+  }
+}

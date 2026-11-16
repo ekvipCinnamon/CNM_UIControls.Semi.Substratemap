@@ -1,0 +1,20 @@
+{
+  "$comment": "HAND-AUTHORED from v0211-multi-layout-childpath.xml (Rule 10, D-030). A two-level layout tree addressed by a PATH: LayoutSpecifier=\"Top/Child\" resolves through the parent's ChildLayouts to the child, and it is the CHILD's Dimension 4x3 and StepSize that describe the lattice, not the parent's 1x1. A resolver that stopped at the first path segment would read a 1x1 lattice against a 12-cell payload.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0211.SubstrateMap",
+  "Layouts": [
+    { "LayoutId": "Top", "DefaultUnits": "mm", "TopLevel": true,
+      "Dimension": { "X": 1, "Y": 1 }, "ChildLayouts": ["Child"] },
+    { "LayoutId": "Child", "DefaultUnits": "mm",
+      "Dimension": { "X": 4, "Y": 3 }, "StepSize": { "X": 2.0, "Y": 2.0 },
+      "ProductId": "ChildProduct01" }
+  ],
+  "Substrates": [{ "SubstrateType": "Wafer", "SubstrateId": "TOPCHILD01" }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "TOPCHILD01", "LayoutSpecifier": "Top/Child",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+        "BinDefinitions": [{ "BinCode": "1", "BinDescription": "Pass" },
+                           { "BinCode": "9", "BinDescription": "Fail" }],
+        "BinCode": ["1111", "1911", "1111"] } }]
+  }]
+}

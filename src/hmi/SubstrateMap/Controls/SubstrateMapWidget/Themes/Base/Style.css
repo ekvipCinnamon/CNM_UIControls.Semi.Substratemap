@@ -1,0 +1,62 @@
+/** Styles for theme: Base */
+
+/*
+ * ---- THE TILE REUSES THE MAP'S VARIABLES ----
+ *
+ * Every colour on a tile is a map colour: a bin, a severity, a density, the
+ * substrate body it sits on. Giving the tile its own palette would mean a wafer
+ * that changes colour when it moves from a dashboard to a full view, which is
+ * the one thing a colour-coded map must never do.
+ *
+ * So this file sets the SAME `--substratemap-*` names the map's theme sets, to
+ * the SAME values, under the tile's own selector. The values are duplicated
+ * rather than inherited because a TwinCAT theme is per-control: there is no
+ * ancestor to inherit from when a tile and a map sit side by side in different
+ * containers.
+ *
+ * `tools/check-themes.mjs` compares the two files and fails on any shared name
+ * whose value differs, so the duplication cannot drift.
+ */
+.TcHmi_Controls_CNM_UIControls_SEMI_SubstrateMapWidget {
+    --substratemap-background: transparent;
+    --substratemap-body-color: rgb(220, 220, 220);
+    --substratemap-edge-color: rgb(110, 110, 110);
+    --substratemap-selection-color: rgb(0, 90, 200);
+    --substratemap-status-unknown: rgb(110, 110, 110);
+    /* The map's values, verbatim. A wafer that changed colour between a
+       dashboard and a full view would be the one thing a colour-coded map must
+       never do. */
+    --substratemap-bin-pass: rgb(0, 158, 115);
+    --substratemap-bin-fail: rgb(213, 94, 0);
+    --substratemap-identity-font-family: inherit;
+    /* 13px, one step down from the map's 14: a tile is 200 px wide and the id
+       is elided to a character budget that assumes this size (W-29). */
+    --substratemap-identity-font-size: 13px;
+    --substratemap-identity-font-weight: 600;
+    --substratemap-identity-color: rgb(40, 40, 40);
+    --substratemap-label-font-family: inherit;
+    /* 12px: the yield and age lines share the tile with the map and must not
+       crowd it. Smaller than the map's label, which sits on a full-size view. */
+    --substratemap-label-font-size: 12px;
+    --substratemap-label-font-weight: 600;
+    --substratemap-label-font-color: rgb(40, 40, 40);
+
+    /*
+     * ---- THE ONE VARIABLE THE TILE GENUINELY NEEDS ----
+     *
+     * The stale marking. It is a STATUS signal, not a map colour: it says the
+     * data has stopped arriving, which is a fact about the feed rather than
+     * about the wafer.
+     *
+     * It had been `--substratemap-edge-color`, and that is wrong for a reason
+     * that only shows up later - re-theming the wafer outline would silently
+     * re-theme the staleness warning with it, and someone choosing a subtle edge
+     * for a dense map would make the warning disappear.
+     *
+     * Deliberately NOT red or amber. The tile's data colours are Okabe-Ito
+     * bin colours and a warning-coloured border beside them would read as part
+     * of the map. A neutral high-contrast stroke says "look at the frame, not
+     * the picture", and the DASH is what carries the meaning (`W-30`).
+     */
+    --substratemap-tile-stale-color: rgb(60, 60, 60);
+}

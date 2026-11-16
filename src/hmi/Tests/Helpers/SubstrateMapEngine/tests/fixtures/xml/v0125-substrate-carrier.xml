@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-substrate-carrier.xml
+  Covers: Substrate/CarrierType and Substrate/CarrierId (Task 19), with
+          CarrierId at exactly 80 characters - the LotIdType maxLength.
+  WHY 80 AND NOT 32. CarrierId is typed sm:LotIdType, two lines below
+  SubstrateId's sm:MaterialIdType in the same xs:sequence. The two id-like
+  types are trivially conflated and the facets differ by a factor of 2.5, so
+  this fixture pins the boundary: a 80-character CarrierId is schema-valid and
+  must parse with ZERO warnings. Checking it at 32 would warn here.
+  (80 is also what a TwinCAT / CODESYS STRING defaults to when no length is
+  given, which is plausibly why the standard chose it for the ids a PLC carries
+  - an inference, not something the standard states.)
+  Grid: 2 cols x 2 rows, all tokens distinct. LowerLeft / UpRight.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Carrier" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="2"/>
+      <StepSize X="1.0" Y="1.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="CARRIER-01">
+      <LotId>LOT-CARRIER</LotId>
+      <CarrierType>FOUP</CarrierType>
+      <CarrierId>CARRIER-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC-END</CarrierId>
+      <GoodDevices>4</GoodDevices>
+    </Substrate>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="CARRIER-01" LayoutSpecifier="Carrier"
+        OriginLocation="LowerLeft" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>ef</BinCode>
+          <BinCode>gh</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

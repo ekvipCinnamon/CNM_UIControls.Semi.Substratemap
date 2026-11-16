@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapAggregationReducer": {
+      "$schema": "http://json-schema.org/draft-04/schema",
+      "title": "SubstrateMapAggregationReducer",
+      "type": "string",
+      "enum": [
+        "Auto",
+        "MaxSeverity",
+        "FailFraction"
+      ],
+      "description": "Which reduction an aggregated tile uses. 'Auto' measures each frame's saturation - the fraction of painted pixels holding at least one failing die - and selects the reducer for the next frame, switching to FailFraction above 0.6 and back below 0.4. 'MaxSeverity' never hides a lone defect; 'FailFraction' never floods a noisy wafer. Force one when the view must not change under the operator."
+    }
+  }
+}

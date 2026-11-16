@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-three-substrates.xml
+  Covers: a MapData carrying THREE SubstrateMaps - the shape E142-0225 14.3
+          MapUpload ("one or more substrates") and 14.4 MapGroupDownload (a lot
+          or a carrier) are defined for. The corpus previously topped out at two
+          (v0921-array-integer2-csdn.xml) and none had more than one substrate
+          ID, so nothing exercised a document where "the first renderable
+          overlay" silently discards the rest.
+  Two of the three share LayoutSpecifier "L" and differ only in SubstrateId;
+  the third uses "L2". That is deliberate: it makes SubstrateId alone sufficient,
+  LayoutSpecifier alone ambiguous for L, and the pair always sufficient -
+  SubstrateMapKey is an xs:key over (SubstrateType, SubstrateId,
+  LayoutSpecifier), so no two rows here can collide.
+  Each substrate's cells are a distinct token ('a', 'b', 'c') so a selector
+  rendering the wrong one is visible in the grid, not just in the identity.
+  Grid: 2 cols x 2 rows each. LowerLeft / UpRight.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="L" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="2"/>
+      <StepSize X="1.0" Y="1.0" Units="mm"/>
+    </Layout>
+    <Layout LayoutId="L2" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="2"/>
+      <StepSize X="2.0" Y="2.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="W-001"><SlotNumber>1</SlotNumber></Substrate>
+    <Substrate SubstrateType="Wafer" SubstrateId="W-002"><SlotNumber>2</SlotNumber></Substrate>
+    <Substrate SubstrateType="Wafer" SubstrateId="W-003"><SlotNumber>3</SlotNumber></Substrate>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="W-001" LayoutSpecifier="L"
+        OriginLocation="LowerLeft" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>aa</BinCode><BinCode>aa</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="W-002" LayoutSpecifier="L"
+        OriginLocation="LowerLeft" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>bb</BinCode><BinCode>bb</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="W-003" LayoutSpecifier="L2"
+        OriginLocation="LowerLeft" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>cc</BinCode><BinCode>cc</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

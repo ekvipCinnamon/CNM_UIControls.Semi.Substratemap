@@ -1,0 +1,58 @@
+{
+  "$comment": "HAND-AUTHORED from v0125-lid-retained.xml, transcribed element by element from the XML bytes - NOT produced by e142DocumentToJson (Rule 10, D-030). Covers LID on both element types that carry one and are modelled: BinCodeType and DeviceIdType. Clause 13.3 addresses a position by 'either the X and Y coordinate, or the location identifier, or both', so all three forms appear: X/Y only, X/Y AND LID (the coordinate places it, the LID names it), and LID only. The lattice here is FULL (2x2, four X/Y entries), so the fifth entry has nowhere to go and is excluded with E142_XML_LID_ONLY_EXCLUDED - the branch v0125-coordinate-lid-mixed does NOT reach, because that one has free cells. LIDs are deliberately awkward - mixed case, a separator, one that looks numeric - and are xs:string with no facet, so none may be normalised.",
+  "$format": "semi-e142",
+  "$version": 1,
+  "$namespace": "urn:semi-org:xsd.E142-1.V0125.SubstrateMap",
+  "Layouts": [
+    {
+      "LayoutId": "Lid",
+      "DefaultUnits": "mm",
+      "TopLevel": true,
+      "Dimension": { "X": 2, "Y": 2 },
+      "StepSize": { "X": 1.0, "Y": 1.0, "Units": "mm" }
+    }
+  ],
+  "Substrates": [
+    { "SubstrateType": "Wafer", "SubstrateId": "LID-01", "LotId": "LOT-LID" }
+  ],
+  "SubstrateMaps": [
+    {
+      "SubstrateType": "Wafer",
+      "SubstrateId": "LID-01",
+      "LayoutSpecifier": "Lid",
+      "SubstrateSide": "TopSide",
+      "Orientation": 0,
+      "OriginLocation": "LowerLeft",
+      "AxisDirection": "UpRight",
+      "Overlay": [
+        {
+          "MapName": "Sort",
+          "MapVersion": "1",
+          "BinCodeMap": {
+            "BinType": "Ascii",
+            "NullBin": ".",
+            "MapType": "Coordinate",
+            "BinCode": [
+              { "X": 0, "Y": 0, "$text": "a" },
+              { "X": 1, "Y": 0, "LID": "pkt-0042", "$text": "b" },
+              { "X": 0, "Y": 1, "LID": "P/0007", "$text": "c" },
+              { "X": 1, "Y": 1, "$text": "d" },
+              { "LID": "0007", "$text": "e" }
+            ]
+          }
+        },
+        {
+          "MapName": "DeviceIds",
+          "MapVersion": "1",
+          "DeviceIdMap": {
+            "Id": [
+              { "X": 0, "Y": 0, "$text": "DEV-A" },
+              { "X": 1, "Y": 0, "LID": "pkt-0042", "$text": "DEV-B" },
+              { "LID": "PI-9F3C", "$text": "DEV-C" }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

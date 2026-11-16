@@ -1,0 +1,267 @@
+{
+  "$schema": "../../.hmiframework/Schema/ControlDescription.Schema.json",
+  "apiVersion": 1,
+  "name": "SubstrateMapWidget",
+  "namespace": "TcHmi.Controls.CNM_UIControls.SEMI",
+  "displayName": "Substrate map widget",
+  "version": {
+    "full": "5.0.0.0",
+    "major": 5,
+    "minor": 0,
+    "revision": 0,
+    "build": 0
+  },
+  "visible": true,
+  "themeable": "Standard",
+  "base": "TcHmi.Controls.CNM_UIControls.SEMI.SubstrateMapBase",
+  "description": "A dashboard tile showing one substrate map. It EXTENDS SubstrateMapBase rather than wrapping SubstrateMap: a tile is a map with a smaller attribute surface and a different idea of what to do when there is no data, not a container holding one. Wrapping would mean forwarding every attribute the map has and keeping the two lists in step forever. The empty state, the demo marking and the no-data image all come from the base, so a tile with nothing bound explains itself without a mechanism of its own.",
+  "properties": {
+    "containerControl": false,
+    "geometry": {
+      "width": 220,
+      "height": 220
+    }
+  },
+  "icons": [
+    {
+      "name": "Icons/16x16.png",
+      "width": 16,
+      "height": 16
+    }
+  ],
+  "template": "Template.html",
+  "dependencyFiles": [
+    {
+      "name": "SubstrateMapWidget.js",
+      "type": "EsModule",
+      "description": "The dashboard tile."
+    },
+    {
+      "name": "../SubstrateMapBase/SubstrateMapBase.js",
+      "type": "EsModule",
+      "description": "The base it extends: canvas sizing, theme, empty state and the demo marking."
+    },
+    {
+      "name": "Style.css",
+      "type": "Stylesheet",
+      "description": "Tile layout."
+    }
+  ],
+  "functions": [
+    {
+      "name": "readAge",
+      "displayName": "Read age",
+      "visible": true,
+      "category": "Tile",
+      "description": "The age line the tile is showing: the local time, its timezone abbreviation, whether it came from a bound MapTimestamp or from the receive clock, and the age in seconds. Useful for a view action that wants to act on staleness rather than only display it.",
+      "type": "tchmi:general#/definitions/Any",
+      "heritable": false,
+      "waitMode": "Synchronous",
+      "params": []
+    },
+    {
+      "name": "readBinStatistics",
+      "displayName": "Read bin statistics",
+      "visible": true,
+      "category": "Tile",
+      "description": "The tile's bin summary, in the shape the full control returns: totalCells, nullCount and one entry per bin code that occurs. Same as the summary carried by onSubstrateSelected, so a dashboard can read it without waiting for a tap.",
+      "type": "tchmi:framework#/definitions/SubstrateMapBinStatistics",
+      "heritable": false,
+      "waitMode": "Synchronous",
+      "params": []
+    }
+  ],
+  "attributes": [
+    {
+      "name": "data-tchmi-grid-data",
+      "propertyName": "GridData",
+      "propertySetterName": "setGridData",
+      "propertyGetterName": "getGridData",
+      "displayName": "Grid data (JSON)",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 100,
+      "type": "tchmi:framework#/definitions/SubstrateMapGridData",
+      "category": "Data",
+      "description": "Identical to the SubstrateMap attribute of the same name, in type, schema and meaning - a tile and a map bound to one symbol must agree about what it carries. Compact GridData v1 document (the PLC-friendly single-map JSON contract).",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": null,
+      "defaultValueInternal": null
+    },
+    {
+      "name": "data-tchmi-e142-map-data",
+      "propertyName": "E142MapData",
+      "propertySetterName": "setE142MapData",
+      "propertyGetterName": "getE142MapData",
+      "displayName": "E142 map data (XML)",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 101,
+      "type": "tchmi:general#/definitions/String",
+      "category": "Data",
+      "description": "Identical to the SubstrateMap attribute of the same name, in type, schema and meaning - a tile and a map bound to one symbol must agree about what it carries. SEMI E142.",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": null,
+      "defaultValueInternal": null
+    },
+    {
+      "name": "data-tchmi-e142-map-data-json",
+      "propertyName": "E142MapDataJson",
+      "propertySetterName": "setE142MapDataJson",
+      "propertyGetterName": "getE142MapDataJson",
+      "displayName": "E142 map data (JSON)",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 102,
+      "type": "tchmi:framework#/definitions/SubstrateMapE142MapDataJson",
+      "category": "Data",
+      "description": "Identical to the SubstrateMap attribute of the same name, in type, schema and meaning - a tile and a map bound to one symbol must agree about what it carries. SEMI E142.",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": null,
+      "defaultValueInternal": null
+    },
+    {
+      "name": "data-tchmi-show-substrate-id",
+      "propertyName": "ShowSubstrateId",
+      "propertySetterName": "setShowSubstrateId",
+      "propertyGetterName": "getShowSubstrateId",
+      "displayName": "Show substrate Id",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 200,
+      "type": "tchmi:general#/definitions/Boolean",
+      "category": "Tile",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": false,
+      "defaultValueInternal": false,
+      "description": "Show the substrate id above the map. Off by default, because a dashboard usually labels its tiles itself and two labels is one too many. When it is on the id comes from whichever input is bound - the same identity the full control shows."
+    },
+    {
+      "name": "data-tchmi-show-yield",
+      "propertyName": "ShowYield",
+      "propertySetterName": "setShowYield",
+      "propertyGetterName": "getShowYield",
+      "displayName": "Show Yield",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 201,
+      "type": "tchmi:general#/definitions/Boolean",
+      "category": "Tile",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": false,
+      "defaultValueInternal": false,
+      "description": "Show the pass fraction as a number on the tile. Off by default. The figure is the passing dies over the dies that were TESTED, so an unprocessed region does not count against it and a wafer that is half-finished does not read as half-failed."
+    },
+    {
+      "name": "data-tchmi-stale-after-seconds",
+      "propertyName": "StaleAfterSeconds",
+      "propertySetterName": "setStaleAfterSeconds",
+      "propertyGetterName": "getStaleAfterSeconds",
+      "displayName": "Stale after Seconds",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 202,
+      "type": "tchmi:general#/definitions/Number",
+      "category": "Tile",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": null,
+      "defaultValueInternal": null,
+      "description": "How long a map may go without an update before the tile marks it stale. null never marks. A dashboard tile is the one place a frozen value is genuinely dangerous - it looks exactly like a healthy one - so the age is shown rather than the reading being hidden. The last known state and its age label arrive with that feature; this attribute fixes the name and the unit now, because an author binding a tile should not have to rebind it later."
+    },
+    {
+      "name": "data-tchmi-show-bin-histogram",
+      "propertyName": "ShowBinHistogram",
+      "propertySetterName": "setShowBinHistogram",
+      "propertyGetterName": "getShowBinHistogram",
+      "displayName": "Show bin Histogram",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 203,
+      "type": "tchmi:general#/definitions/Boolean",
+      "category": "Tile",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": false,
+      "defaultValueInternal": false,
+      "description": "Show a small bin histogram along the bottom of the tile. Off by default. It answers 'which failure ''mode' at a glance without leaving the dashboard; the full SubstrateMapBinChart control is the place for reading one properly."
+    },
+    {
+      "name": "data-tchmi-map-timestamp",
+      "propertyName": "MapTimestamp",
+      "propertySetterName": "setMapTimestamp",
+      "propertyGetterName": "getMapTimestamp",
+      "displayName": "Map timestamp",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 204,
+      "type": "tchmi:general#/definitions/String",
+      "category": "Tile",
+      "readOnly": false,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": null,
+      "defaultValueInternal": null,
+      "description": "When the map was MEASURED, if you can supply it. Bind it and the tile labels its age 'measured'; leave it and the tile labels the age 'received' instead, which is when the payload arrived here. The two are different facts - a map that arrived a second ago may describe a wafer tested this morning - so the tile always says which one it is showing. AN E142 DOCUMENT CARRIES NO TIMESTAMP OF ITS OWN. The ITEMVERSION value the SEMI standard defines belongs to the Stream 21 message that transports the item, not to the map, so a control that only sees the document cannot know when it was made. Bind it from wherever your transport keeps it. Accepts the SEMI form YYYYMMDDhhmmsscc and ISO 8601; a value with no timezone is read as local time, because a tester writes the time on its own clock."
+    },
+    {
+      "name": "data-tchmi-e142-last-error",
+      "propertyName": "E142LastError",
+      "propertySetterName": "setE142LastError",
+      "propertyGetterName": "getE142LastError",
+      "displayName": "E142 last error",
+      "visible": true,
+      "themeable": "None",
+      "displayPriority": 205,
+      "type": "tchmi:general#/definitions/String",
+      "category": "Tile",
+      "description": "Identical to the SubstrateMap attribute of the same name. Set when a bound map cannot be read, and cleared when one can. The tile keeps showing the last map that DID render, so this is the only signal that the feed has gone bad - a tile that silently kept an old picture with no way to know why would be the failure this whole phase is about. Read-only.",
+      "readOnly": true,
+      "bindable": true,
+      "heritable": false,
+      "defaultValue": null,
+      "defaultValueInternal": null
+    }
+  ],
+  "events": [
+    {
+      "name": "onSubstrateSelected",
+      "displayName": "onSubstrateSelected",
+      "visible": true,
+      "displayPriority": 300,
+      "category": "Selection",
+      "description": "Raised when the tile is clicked or tapped anywhere. Event data is a SubstrateMapTileSelection: { substrateId, lotId, state, ageSeconds, ageSource, goodDevices, summary }. NO CELL-LEVEL HIT TEST - the tile is one target. At 200 px a die is a fraction of a pixel and a coordinate read off one would be a guess dressed as a fact; a dashboard that wants a cell opens the full control. A tile showing nothing raises nothing: without a map there is no substrate to select, and an event carrying nulls would make every handler check what the control already knows.",
+      "heritable": false
+    }
+  ],
+  "attributeCategories": [
+    {
+      "name": "Data",
+      "displayPriority": 100
+    },
+    {
+      "name": "Tile",
+      "displayPriority": 200
+    },
+    {
+      "name": "Selection",
+      "displayPriority": 300
+    }
+  ],
+  "languages": {
+    "en-US": "en-US.localization",
+    "de-DE": "de-DE.localization"
+  }
+}

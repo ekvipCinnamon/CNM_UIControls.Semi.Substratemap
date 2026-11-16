@@ -1,0 +1,14 @@
+{
+  "_fixtureNote": "INVALID FIXTURE - expected failure class: typed validation error, dimension/bins length mismatch. dimension declares x=5,y=3 (5 rows of 3... actually per contract dimension.x=cols, dimension.y=rows so 5 cols x 3 rows expected), but only 2 bins rows are supplied and the second row is only 4 characters wide (not 5). Both a row-COUNT mismatch (2 supplied vs 3 declared) and a row-WIDTH mismatch (row 2 has 4 chars vs the required 5) are present simultaneously.",
+  "dimension": { "x": 5, "y": 3 },
+  "units": "mm",
+  "stepSize": { "x": 1.0, "y": 1.0 },
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "2DArray",
+  "bins": [
+    "11191",
+    "1911"
+  ],
+  "substrateId": "JSONBADIM1"
+}

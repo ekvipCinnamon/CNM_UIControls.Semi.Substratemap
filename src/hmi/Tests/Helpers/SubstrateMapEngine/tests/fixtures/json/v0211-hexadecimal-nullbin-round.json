@@ -1,0 +1,19 @@
+{
+  "$comment": "HAND-AUTHORED from v0211-hexadecimal-nullbin-round.xml (Rule 10, D-030). BinType=HexaDecimal - the schema's own spelling, with the capital D, which is the enum member and not a typo. Two fixed-width characters per cell, concatenated with no separator, on a 9x9 round wafer whose off-wafer cells carry NullBin=F0. F0 is a legal hex token that is NOT zero, so a reader that treated the null bin as 00 would read twenty corner cells as a real bin. Uppercase throughout: the tokens are compared as strings, never parsed to a number and re-formatted.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0211.SubstrateMap",
+  "Layouts": [{ "LayoutId": "Round", "DefaultUnits": "mm", "TopLevel": true,
+    "Dimension": { "X": 9, "Y": 9 }, "StepSize": { "X": 1.0, "Y": 1.0 } }],
+  "Substrates": [{ "SubstrateType": "Wafer", "SubstrateId": "ROUNDHEX01" }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "ROUNDHEX01", "LayoutSpecifier": "Round",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "HexaDecimal", "NullBin": "F0", "MapType": "2DArray",
+        "BinDefinitions": [{ "BinCode": "01", "BinDescription": "Pass" },
+                           { "BinCode": "09", "BinDescription": "Fail" }],
+        "BinCode": [
+          "F0F0F0010101F0F0F0", "F001010101010101F0", "F001010101010101F0",
+          "010101010901010101", "010101010101010101", "010101090101010101",
+          "F001010101010101F0", "F001010101010101F0", "F0F0F0010101F0F0F0"
+        ] } }]
+  }]
+}

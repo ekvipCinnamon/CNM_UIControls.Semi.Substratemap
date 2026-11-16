@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap"
+    xmlns:sme="urn:semi-org:xsd.E142-1.V0211.SubstrateMap_ACMEProductsInc"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap_ACMEProductsInc 
+        E142-1-V0211-Schema-Extension-Example.xsd">
+
+    <Substrates>
+        <Substrate SubstrateType="Wafer" SubstrateId="Wafer1" xsi:type="sme:SubstrateTypeExtension">
+            <GoodDevices>148</GoodDevices>
+            <SupplierName>XDFG</SupplierName>
+            <Status>Version 001</Status>
+            <sme:SupplierData>
+                <sme:SetupFile Value="58501AP" />
+                <sme:TestSystem Value="TA99K04" />
+                <sme:TestProgram Value="VW550CMG_151" />
+                <sme:Prober Value="PRBRP05" />
+                <sme:Operator Value="supeq4" />
+                <sme:ProbeCard Value="PRBRB04" />
+                <sme:TestStartTime Value="2004052118000000" />
+                <sme:TestEndTime Value="2004052157000000" />
+            </sme:SupplierData>
+        </Substrate>
+    </Substrates>
+</MapData>

@@ -1,0 +1,13 @@
+{
+  "$comment": "HAND-AUTHORED from v0211-layoutless-defaults-alt.xml (Rule 10, D-030). No Layouts block at all AND a LayoutSpecifier that names one - \"WaferLayout/Devices\" - so the specifier dangles and the lattice must come from the payload's own shape, 8x6. MapType is absent, so the prose default applies. Every header attribute except the three required ones is absent, so this is the fixture where the XSD defaults do the most work: SubstrateSide TopSide, Orientation 0, OriginLocation LowerLeft, AxisDirection UpRight.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0211.SubstrateMap",
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "Wafer2", "LayoutSpecifier": "WaferLayout/Devices",
+    "Overlay": [{ "MapName": "SortGrade", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".",
+        "BinDefinitions": [{ "BinCode": "1", "BinDescription": "Pass" },
+                           { "BinCode": "9", "BinDescription": "Fail" }],
+        "BinCode": ["11111111", "19111191", "11111111",
+                    "11111111", "19111191", "11111111"] } }]
+  }]
+}

@@ -1,0 +1,41 @@
+{
+  "_fixtureNote": "bins as number[]: one numeric value per cell, row-major, length = x*y (per GridData-2.txt payload contract). binType Integer2 (canonical token is 4-digit hex perBinType table); numbers are decoded to their canonical token per binType (contract section 5.2 reference). Grid 4x2 (x=4, y=2) -> 8 numbers.",
+  "dimension": {
+    "x": 4,
+    "y": 2
+  },
+  "units": "mm",
+  "stepSize": {
+    "x": 2.0,
+    "y": 2.0
+  },
+  "orientation": 0,
+  "originLocation": "LowerLeft",
+  "axisDirection": "UpRight",
+  "binType": "Integer2",
+  "nullBin": "FFFF",
+  "mapType": "2DArray",
+  "binDefinitions": [
+    {
+      "binCode": "0001",
+      "binQuality": "Pass",
+      "binDescription": "Good"
+    },
+    {
+      "binCode": "0009",
+      "binQuality": "Fail",
+      "binDescription": "Bad"
+    }
+  ],
+  "bins": [
+    1,
+    1,
+    9,
+    1,
+    1,
+    1,
+    1,
+    65535
+  ],
+  "substrateId": "JSONNUM001"
+}

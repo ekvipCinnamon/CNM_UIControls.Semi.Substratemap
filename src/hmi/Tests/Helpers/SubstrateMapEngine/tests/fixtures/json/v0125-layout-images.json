@@ -1,0 +1,24 @@
+{
+  "$comment": "HAND-AUTHORED from v0125-layout-images.xml (Rule 10, D-030). TopImage and BottomImage on BOTH levels of a two-layout tree. They are carry-only URIs: never fetched, never rendered, and never resolved against a base - the child's are relative (../assets/) and percent-encoded (die%20top.png), and both properties must survive byte-for-byte, because a consumer that decoded the escape or resolved the path would hand back a URI its producer never wrote.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0125.SubstrateMap",
+  "Layouts": [
+    { "LayoutId": "Img", "DefaultUnits": "mm", "TopLevel": true,
+      "Dimension": { "X": 1, "Y": 1 },
+      "TopImage": "images/substrate-top.png",
+      "BottomImage": "images/substrate-bottom.png",
+      "ChildLayouts": ["Img_Devices"] },
+    { "LayoutId": "Img_Devices", "DefaultUnits": "mm",
+      "Dimension": { "X": 2, "Y": 2 },
+      "StepSize": { "X": 1.0, "Y": 1.0, "Units": "mm" },
+      "TopImage": "../assets/die%20top.png",
+      "BottomImage": "../assets/die%20bottom.png",
+      "ProductId": "PROD-22" }
+  ],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "IMAGES-01", "LayoutSpecifier": "Img/Img_Devices",
+    "OriginLocation": "LowerLeft", "AxisDirection": "UpRight",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+        "BinCode": ["mn", "op"] } }]
+  }]
+}

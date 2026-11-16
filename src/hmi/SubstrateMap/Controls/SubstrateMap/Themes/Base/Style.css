@@ -1,0 +1,37 @@
+/** Styles for theme: Base */
+.TcHmi_Controls_CNM_UIControls_SEMI_SubstrateMap {
+    --substratemap-background: transparent;
+    --substratemap-body-color: rgb(220, 220, 220);
+    --substratemap-edge-color: rgb(110, 110, 110);
+    --substratemap-selection-color: rgb(0, 90, 200);
+    /* Fallback color for unmapped / unknown status */
+    --substratemap-status-unknown: rgb(110, 110, 110);
+    /* Per-quality default fill for grid cells whose bin quality is the
+       conventional "pass" / "fail" and whose bin CODE is not named by
+       StatusColorMapping (which always wins). Bluish-green / vermillion rather
+       than green / red: the pair stays distinguishable under deuteranopia and
+       protanopia. Every other quality falls back to --substratemap-status-unknown. */
+    --substratemap-bin-pass: rgb(0, 158, 115);
+    --substratemap-bin-fail: rgb(213, 94, 0);
+    /* Decoration marks for composed overlay layers (E142Overlays). One colour
+       per layer, cycling past four. NOT a bin palette: a decoration marks that a
+       cell is also named by another overlay, it never restates that overlay's
+       bin as a fill - see ws/notes/DECISION-overlay-composition.md. The layer's
+       CORNER is the primary distinction; colour is reinforcement, which is why
+       four suffice and why these are Okabe-Ito hues (distinguishable under
+       deuteranopia and protanopia), like --substratemap-bin-pass / -fail. */
+    --substratemap-decoration-1: rgb(213, 94, 0);
+    --substratemap-decoration-2: rgb(204, 121, 167);
+    --substratemap-decoration-3: rgb(240, 228, 66);
+    --substratemap-decoration-4: rgb(0, 114, 178);
+    /* Substrate identity label (SubstrateId) */
+    --substratemap-identity-font-family: inherit;
+    --substratemap-identity-font-size: 14px;
+    --substratemap-identity-font-weight: 600;
+    --substratemap-identity-color: rgb(40, 40, 40);
+    /* Item label (drawn on the canvas, upright) */
+    --substratemap-label-font-family: inherit;
+    --substratemap-label-font-size: 14px;
+    --substratemap-label-font-weight: 600;
+    --substratemap-label-font-color: rgb(40, 40, 40);
+}

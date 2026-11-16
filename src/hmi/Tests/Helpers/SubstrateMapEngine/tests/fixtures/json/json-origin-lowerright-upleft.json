@@ -1,0 +1,23 @@
+{
+  "_fixtureNote": "OriginLocation LowerRight x AxisDirection UpLeft - the mirror of json-origin-upperleft-downright.json and the remaining two enum members. LowerRight -> serialization (col 2, row 2); UpLeft -> +x left, +y up, so logical (x,y) == serialization (col 2-x, row 2-y).",
+  "dimension": {
+    "x": 3,
+    "y": 3
+  },
+  "units": "mm",
+  "stepSize": {
+    "x": 1,
+    "y": 1
+  },
+  "orientation": 0,
+  "originLocation": "LowerRight",
+  "axisDirection": "UpLeft",
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "2DArray",
+  "bins": [
+    "JKL",
+    "MNO",
+    "PQR"
+  ]
+}

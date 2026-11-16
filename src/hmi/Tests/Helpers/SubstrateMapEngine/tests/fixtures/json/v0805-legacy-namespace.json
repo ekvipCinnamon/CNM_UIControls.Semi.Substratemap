@@ -1,0 +1,16 @@
+{
+  "$comment": "HAND-AUTHORED from v0805-legacy-namespace.xml (Rule 10, D-030). Namespace V0805, the oldest revision in the corpus and one this engine does not carry an XSD for. It must still parse: the version token is read from the namespace URI by the same pattern the XML path uses, an unlisted one warns and the document is read anyway. In JSON the URI travels in $namespace rather than in an xmlns attribute, which is the whole reason $namespace exists - without it a round trip would silently promote every document to V0125.",
+  "$format": "semi-e142", "$version": 1,
+  "$namespace": "urn:semi-org:xsd.E142-1.V0805.SubstrateMap",
+  "Layouts": [{ "LayoutId": "Top", "DefaultUnits": "mm", "TopLevel": true,
+    "Dimension": { "X": 4, "Y": 3 }, "StepSize": { "X": 1.0, "Y": 1.0 } }],
+  "Substrates": [{ "SubstrateType": "Wafer", "SubstrateId": "LEGACY001" }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "LEGACY001", "LayoutSpecifier": "Top",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+        "BinDefinitions": [{ "BinCode": "1", "BinDescription": "Pass" },
+                           { "BinCode": "9", "BinDescription": "Fail" }],
+        "BinCode": [".11.", "1191", ".11."] } }]
+  }]
+}

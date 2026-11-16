@@ -1,0 +1,39 @@
+{
+    "$schema": "http://json.schemastore.org/tsconfig",
+    "extends": "./tsconfig.base.json",
+    "compileOnSave": true,
+    "compilerOptions": {
+        "paths": {
+            "Beckhoff.TwinCAT.HMI.Framework/*": [
+                "./$(Beckhoff.TwinCAT.HMI.Framework).InstallPath/*"
+            ],
+            "Beckhoff.TwinCAT.HMI.Framework": [
+                "./$(Beckhoff.TwinCAT.HMI.Framework).InstallPath/index.esm.d.ts"
+            ]
+        }
+    },
+    "include": [
+        "$(Beckhoff.TwinCAT.HMI.Framework).InstallPath/TcHmi.d.ts"
+    ],
+    "files": [
+        "./Controls/SubstrateMap/SubstrateMap.ts",
+        "./Controls/SubstrateMapBase/SubstrateMapBase.ts",
+        "./Controls/SubstrateMapBinChart/SubstrateMapBinChart.ts",
+        "./Controls/SubstrateMapFilterBar/SubstrateMapFilterBar.ts",
+        "./Controls/SubstrateMapWidget/SubstrateMapWidget.ts",
+        "./Helpers/SubstrateMapEngine/BinCodec.ts",
+        "./Helpers/SubstrateMapEngine/BinPalette.ts",
+        "./Helpers/SubstrateMapEngine/BinSeverity.ts",
+        "./Helpers/SubstrateMapEngine/E138Pv.ts",
+        "./Helpers/SubstrateMapEngine/E142.ts",
+        "./Helpers/SubstrateMapEngine/E142Bins.ts",
+        "./Helpers/SubstrateMapEngine/E142Grid.ts",
+        "./Helpers/SubstrateMapEngine/E142Item.ts",
+        "./Helpers/SubstrateMapEngine/E142Json.ts",
+        "./Helpers/SubstrateMapEngine/E142Xml.ts",
+        "./Helpers/SubstrateMapEngine/Engine.ts",
+        "./Helpers/SubstrateMapEngine/GridAggregate.ts",
+        "./Helpers/SubstrateMapEngine/Oklch.ts",
+        "./Helpers/SubstrateMapEngine/SpatialFilter.ts"
+    ]
+}

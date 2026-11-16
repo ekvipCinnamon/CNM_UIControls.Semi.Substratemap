@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapLabelList": {
+      "type": "array",
+      "minItems": 0,
+      "title": "SubstrateMapLabelList",
+      "items": {
+        "type": "object",
+        "properties": {
+          "center_position_x": {
+            "type": "integer",
+            "description": "Label box center X in the data frame, relative to the data origin."
+          },
+          "center_position_y": {
+            "type": "integer",
+            "description": "Label box center Y in the data frame, relative to the data origin (+y per YAxisDirection)."
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Label box width."
+          },
+          "length": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Label box length (height)."
+          },
+          "unit": {
+            "type": "string",
+            "description": "Base unit for position and size.",
+            "enum": [
+              "meter"
+            ]
+          },
+          "prefix": {
+            "type": "string",
+            "description": "Metric prefix applied to the meter base unit.",
+            "enum": [
+              "yocto",
+              "zepto",
+              "atto",
+              "femto",
+              "pico",
+              "nano",
+              "micro",
+              "milli",
+              "centi",
+              "deci",
+              "none"
+            ],
+            "options": [
+              {
+                "value": "yocto",
+                "label": null
+              },
+              {
+                "value": "zepto",
+                "label": null
+              },
+              {
+                "value": "atto",
+                "label": null
+              },
+              {
+                "value": "femto",
+                "label": null
+              },
+              {
+                "value": "pico",
+                "label": null
+              },
+              {
+                "value": "nano",
+                "label": null
+              },
+              {
+                "value": "micro",
+                "label": null
+              },
+              {
+                "value": "milli",
+                "label": null
+              },
+              {
+                "value": "centi",
+                "label": null
+              },
+              {
+                "value": "deci",
+                "label": null
+              },
+              {
+                "value": "none",
+                "label": null
+              }
+            ]
+          },
+          "text": {
+            "type": "string",
+            "description": "Label text, drawn upright and clipped to the box."
+          }
+        },
+        "required": [
+          "center_position_x",
+          "center_position_y",
+          "width",
+          "length",
+          "unit",
+          "prefix",
+          "text"
+        ],
+        "additionalProperties": {}
+      }
+    }
+  }
+}

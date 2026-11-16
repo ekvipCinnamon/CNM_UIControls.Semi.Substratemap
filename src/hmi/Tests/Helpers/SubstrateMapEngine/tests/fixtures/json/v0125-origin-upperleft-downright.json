@@ -1,0 +1,13 @@
+{
+  "$comment": "HAND-AUTHORED from v0125-origin-upperleft-downright.xml (Rule 10, D-030). OriginLocation=UpperLeft with AxisDirection=DownRight - the frame that flips only Y. Deliberately the same lattice and token count as v0125-origin-lowerright-upleft with a different token set, so the pair isolates the axis transform: same shape in, different cells out.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0125.SubstrateMap",
+  "Layouts": [{ "LayoutId": "UpperLeft", "DefaultUnits": "mm", "TopLevel": true,
+    "Dimension": { "X": 3, "Y": 3 }, "StepSize": { "X": 1.0, "Y": 1.0, "Units": "mm" } }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Panel", "SubstrateId": "ULDR01", "LayoutSpecifier": "UpperLeft",
+    "OriginLocation": "UpperLeft", "AxisDirection": "DownRight",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+        "BinCode": ["ABC", "DEF", "GHI"] } }]
+  }]
+}

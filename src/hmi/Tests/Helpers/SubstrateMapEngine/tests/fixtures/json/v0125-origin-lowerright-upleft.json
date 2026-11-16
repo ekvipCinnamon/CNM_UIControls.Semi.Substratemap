@@ -1,0 +1,13 @@
+{
+  "$comment": "HAND-AUTHORED from v0125-origin-lowerright-upleft.xml (Rule 10, D-030). OriginLocation=LowerRight with AxisDirection=UpLeft - the frame that flips BOTH axes relative to the LowerLeft/UpRight default. No Substrates block at all, which is legal: MapData's three children are each minOccurs=0. Nine distinct tokens, so any axis error shows as a specific wrong cell rather than a plausible map.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0125.SubstrateMap",
+  "Layouts": [{ "LayoutId": "LowerRight", "DefaultUnits": "mm", "TopLevel": true,
+    "Dimension": { "X": 3, "Y": 3 }, "StepSize": { "X": 1.0, "Y": 1.0, "Units": "mm" } }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Panel", "SubstrateId": "LRUL01", "LayoutSpecifier": "LowerRight",
+    "OriginLocation": "LowerRight", "AxisDirection": "UpLeft",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+        "BinCode": ["JKL", "MNO", "PQR"] } }]
+  }]
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapTileSelection": {
+      "type": "object",
+      "title": "SubstrateMapTileSelection",
+      "description": "What onSubstrateSelected carries: enough to open the full view on the substrate the operator tapped, and nothing more. NO CELL-LEVEL INFORMATION - the tile is one target and does no hit test, because at 200 px a die is a fraction of a pixel and a coordinate read off one would be a guess dressed as a fact. A dashboard that wants a cell opens the full control. The summary is the same shape readBinStatistics() returns, so a handler that already knows how to read one does not learn a second format.",
+      "properties": {
+        "substrateId": {
+          "type": ["string", "null"],
+          "description": "The substrate the tile is showing, or null when the bound map declared none. Null rather than an empty string, because 'the map did not say' and 'the map said nothing' are different facts and a dashboard routing on this needs to tell them apart."
+        },
+        "lotId": {
+          "type": ["string", "null"],
+          "description": "The lot, or null when the map declared none. Carried because a dashboard usually opens a lot view rather than a wafer view, and asking the handler to fetch it again would mean a round trip for something already on screen."
+        },
+        "state": {
+          "type": "string",
+          "enum": ["data", "stale"],
+          "description": "Whether the tile was showing live data or a retained last known state when it was tapped. A handler opening the full view on stale data should say so, and only the tile knows - the id alone cannot tell it. 'demo' and 'nodata' never appear: a tile in those states raises nothing at all."
+        },
+        "ageSeconds": {
+          "type": "number",
+          "minimum": 0,
+          "description": "How old the displayed data was at the moment of the tap, from whichever clock the tile is labeling - the bound MapTimestamp when there is one, the receive time otherwise. Seconds, matching StaleAfterSeconds."
+        },
+        "ageSource": {
+          "type": "string",
+          "enum": ["map", "received"],
+          "description": "Which clock ageSeconds came from. 'map' is a bound MapTimestamp; 'received' is when the payload arrived here. The two are different facts - a map that arrived a second ago may describe a wafer tested this morning - so the payload names the source rather than leaving a handler to assume."
+        },
+        "goodDevices": {
+          "type": ["integer", "null"],
+          "description": "The DECLARED good-device count, or null when the map declared none. Never recomputed from the bin table: it is what the tester reported, and a number that disagrees with the MES is worse than no number."
+        },
+        "summary": {
+          "type": "object",
+          "description": "The aggregate summary, in the shape readBinStatistics() returns. Present even when the tile is showing a retained state, because that is what the operator was looking at."
+        }
+      },
+      "required": ["substrateId", "lotId", "state", "ageSeconds", "ageSource", "goodDevices", "summary"],
+      "additionalProperties": false
+    }
+  }
+}

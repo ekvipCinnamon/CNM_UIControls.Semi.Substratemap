@@ -1,0 +1,30 @@
+{
+  "_fixtureNote": "Per-cell LIDs on the GridData path (Task 41). ROW-MAJOR over the whole 3x2 lattice, one slot per cell whatever form `bins` takes. null marks an unnamed cell; the EMPTY STRING at index 1 is a real LID of zero length (E142 types LID as xs:string with no minLength) and is deliberately NOT the same as null. The values are awkward on purpose - leading/trailing space, mixed case, a separator, a numeric-looking one - because a LID is a join key and is never trimmed or case-folded.",
+  "dimension": {
+    "x": 3,
+    "y": 2
+  },
+  "units": "mm",
+  "stepSize": {
+    "x": 1,
+    "y": 1
+  },
+  "orientation": 0,
+  "originLocation": "LowerLeft",
+  "axisDirection": "UpRight",
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "2DArray",
+  "bins": [
+    "abc",
+    "def"
+  ],
+  "lids": [
+    "  P-1  ",
+    "",
+    null,
+    "pkt-0042",
+    "P/0007",
+    "0007"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "$comment": "HAND-AUTHORED from v0211-orientation-90.xml (Rule 10, D-030). Orientation=90 on a NON-SQUARE 5x3 lattice, which is the pairing that matters: a quarter turn applied to the lattice instead of recorded as a header fact yields a 3x5 map, and a square fixture could not tell the two apart. The three fail cells sit in three different columns for the same reason.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0211.SubstrateMap",
+  "Layouts": [{ "LayoutId": "Orient90", "DefaultUnits": "mm", "TopLevel": true,
+    "Dimension": { "X": 5, "Y": 3 }, "StepSize": { "X": 1.0, "Y": 1.0 } }],
+  "Substrates": [{ "SubstrateType": "Wafer", "SubstrateId": "ORIENT090" }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "ORIENT090", "LayoutSpecifier": "Orient90",
+    "Orientation": 90,
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+        "BinDefinitions": [{ "BinCode": "1", "BinDescription": "Pass" },
+                           { "BinCode": "9", "BinDescription": "Fail" }],
+        "BinCode": ["11119", "19111", "11191"] } }]
+  }]
+}

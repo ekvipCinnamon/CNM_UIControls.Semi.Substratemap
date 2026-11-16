@@ -1,0 +1,23 @@
+{
+  "_fixtureNote": "OriginLocation Center on an ODD x ODD grid, where the centre cell is unambiguous. The XML corpus covers Center only on an EVEN grid (v0211-origin-center-even.xml), where the zero-cell needs a tie-break rule; the odd case is the one where the rule cannot hide a mistake. 3x3, all tokens distinct.",
+  "dimension": {
+    "x": 3,
+    "y": 3
+  },
+  "units": "mm",
+  "stepSize": {
+    "x": 1,
+    "y": 1
+  },
+  "orientation": 0,
+  "originLocation": "Center",
+  "axisDirection": "UpRight",
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "2DArray",
+  "bins": [
+    "abc",
+    "def",
+    "ghi"
+  ]
+}

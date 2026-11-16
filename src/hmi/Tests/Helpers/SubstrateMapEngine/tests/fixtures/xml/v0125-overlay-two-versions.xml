@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-overlay-two-versions.xml
+  Covers: the SAME MapName carried at TWO MapVersions under one SubstrateMap -
+          the map lifecycle E142-0225 R2-1.2.1 describes: a map is downloaded to
+          the equipment at MapVersion=1, the equipment processes it and "uploads
+          the results in an updated map (MapVersion=2)".
+  WHY IT IS NOT v0211-multi-overlay.xml. That fixture has three overlays with
+  three DIFFERENT names (SortGrade/1, Retest/1, FinalTest/2), so selecting by
+  name alone is unambiguous there. Nothing in the corpus carried one name at two
+  versions, which is precisely the case where a name-only selector silently
+  renders the stale map.
+  The two overlays differ in content ('a' vs 'b' everywhere) so a selector
+  picking the wrong one is visible in the cells, not just in the metadata.
+  OverlayKey (MapName, MapVersion) keeps them distinct and the document valid.
+  Grid: 2 cols x 2 rows. LowerLeft / UpRight.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Life" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="2"/>
+      <StepSize X="1.0" Y="1.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="LIFECYCLE-01">
+      <LotId>LOT-R2-1-2</LotId>
+    </Substrate>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="LIFECYCLE-01" LayoutSpecifier="Life"
+        OriginLocation="LowerLeft" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>aa</BinCode>
+          <BinCode>aa</BinCode>
+        </BinCodeMap>
+      </Overlay>
+      <Overlay MapName="Sort" MapVersion="2">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>bb</BinCode>
+          <BinCode>bb</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

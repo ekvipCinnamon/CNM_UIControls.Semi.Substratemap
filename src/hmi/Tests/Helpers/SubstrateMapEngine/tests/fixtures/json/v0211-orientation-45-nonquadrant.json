@@ -1,0 +1,16 @@
+{
+  "$comment": "HAND-AUTHORED from v0211-orientation-45-nonquadrant.xml (Rule 10, D-030). Orientation=45 - INSIDE OrientationType's 0..359 facet and NOT a multiple of 90. The value is legal and must be carried verbatim; nothing may round it to a quadrant, because a rotation is a physical fact about how the substrate sits and rounding it would silently mis-state the substrate's position. OriginLocation and AxisDirection are absent, so their XSD defaults apply and this fixture isolates Orientation alone.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0211.SubstrateMap",
+  "Layouts": [{ "LayoutId": "Orient45", "DefaultUnits": "mm", "TopLevel": true,
+    "Dimension": { "X": 4, "Y": 4 }, "StepSize": { "X": 1.0, "Y": 1.0 } }],
+  "Substrates": [{ "SubstrateType": "Wafer", "SubstrateId": "ORIENT045" }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "ORIENT045", "LayoutSpecifier": "Orient45",
+    "Orientation": 45,
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+        "BinDefinitions": [{ "BinCode": "1", "BinDescription": "Pass" },
+                           { "BinCode": "9", "BinDescription": "Fail" }],
+        "BinCode": ["1111", "1911", "1191", "1111"] } }]
+  }]
+}

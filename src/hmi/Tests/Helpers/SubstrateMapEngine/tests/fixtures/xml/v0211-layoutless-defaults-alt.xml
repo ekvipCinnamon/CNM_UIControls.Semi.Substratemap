@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-layoutless-defaults-alt.xml
+ Covers: "one additional layoutless fixture with a different grid" (PART 1
+ changes). Modeled on the official BinCodeMap-Example.xml :
+ no <Layouts> element at all, no Orientation/OriginLocation/AxisDirection/
+ MapType set (all defaults), a rectangular BinCodeMap with a different
+ grid shape (8 cols x 6 rows, vs. the official example's 12x11) and a
+ different NullBin usage pattern (rectangular block, not a round shape,
+ to visually distinguish it from the official example).
+ Since there is no Layouts element, dims are known ONLY from the BinCode
+ row/column data itself ("dims-from-data").
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+    <SubstrateMaps>
+        <SubstrateMap SubstrateType="Wafer" SubstrateId="Wafer2" LayoutSpecifier="WaferLayout/Devices">
+            <Overlay MapName="SortGrade" MapVersion="1">
+                <BinCodeMap BinType="Ascii" NullBin=".">
+                    <BinDefinitions>
+                        <BinDefinition BinCode="1" BinDescription="Pass" />
+                        <BinDefinition BinCode="9" BinDescription="Fail" />
+                    </BinDefinitions>
+                    <BinCode>11111111</BinCode>
+                    <BinCode>19111191</BinCode>
+                    <BinCode>11111111</BinCode>
+                    <BinCode>11111111</BinCode>
+                    <BinCode>19111191</BinCode>
+                    <BinCode>11111111</BinCode>
+                </BinCodeMap>
+            </Overlay>
+        </SubstrateMap>
+    </SubstrateMaps>
+</MapData>

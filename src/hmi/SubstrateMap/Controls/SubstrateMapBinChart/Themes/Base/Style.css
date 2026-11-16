@@ -1,0 +1,43 @@
+/** Styles for theme: Base */
+
+/*
+ * ---- THE CHART REUSES THE MAP'S VARIABLES ----
+ *
+ * Every colour in a chart is a map colour: a bin, a severity, a density, the
+ * substrate body it sits on. Giving the chart its own palette would mean a wafer
+ * that changes colour when it moves from a dashboard to a full view, which is
+ * the one thing a colour-coded map must never do.
+ *
+ * So this file sets the SAME `--substratemap-*` names the map's theme sets, to
+ * the SAME values, under the chart's own selector. The values are duplicated
+ * rather than inherited because a TwinCAT theme is per-control: there is no
+ * ancestor to inherit from when a chart and a map sit side by side in different
+ * containers.
+ *
+ * `tools/check-themes.mjs` compares the two files and fails on any shared name
+ * whose value differs, so the duplication cannot drift.
+ */
+.TcHmi_Controls_CNM_UIControls_SEMI_SubstrateMapBinChart {
+    --substratemap-background: transparent;
+    --substratemap-body-color: rgb(220, 220, 220);
+    --substratemap-edge-color: rgb(110, 110, 110);
+    --substratemap-selection-color: rgb(0, 90, 200);
+    --substratemap-status-unknown: rgb(110, 110, 110);
+    /* The map's values, verbatim. A wafer that changed colour between a
+       dashboard and a full view would be the one thing a colour-coded map must
+       never do. */
+    --substratemap-bin-pass: rgb(0, 158, 115);
+    --substratemap-bin-fail: rgb(213, 94, 0);
+    --substratemap-identity-font-family: inherit;
+    /* 13px, one step down from the map's 14: a chart is narrow and its labels
+       must not crowd the bars (W-35). */
+    --substratemap-identity-font-size: 13px;
+    --substratemap-identity-font-weight: 600;
+    --substratemap-identity-color: rgb(40, 40, 40);
+    --substratemap-label-font-family: inherit;
+    /* 12px: axis and legend labels sit between the bars. Smaller than the map's
+       label, which has a full-size view to itself. */
+    --substratemap-label-font-size: 12px;
+    --substratemap-label-font-weight: 600;
+    --substratemap-label-font-color: rgb(40, 40, 40);
+}

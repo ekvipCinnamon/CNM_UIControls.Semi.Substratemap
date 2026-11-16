@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-substrate-multiple-records.xml
+  Covers: the JOIN. Two Substrate records differing only in SubstrateId (which
+          SubstrateKey requires - the xs:key is over SubstrateType + SubstrateId),
+          with the SubstrateMap keyed to the SECOND. Reading the first record
+          because it happens to be first in document order is the obvious bug,
+          and every other fixture in the corpus has exactly one Substrate, so
+          nothing else can catch it.
+  Note on export: a serializer holding ONE map emits ONE Substrate - the joined
+  one. The unrelated record is not carried, which is correct rather than lossy:
+  it describes a different substrate this map says nothing about.
+  Grid: 2 cols x 2 rows, all tokens distinct.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Multi" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="2"/>
+      <StepSize X="1.0" Y="1.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="DECOY-01">
+      <LotId>WRONG-LOT</LotId>
+      <GoodDevices>99</GoodDevices>
+      <SupplierName>Not This One</SupplierName>
+      <Status>Ignored</Status>
+    </Substrate>
+    <Substrate SubstrateType="Wafer" SubstrateId="TARGET-02">
+      <LotId>RIGHT-LOT</LotId>
+      <GoodDevices>3</GoodDevices>
+      <SupplierName>Correct Supplier</SupplierName>
+      <Status>Probed</Status>
+    </Substrate>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="TARGET-02" LayoutSpecifier="Multi"
+        OriginLocation="LowerLeft" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>wx</BinCode>
+          <BinCode>yz</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

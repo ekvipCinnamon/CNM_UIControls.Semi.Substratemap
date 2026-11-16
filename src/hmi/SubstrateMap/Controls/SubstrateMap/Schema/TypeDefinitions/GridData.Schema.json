@@ -1,0 +1,274 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapGridData": {
+      "type": "object",
+      "title": "SubstrateMapGridData",
+      "description": "The compact, PLC-friendly single-map GridData v1 contract: one substrate, one layout, one bin map, no overlays. Field semantics, enumerations and defaults are SEMI E142 verbatim (V0125 XSD), with one deliberate exception documented on `lowerLeft`. Normalized by the engine's E142Grid.normalizeGridData.",
+      "properties": {
+        "dimension": {
+          "type": "object",
+          "description": "E142 Layout/Dimension: the logical grid extent. Required.",
+          "properties": {
+            "x": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Number of columns along the layout X axis."
+            },
+            "y": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Number of rows along the layout Y axis."
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "additionalProperties": false
+        },
+        "units": {
+          "type": "string",
+          "description": "E142 Layout/@DefaultUnits: the units every physical field of this document is expressed in (stepSize, deviceSize, lowerLeft). Required. \"mm\" and \"um\" are normative; \"microns\", \"<n>Microns\" and \"mil\" are accepted with a warning; anything else is rejected.",
+          "minLength": 1
+        },
+        "stepSize": {
+          "type": "object",
+          "description": "E142 Layout/StepSize: the full pitch (street included), in `units`. Required.",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "Column pitch along the layout X axis."
+            },
+            "y": {
+              "type": "number",
+              "description": "Row pitch along the layout Y axis."
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "additionalProperties": false
+        },
+        "deviceSize": {
+          "type": "object",
+          "description": "E142 Layout/DeviceSize: the drawn cell extent, in `units`. Optional; defaults to stepSize.",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "Drawn cell width along the layout X axis."
+            },
+            "y": {
+              "type": "number",
+              "description": "Drawn cell length along the layout Y axis."
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "additionalProperties": false
+        },
+        "lowerLeft": {
+          "type": "object",
+          "description": "Physical anchor: the substrate-frame position of the grid's lower-left corner, in `units`, +y up, origin at the substrate center. Optional; when absent the grid extent is centered on the substrate origin. DELIBERATELY CONTROL-DEFINED: E142's own Layout/LowerLeft is a parent-layout-relative offset and is NOT interchangeable with this field.",
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "Substrate-frame X of the grid's lower-left corner."
+            },
+            "y": {
+              "type": "number",
+              "description": "Substrate-frame Y of the grid's lower-left corner."
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "additionalProperties": false
+        },
+        "orientation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 359,
+          "description": "E142 SubstrateMap/@Orientation: rotation of the substrate relative to the map data, clockwise-positive. Optional; defaults to 0."
+        },
+        "originLocation": {
+          "type": "string",
+          "description": "E142 SubstrateMap/@OriginLocation: the visual cell carrying logical coordinate (0,0). Optional; defaults to \"LowerLeft\".",
+          "enum": [
+            "LowerLeft",
+            "UpperLeft",
+            "LowerRight",
+            "UpperRight",
+            "Center"
+          ]
+        },
+        "axisDirection": {
+          "type": "string",
+          "description": "E142 SubstrateMap/@AxisDirection: the logical axis sign convention. The first token is the Y direction, the second the X direction. Optional; defaults to \"UpRight\".",
+          "enum": [
+            "UpRight",
+            "DownRight",
+            "UpLeft",
+            "DownLeft"
+          ]
+        },
+        "binType": {
+          "type": "string",
+          "description": "E142 BinCodeMap/@BinType: the encoding of one bin token. Required. Ascii = 1 printable character; Decimal = 3 digits 000-255, whitespace-separated; HexaDecimal = 2 hex digits; Integer2 = 4 hex digits.",
+          "enum": [
+            "Ascii",
+            "Decimal",
+            "HexaDecimal",
+            "Integer2"
+          ]
+        },
+        "nullBin": {
+          "type": "string",
+          "description": "E142 BinCodeMap/@NullBin: the token standing for \"no device / not tested / outside the substrate\". Required. Must be a well-formed token of `binType`. Null cells are never painted and never hit.",
+          "minLength": 1
+        },
+        "mapType": {
+          "type": "string",
+          "description": "E142 BinCodeMap/@MapType: the serialization form of `bins`. Optional; defaults to \"2DArray\" (the standard's prose default - the XSD declares none). \"Row/Column\" shares \"2DArray\"'s wire form: GridData carries no run-start field, so a Row/Column map is full-width rows with the cells no run covers written as the NullBin token, and it is decoded as 2DArray.",
+          "enum": [
+            "2DArray",
+            "Row/Column",
+            "Array",
+            "Coordinate"
+          ]
+        },
+        "binDefinitions": {
+          "type": "array",
+          "minItems": 0,
+          "description": "E142 BinDefinitions/BinDefinition: the per-code metadata. Optional.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "binCode": {
+                "type": "string",
+                "description": "The bin token this definition describes. Required."
+              },
+              "binQuality": {
+                "type": "string",
+                "description": "Free-form quality string, NOT an enumeration. The conventional values \"Pass\" and \"Fail\" get per-quality default colors; every other value falls back to the unknown color unless StatusColorMapping names the code. Defaults to \"\"."
+              },
+              "binDescription": {
+                "type": "string",
+                "description": "Human-readable description of the bin. Defaults to \"\"."
+              },
+              "binCount": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Optional running count of devices in this bin."
+              },
+              "pick": {
+                "type": "boolean",
+                "description": "Whether devices of this bin are selected for downstream pick-and-place. Defaults to false."
+              }
+            },
+            "required": [
+              "binCode"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "bins": {
+          "description": "The payload. Its legal form is decided by `mapType`: \"Array\" takes one token block (string) or one value per cell (number[], row-major); \"2DArray\" and \"Row/Column\" take one row per element (string[], top row first, every row the full grid width) or one value per cell (number[], row-major); \"Coordinate\" takes sparse {x, y, bin} entries whose x/y are logical map coordinates. A number[] is canonicalized to a token per `binType` and must be exactly dimension.x * dimension.y long.",
+          "oneOf": [
+            {
+              "type": "string",
+              "description": "One continuous token block, row-major starting at the top left (mapType \"Array\").",
+              "minLength": 1
+            },
+            {
+              "type": "array",
+              "minItems": 1,
+              "description": "One row per element, visual top row first, tokens left to right (mapType \"2DArray\").",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "array",
+              "minItems": 1,
+              "description": "One numeric value per cell, row-major, dimension.x * dimension.y long; each value is canonicalized to a token per `binType`.",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "array",
+              "minItems": 0,
+              "description": "Sparse entries, one per addressed device (mapType \"Coordinate\" only). Cells named by no entry stay NullBin.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "integer",
+                    "description": "Logical X of the addressed device (may be negative)."
+                  },
+                  "y": {
+                    "type": "integer",
+                    "description": "Logical Y of the addressed device (may be negative)."
+                  },
+                  "bin": {
+                    "type": [
+                      "string",
+                      "number"
+                    ],
+                    "description": "The device's bin: the wire token, or its numeric value. Every entry of one payload must use the same form."
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "bin"
+                ],
+                "additionalProperties": false
+              }
+            }
+          ]
+        },
+        "lids": {
+          "description": "Optional per-cell location identifiers, mirroring E142 BinCode/@LID. ROW-MAJOR in the same order as the decoded cells (index = row * dimension.x + column, top row first), and exactly dimension.x * dimension.y long - one slot per cell regardless of which form `bins` takes, so there is no shape to match. Use null for a cell the document does not name; an EMPTY STRING is not the same thing - E142 permits a LID of zero length (LID is xs:string with no minLength) and it is retained as given. A LID names the LOCATION, not the device in it: E142 13.4 - 'A location identifier is distinct from the DeviceId ... The location identifier is still present when the device is removed.' Values are opaque: not ordered, not unique by declaration, and never normalized (no trimming, no case folding), because a LID is a join key.",
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "E142 BinCode/@LID for this cell, or null when the document names no location here."
+          }
+        },
+        "substrateId": {
+          "type": "string",
+          "maxLength": 32,
+          "description": "E142 Substrate/@SubstrateId. Optional; passed through unchanged to the read-only outputs."
+        },
+        "lotId": {
+          "type": "string",
+          "maxLength": 80,
+          "description": "E142 Substrate/LotId. Optional; passed through unchanged to the read-only outputs."
+        },
+        "goodDevices": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "E142 Substrate/GoodDevices. Optional; passed through unchanged to the read-only outputs."
+        }
+      },
+      "required": [
+        "dimension",
+        "units",
+        "stepSize",
+        "binType",
+        "nullBin",
+        "bins"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

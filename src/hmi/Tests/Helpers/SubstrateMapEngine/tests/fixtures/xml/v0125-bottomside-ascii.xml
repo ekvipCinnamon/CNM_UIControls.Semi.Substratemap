@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-bottomside-ascii.xml
+  Covers: SubstrateSide="BottomSide" - the value no other fixture in the corpus
+          carried. SubstrateSide is a coordinate-system attribute (E142-0225
+          Tables 4, 9, 14, 16; Figure R2-17 p.41), and it is declared
+          use="optional" default="TopSide", so an exporter that drops it does
+          not lose the side, it asserts the opposite one.
+  Grid: 4 cols x 3 rows, every cell a distinct token so the frame mapping is
+        pinned by any single probe.
+  Frame: OriginLocation="LowerLeft" (default) x AxisDirection="UpRight"
+         (default) - deliberately the plain frame, so this fixture varies ONLY
+         the side.
+  Zero-cell: LowerLeft/UpRight -> logical (0,0) is serialization (col 0, row 2).
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="BottomSide" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="4" Y="3"/>
+      <DeviceSize X="0.8" Y="0.8" Units="mm"/>
+      <StepSize X="1.0" Y="1.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="BOTTOM01"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="BOTTOM01" LayoutSpecifier="BottomSide"
+        SubstrateSide="BottomSide" OriginLocation="LowerLeft" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>abcd</BinCode>
+          <BinCode>efgh</BinCode>
+          <BinCode>ijkl</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

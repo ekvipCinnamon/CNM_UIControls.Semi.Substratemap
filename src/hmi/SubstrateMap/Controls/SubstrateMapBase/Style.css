@@ -1,0 +1,19 @@
+/* SubstrateMapBase - theme-independent COSMETIC style for the identity label.
+   Structural layout (root flexbox, canvas fill, identity ordering) is applied
+   inline in __attach so the shell functions regardless of whether this
+   base-chain stylesheet is loaded when only a derived control is placed; the
+   rules here are cosmetic only and degrade gracefully to an unstyled but
+   functional label if the stylesheet is absent. The identity font honors the
+   concrete control's --substratemap-* theme variables. */
+
+.TcHmi_Controls_CNM_UIControls_SEMI_SubstrateMapBase-Identity {
+    text-align: center;
+    padding: 2px 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: var(--substratemap-identity-font-family, inherit);
+    font-size: var(--substratemap-identity-font-size, 14px);
+    font-weight: var(--substratemap-identity-font-weight, 600);
+    color: var(--substratemap-identity-color, inherit);
+}

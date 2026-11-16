@@ -1,0 +1,7 @@
+/* SubstrateMap - theme independent style. The shared structural layout (canvas +
+   identity flexbox) lives in the base's Style.css via the reused template class;
+   only the outer control clip is owned here. */
+
+.TcHmi_Controls_CNM_UIControls_SEMI_SubstrateMap {
+    overflow: hidden;
+}

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0125-coordinate-lid-mixed.xml
+ HARD ACCEPTANCE CRITERION FIXTURE (spec 6.1 Abnahme): V0125 LID Coordinate
+ fixture with a mix of X/Y-addressed and LID-only BinCode entries.
+ Basis: the standard (V0224->V0125 delta) + V0125 XSD BinCodeType
+ (X optional, Y optional, LID optional, Number optional - all four may
+ appear independently). the standard the assumption note: "V0125 LID:
+ an opaque logical identifier alternative to X/Y; no intra-document
+ resolution rule is assumed. Entries carrying LID without X/Y cannot be
+ placed on a grid -> carried in the model, excluded from the grid with one
+ aggregated warning. " This fixture exercises exactly that: some
+ BinCode entries carry only X/Y, some carry only LID, and one carries
+ both X/Y AND LID (to test that placement uses X/Y when both present).
+ Namespace: V0125 (urn:semi-org:xsd.E142-1.V0125.SubstrateMap).
+ Grid: 4 cols x 3 rows, defaults (LowerLeft/UpRight) -> logical X in [0,3],
+ Y in [0,2]. Of 12 grid cells: 5 are X/Y-addressed (one of which also
+ carries a LID), 3 additional entries are LID-only (unplaceable on the
+ grid, expected to be carried in the model / excluded with a warning per
+ the assumption sheet above), remaining 7 grid cells are NullBin.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="LidCoord" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="4" Y="3"/>
+      <StepSize X="1.0" Y="1.0"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="LIDMIX001"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="LIDMIX001" LayoutSpecifier="LidCoord">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="Coordinate">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinDescription="Pass"/>
+            <BinDefinition BinCode="9" BinDescription="Fail"/>
+          </BinDefinitions>
+          <!-- X/Y-addressed entries (placeable on the grid) -->
+          <BinCode X="0" Y="0">1</BinCode>
+          <BinCode X="1" Y="0">1</BinCode>
+          <BinCode X="2" Y="0">9</BinCode>
+          <BinCode X="0" Y="1">1</BinCode>
+          <!-- This entry carries BOTH X/Y and LID: placement must follow X/Y -->
+          <BinCode X="3" Y="1" LID="DIE-0301">1</BinCode>
+          <!-- LID-only entries: no X/Y present, cannot be placed on the grid -->
+          <BinCode LID="DIE-SPARE-A">9</BinCode>
+          <BinCode LID="DIE-SPARE-B">1</BinCode>
+          <BinCode LID="DIE-SPARE-C">1</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

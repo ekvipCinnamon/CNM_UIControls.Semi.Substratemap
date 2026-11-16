@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+ Fixture: v0921-array-integer2-csdn.xml
+ Basis: the standard (CSDN blog example, download/upload overlays on a
+ strip), namespace bumped to V0921 to cover the E138/DeviceDataMap
+ schema generation per the standard (data model otherwise unchanged
+ from V0211).
+ Covers: namespace V0921; MapType=Array (single BinCode element, row-major,
+ starting top-left per the standard); BinType=Integer2;
+ multiple SubstrateMap entries sharing the same SubstrateId with
+ different LayoutSpecifier (schema-legal, the standard note).
+ Grid: 5 cols x 4 rows (<=12x12), Array payload = 20 tokens x 4 hex chars.
+-->
+<MapData xmlns="urn:semi-org:xsd.E142-1.V0921.SubstrateMap">
+<Layouts>
+<Layout TopLevel="true" DefaultUnits="mm" LayoutId="StripLayout">
+<Dimension Y="1" X="1"/>
+<ChildLayouts><ChildLayout LayoutId="Device"/></ChildLayouts>
+</Layout>
+<Layout DefaultUnits="mm" LayoutId="Device"><Dimension Y="4" X="5"/></Layout>
+</Layouts>
+<SubstrateMaps>
+<SubstrateMap LayoutSpecifier="StripLayout/Device" SubstrateId="33D075" SubstrateType="Strip">
+<Overlay MapName="DownloadCodeMap">
+<BinCodeMap MapType="Array" NullBin="0000" BinType="Integer2">
+<BinCode>00010002000100020001000200010002000100020001000200010002000100020001000200010002</BinCode>
+</BinCodeMap></Overlay>
+<Overlay MapName="UploadCodeMap">
+<BinCodeMap BinType="Integer2" NullBin="0000"><BinCode>0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A</BinCode></BinCodeMap>
+</Overlay></SubstrateMap>
+<SubstrateMap SubstrateId="33D075" SubstrateType="Strip" LayoutSpecifier="StripLayout/Device/Die1">
+<Overlay MapName="UploadTransferMap">
+</Overlay></SubstrateMap>
+</SubstrateMaps></MapData>

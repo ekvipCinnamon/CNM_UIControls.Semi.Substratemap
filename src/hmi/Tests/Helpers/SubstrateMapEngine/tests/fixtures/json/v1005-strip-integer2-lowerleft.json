@@ -1,0 +1,33 @@
+{
+  "$comment": "HAND-AUTHORED from v1005-strip-integer2-lowerleft.xml (Rule 10, D-030). A real production strip map. Covers: BinType=Integer2, four fixed-width hex characters concatenated; NullBin=FFFF marking two whole off-strip rows; MapType ABSENT again; a two-level layout where the CHILD carries LowerLeft 4.5,42 - a parent-relative offset that is the only non-zero one in the corpus - plus a Z element with Order, Height and its OWN Units (um) differing from the layout's DefaultUnits (mm); Orientation 180; and BinDefinitions carrying all five attributes at once, including BinQuality and Pick=false. TopLevel is written \"True\" with a capital T in the XML, which xs:boolean does not accept and the parser tolerates - the JSON is a real boolean, because there is no legacy JSON to be tolerant of.",
+  "$format": "semi-e142", "$version": 1,
+  "$namespace": "urn:semi-org:xsd.E142-1.V1005.SubstrateMap",
+  "Layouts": [
+    { "LayoutId": "StripLayout", "DefaultUnits": "mm", "TopLevel": true,
+      "Dimension": { "X": 1, "Y": 1 }, "DeviceSize": { "X": 170, "Y": 200 },
+      "ChildLayouts": ["ChipLayout"] },
+    { "LayoutId": "ChipLayout", "DefaultUnits": "mm",
+      "Dimension": { "X": 7, "Y": 5 },
+      "LowerLeft": { "X": 4.5, "Y": 42 },
+      "StepSize": { "X": 50, "Y": 15 },
+      "Z": { "Order": 0, "Height": 500, "Units": "um" } }
+  ],
+  "Substrates": [{ "SubstrateType": "Strip", "SubstrateId": "P1AAA0003" }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Strip", "SubstrateId": "P1AAA0003",
+    "LayoutSpecifier": "StripLayout/ChipLayout", "Orientation": 180,
+    "Overlay": [{ "MapName": "BinCodeMap", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Integer2", "NullBin": "FFFF",
+        "BinDefinitions": [
+          { "BinCode": "0002", "BinCount": 0, "BinQuality": "Pass", "BinDescription": "Good" },
+          { "BinCode": "0008", "BinCount": 0, "BinQuality": "Fail", "BinDescription": "Chipping bottom" },
+          { "BinCode": "0001", "BinCount": 0, "BinQuality": "Fail", "BinDescription": "Missing Reference" },
+          { "BinCode": "0009", "BinCount": 0, "BinQuality": "Fail", "BinDescription": "Scrap" }
+        ],
+        "BinCode": [
+          "FFFFFFFFFFFFFFFFFFFFFFFFFFFF", "0002000200020002000200020002",
+          "0002000800020002000100020002", "0002000200020002000200020002",
+          "FFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+        ] } }]
+  }]
+}

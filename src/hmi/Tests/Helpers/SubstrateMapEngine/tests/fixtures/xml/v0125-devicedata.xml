@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-devicedata.xml
+  Covers: DeviceDataMap + the embedded E138 ccs:PVSet (Tasks 51-56).
+  SHAPE: E142-0225 R1-2.1's DeviceDataMap overlay, with ONE correction.
+    The standard's own example writes the third value as
+        <F8>145.4 933.0 1727.1</F8>   <!-\- "Array of 3 elements" -\->
+    which is NOT schema-valid: F8 is xsd:double, a single atomic value, and
+    xmllint rejects it ("is not a valid value of the atomic type 'xs:double'").
+    E138's actual way to say "array of 3" is <Arr>, which the very next value of
+    the same example uses correctly - so this fixture writes it as an Arr of
+    three F8. The invalid form is exercised in the Task 56 gate script instead,
+    because every corpus fixture must validate.
+  The fourth value is the waveform verbatim: an Arr of two Su, each two I2.
+  The parameter list is the SCHEMA for the values - Table 19 makes the ordering
+  a `shall`, and the values carry no names - so all four are present and in
+  order, which is also why the count check does not fire.
+  A separate Sort overlay does the rendering: OverlayType is an xs:choice, so a
+  DeviceDataMap overlay has no BinCodeMap and nothing to draw.
+  Grid: 2x2, LowerLeft / UpRight.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ccs="urn:semi-org:xsd.E138.V0709.ccs"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="DD" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="2"/>
+      <StepSize X="1.0" Y="1.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Strip" SubstrateId="DD-01" LayoutSpecifier="DD"
+        OriginLocation="LowerLeft" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>ab</BinCode>
+          <BinCode>cd</BinCode>
+        </BinCodeMap>
+      </Overlay>
+      <Overlay MapName="DeviceDataMap" MapVersion="1">
+        <DeviceDataMap>
+          <Parameter Name="Ball Dia (um)" Description="Ball diameter at bond"/>
+          <Parameter Name="Ball Height (um)"/>
+          <Parameter Name="Time series parameter"/>
+          <Parameter Name="Waveform"/>
+          <DeviceData X="0" Y="0">
+            <ccs:PVSet>
+              <ccs:F8>42.9</ccs:F8>
+              <ccs:F8>10.4</ccs:F8>
+              <ccs:Arr>
+                <ccs:F8>145.4</ccs:F8><ccs:F8>933.0</ccs:F8><ccs:F8>1727.1</ccs:F8>
+              </ccs:Arr>
+              <ccs:Arr>
+                <ccs:Su><ccs:I2>23</ccs:I2><ccs:I2>57</ccs:I2></ccs:Su>
+                <ccs:Su><ccs:I2>25</ccs:I2><ccs:I2>63</ccs:I2></ccs:Su>
+              </ccs:Arr>
+            </ccs:PVSet>
+          </DeviceData>
+          <DeviceData X="1" Y="0">
+            <ccs:PVSet>
+              <ccs:F8>41.2</ccs:F8>
+              <ccs:F8 xsi:nil="true"/>
+              <ccs:NoValue reasonCode="ValueNotAvailable">
+                <ccs:Description>probe offline</ccs:Description>
+              </ccs:NoValue>
+              <ccs:Arr/>
+            </ccs:PVSet>
+          </DeviceData>
+        </DeviceDataMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

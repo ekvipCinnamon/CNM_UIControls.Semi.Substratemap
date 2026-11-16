@@ -1,0 +1,16 @@
+{
+  "$comment": "HAND-AUTHORED from v0211-origin-center-even.xml (Rule 10, D-030). OriginLocation=Center on an EVEN lattice - 4x4 - which is the case with no exact centre cell, so the implementation must pick a convention and hold it. Center is the fifth OriginLocationEnum member and the only one that is not a corner. StepSize carries no Units, so it falls back to the Layout's DefaultUnits.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0211.SubstrateMap",
+  "Layouts": [{ "LayoutId": "CenterEven", "DefaultUnits": "mm", "TopLevel": true,
+    "Dimension": { "X": 4, "Y": 4 }, "StepSize": { "X": 1.0, "Y": 1.0 } }],
+  "Substrates": [{ "SubstrateType": "Wafer", "SubstrateId": "CENTEREVN" }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "CENTEREVN", "LayoutSpecifier": "CenterEven",
+    "OriginLocation": "Center", "AxisDirection": "UpRight",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+        "BinDefinitions": [{ "BinCode": "1", "BinDescription": "Pass" },
+                           { "BinCode": "9", "BinDescription": "Fail" }],
+        "BinCode": ["1111", "1911", "1191", "1111"] } }]
+  }]
+}

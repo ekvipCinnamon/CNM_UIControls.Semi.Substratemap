@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapAliasIdList": {
+      "type": "array",
+      "minItems": 0,
+      "title": "SubstrateMapAliasIdList",
+      "description": "The alternate identifiers of the active map's substrate, mirrored from E142 Substrate/AliasIds. Read-only output; null rather than an empty array when the source document carried no AliasIds element, because 'no aliases were stated' and 'an empty list of aliases' are different claims and the E142 schema can only express the first (an empty <AliasIds/> is invalid - AliasIdsType requires at least one AliasId).",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The kind of identifier, from AliasId/@Type. An OPEN vocabulary: E142-0225 Table 7 gives examples ('FrontsideId', 'BacksideId', 'WaferId', 'FrameId') and declares no enumeration, so an unrecognized type is carried verbatim and must not be treated as an error."
+          },
+          "value": {
+            "type": "string",
+            "maxLength": 32,
+            "description": "The identifier itself, from AliasId/@Value. Typed MaterialIdType in the E142 schema, hence maxLength 32. Table 7 states the range as 'Text 1-32 characters', but MaterialIdType declares no minLength, so a document may legally carry an empty value; the parser warns and carries it rather than rejecting, and it appears here as an empty string."
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-substrate-numbers.xml
+  Covers: Substrate/SlotNumber and Substrate/SubstrateNumber (Task 20), at the
+          boundary that the standard and its own schema disagree about.
+  SLOT 0 IS THE POINT. E142-0225 Table 6 calls SlotNumber, SubstrateNumber and
+  GoodDevices "Positive Integer"; the XSD types all three
+  xs:nonNegativeInteger, and xmllint accepts <SlotNumber>0</SlotNumber>. The
+  schema is what a document is validated against, so 0 must parse - and slot 0
+  is a real slot in plenty of carrier conventions, not a theoretical case. This
+  fixture pins it: it is schema-valid and must parse with ZERO warnings. A
+  parser that implemented the prose would reject it.
+  GoodDevices is 0 here too, for the same reason and to prove the three fields
+  agree with each other.
+  Grid: 2 cols x 2 rows, all tokens distinct. LowerLeft / UpRight.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Numbers" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="2"/>
+      <StepSize X="1.0" Y="1.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="NUMBERS-01">
+      <LotId>LOT-NUM</LotId>
+      <CarrierType>FOUP</CarrierType>
+      <CarrierId>CAR-NUM-01</CarrierId>
+      <SlotNumber>0</SlotNumber>
+      <SubstrateNumber>25</SubstrateNumber>
+      <GoodDevices>0</GoodDevices>
+    </Substrate>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="NUMBERS-01" LayoutSpecifier="Numbers"
+        OriginLocation="LowerLeft" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>ij</BinCode>
+          <BinCode>kl</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

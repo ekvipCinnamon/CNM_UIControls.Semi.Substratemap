@@ -1,0 +1,18 @@
+{
+  "$comment": "HAND-AUTHORED from v0125-substrate-numbers.xml (Rule 10, D-030). SlotNumber, SubstrateNumber and GoodDevices are xs:nonNegativeInteger, so ZERO IS A VALUE and not an absence - Table 6 calls them \"Positive Integer\" and the schema disagrees with its own prose; the schema wins. SlotNumber 0 is a real slot and GoodDevices 0 means \"none good\", not \"unknown\". Both are omitted-vs-zero traps and both must survive as 0.",
+  "$format": "semi-e142", "$version": 1,
+  "$namespace": "urn:semi-org:xsd.E142-1.V0125.SubstrateMap",
+  "Layouts": [{ "LayoutId": "Numbers", "DefaultUnits": "mm", "TopLevel": true,
+    "Dimension": { "X": 2, "Y": 2 }, "StepSize": { "X": 1.0, "Y": 1.0, "Units": "mm" } }],
+  "Substrates": [{
+    "SubstrateType": "Wafer", "SubstrateId": "NUMBERS-01", "LotId": "LOT-NUM",
+    "CarrierType": "FOUP", "CarrierId": "CAR-NUM-01",
+    "SlotNumber": 0, "SubstrateNumber": 25, "GoodDevices": 0
+  }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "NUMBERS-01", "LayoutSpecifier": "Numbers",
+    "OriginLocation": "LowerLeft", "AxisDirection": "UpRight",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray", "BinCode": ["ij", "kl"] } }]
+  }]
+}

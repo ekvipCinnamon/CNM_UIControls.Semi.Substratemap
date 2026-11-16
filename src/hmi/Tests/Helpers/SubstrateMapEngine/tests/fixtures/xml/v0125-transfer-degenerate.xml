@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-transfer-degenerate.xml
+  Covers: the two ways a TransferMap can be well-formed and still say nothing,
+          both of which the parser reports and neither of which it refuses.
+    1. A <T> carrying NONE of its six optional attributes. Every one of FX, FY,
+       FID, TX, TY, TID is use="optional" and none is coupled to another, so an
+       empty <T> is schema-valid - and it names neither end, so it records no
+       movement. E142_XML_TRANSFER_EMPTY.
+    2. A TransferMap missing one of the three From* attributes. The XSD declares
+       all three use="required", and together they are an intra-document keyref
+       (FromSubstrateMapRef -> SubstrateMapKey), so a missing one leaves the
+       source substrate unidentifiable. E142_XML_TRANSFER_FROM_MISSING.
+  Both are WARNINGS rather than errors: the rest of the document is still a
+  usable map, and Rule 9 prefers a warning to a throw where it is.
+  The second TransferMap is well formed and resolves, so the fixture also shows
+  that one degenerate map does not poison its siblings.
+-->
+<MapData xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Deg" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="1"/>
+    </Layout>
+  </Layouts>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="SRC-A" LayoutSpecifier=""/>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="DEG-01" LayoutSpecifier="Deg">
+      <Overlay MapName="Provenance" MapVersion="1">
+        <TransferMap FromSubstrateType="Wafer" FromSubstrateId="SRC-A" FromSubstrateLayoutSpecifier="">
+          <T FX="0" FY="0" TX="0" TY="0"/>
+          <T/>
+        </TransferMap>
+        <TransferMap FromSubstrateType="Wafer" FromSubstrateLayoutSpecifier="">
+          <T FX="1" FY="0" TX="1" TY="0"/>
+        </TransferMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

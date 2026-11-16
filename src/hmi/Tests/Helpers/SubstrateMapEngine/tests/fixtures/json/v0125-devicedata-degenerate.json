@@ -1,0 +1,47 @@
+{
+  "$comment": "HAND-AUTHORED from v0125-devicedata-degenerate.xml, transcribed element by element from the XML bytes - NOT produced by e142DocumentToJson (Rule 10, D-030). Task 13's negative case, and the first value is the STANDARD'S OWN: E142-0225 R1-2.1 writes an array of three doubles as <F8>145.4 933.0 1727.1</F8>, which is not schema-valid because ccs:F8 is xsd:double, a single atomic value - and the very next value of the same figure uses <Arr> correctly, so the standard contradicts itself inside one example. Here it is a JSON string, which is the faithful analogue: in XML every value is text and this one fails to convert, and in JSON three doubles cannot be written as one number either. Both paths report E138_PV_LEXICAL, drop the value to null and parse on, because a consumer will meet this document in the field and must not reject it. The remaining values cover NoValue with no reasonCode, NoValue with a reason outside NoValueReasonEnumType (carried verbatim rather than normalised, so a reader sees what the producer wrote), and one value more than there are Parameters, which breaks the positional binding Table 19 makes a shall. THIS FIXTURE IS SCHEMA-INVALID ON PURPOSE - see SCHEMA_INVALID in tests/lib/representations.mjs.",
+  "$format": "semi-e142",
+  "$version": 1,
+  "$namespace": "urn:semi-org:xsd.E142-1.V0125.SubstrateMap",
+  "Layouts": [
+    { "LayoutId": "DDeg", "DefaultUnits": "mm", "TopLevel": true, "Dimension": { "X": 1, "Y": 1 } }
+  ],
+  "SubstrateMaps": [
+    {
+      "SubstrateType": "Strip",
+      "SubstrateId": "DDEG-01",
+      "LayoutSpecifier": "DDeg",
+      "Overlay": [
+        {
+          "MapName": "Sort",
+          "MapVersion": "1",
+          "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray", "BinCode": ["a"] }
+        },
+        {
+          "MapName": "DeviceDataMap",
+          "MapVersion": "1",
+          "DeviceDataMap": [
+            {
+              "Parameter": [
+                { "Name": "Time series parameter" },
+                { "Name": "Missing reason" },
+                { "Name": "Unlisted reason" }
+              ],
+              "DeviceData": [
+                {
+                  "X": 0, "Y": 0,
+                  "PVSet": [
+                    { "F8": "145.4 933.0 1727.1" },
+                    { "NoValue": {} },
+                    { "NoValue": { "reasonCode": "ProbeOffline" } },
+                    { "F8": 1.0 }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

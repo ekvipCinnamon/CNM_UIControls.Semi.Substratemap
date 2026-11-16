@@ -1,0 +1,617 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Ekvip.Cinnamon.Semi.SubstrateMap</id>
+    <version>5.0.0.0</version>
+    <description>A TwinCAT HMI control that renders SEMI substrate maps (wafers, panels and other SEMI substrate types) from SEMI E142.1 MapData XML, SEMI E142.4 Stream-21 transfers, a compact GridData JSON or an E142 JSON projection, with individually selectable, status-colored dies and features drawn on the substrate outline. Maps of a million dies and more render at full resolution: below one device pixel per die the control aggregates rather than point-samples, so a single failing die stays visible at any zoom, and a tap selects a group with a summary of what it contains. Per-die measurements that are not bin codes - a relevance map, a thermal field, a probe result - can be carried as an ordinary E142 overlay and drawn as a value field.</description>
+    <authors>ekvip automation GmbH</authors>
+    <title>Cinnamon SEMI SubstrateMap</title>
+    <owners>ekvip automation GmbH</owners>
+    <projectUrl>https://github.com/ekvipCinnamon/CNM_UIControls.Semi.Substratemap</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <releaseNotes>
+      5.0.0.0 - Localization, a new package id, and fixes to the tile and the chart.
+      Nothing a view binds has changed: no attribute, event or function was
+      added, removed, renamed, retyped or re-defaulted. It is a major release
+      because two changes ask something of a consumer. See CHANGELOG.md for
+      the detail.
+
+      =====================================================================
+      BREAKING CHANGES - read these two before upgrading
+      =====================================================================
+
+      1. THE PACKAGE ID IS Ekvip.Cinnamon.Semi.SubstrateMap (was SubstrateMap).
+
+         NuGet does not offer a package under a new id as an upgrade of the
+         old one.
+
+         WHAT TO DO: replace the package reference in your engineering
+         project. The control namespace is unchanged -
+         TcHmi.Controls.CNM_UIControls.SEMI.* - so no view needs editing.
+
+      2. LOCALIZATION KEYS NAME THE SLOT THEY FILL, NOT THE ENGLISH TEXT.
+
+         A key is now SubstrateMapBinChart.displayName or category.Data, where
+         it used to be the whole English string - in one case a thousand
+         characters long.
+
+         WHAT TO DO: only if something of yours reads this package's
+         .localization files by key, update the keys. Views and the controls
+         themselves are unaffected.
+
+      =====================================================================
+      New
+      =====================================================================
+
+      - en-US, en-UK and de-DE are supplied, with en-US as the default. The
+        strings the controls draw follow the locale: the filter bar's labels,
+        options and radius readout, and the chart's remainder bucket. BIN CODES
+        ARE NOT TRANSLATED - they are the document's own data, and translating
+        them would make a chart disagree with the map beside it.
+
+      - The controls appear in the Toolbox under "Cinnamon SEMI".
+
+      - Every E142_* diagnostic code is documented with a likely cause and what
+        to do about it, and where the control recovers by itself the entry says
+        so (README.md, "Diagnostic codes").
+
+      - ARCHITECTURE.md (how the controls and the engine fit together), API.md
+        (five symptoms, each with the file and call chain to break on),
+        CONTRIBUTING.md, and worked examples with screen captures in README.md.
+        The shipped text is US English throughout; en-UK is the deliberate
+        exception.
+
+      =====================================================================
+      Fixed
+      =====================================================================
+
+      - THE TILE AND THE CHART IGNORED E142MapData AND E142MapDataJson. Both
+        declared the attributes and built their grid from GridData only, so a
+        tile bound to a valid E142 document showed "no data" while holding it.
+        Both now read all three inputs by the route the map uses, and agree
+        with it on all 58 document fixtures.
+
+      - The stale marking and the age text were drawn at the wrong size on any
+        display whose device pixel ratio is not 1 - the dashed border appeared
+        as a small box near the top-left corner. On a ratio-1 display nothing
+        changes.
+
+      - A long substrate identity ran into the chart's timestamp. The identity
+        is now shortened with an ellipsis; the timestamp never is.
+
+      - A tile kept a selection it never reported. A control that does not
+        select now declines before hit-testing.
+
+      - The share chart drew its legend over its own header.
+
+      - Three diagnostic messages - E142_JSON_UNKNOWN_MEMBER,
+        E142_XML_SUBSTRATE_TYPE_UNKNOWN and E142_XML_INTEGRITY - cited internal
+        numbers in their text and now state the reason. THE CODES ARE
+        UNCHANGED: match on the code, never on the message.
+
+      =====================================================================
+      Previous releases
+      =====================================================================
+
+      4.0.0.0 - Dashboard widgets, spatial filters, and a golden-map comparison.
+      Three new controls and a filter pipeline over the existing map. See
+      README.md for the attributes, CHANGELOG.md for the upgrade
+      detail, and WIDGET-PATTERN.md if you are giving another control a widget.
+
+      =====================================================================
+      BREAKING CHANGES - read these three before upgrading
+      =====================================================================
+
+      1. AN UNBOUND CONTROL DRAWS A NO-DATA IMAGE, NOT A DEMO WAFER.
+
+         3.0 drew a sample wafer when nothing was bound. It looked like data, and
+         on more than one panel it was taken for data. 4.0 draws an explanatory
+         image instead, in the theme's own colors.
+
+         WHAT TO DO: if you relied on the demo appearing in a running view - a
+         placeholder, a screenshot, a training panel - set ShowDemoItems="true"
+         explicitly. It is off by default. A view that always binds data is
+         unaffected.
+
+      2. A VIEW BINDING AN OUTLINE *AND* ShowDemoItems NOW DRAWS THE DEMO.
+
+         Binding an outline used to suppress the demo, so the flag did nothing
+         and the panel showed an empty substrate. That was a defect: the flag was
+         on and nothing honored it. The demo now draws INSIDE the bound outline,
+         scaled to fit it.
+
+         WHAT TO DO: if such a panel is meant to be empty, turn ShowDemoItems
+         off. It is the flag that was being ignored and it now does what it says.
+         Real bound items still suppress the demo; only the EMPTY case changed.
+
+      3. BIN CODES WITH NO BinQuality AND NO StatusColorMapping ENTRY GET A
+         COLOR.
+
+         Such a code used to fall through to the unknown color, so eight sort
+         grades rendered as eight identical grays. Each now takes a distinct
+         color from a categorical palette with a measured minimum perceptual
+         separation.
+
+         WHAT TO DO: if you relied on unqualified codes being visually merged,
+         declare a StatusColorMapping entry giving them the same color
+         explicitly. Relying on the merge was relying on a limitation.
+
+         A MAP WHOSE CODES ALL CARRY BinQuality RENDERS BYTE-IDENTICALLY TO
+         BEFORE. Quality coloring still wins over the categorical fallback, so
+         the common case does not move.
+
+      4. onItemSelected IS RAISED AFTER THE ATTRIBUTES IT DESCRIBES.
+
+         It used to be raised BEFORE SelectedItemId, SelectedItemStatus and
+         SelectedItems were written, so a handler reading them got the PREVIOUS
+         selection - and on the first click of a session there was none, so it
+         read null. It looked intermittent because re-clicking the same cell
+         leaves the attributes unchanged and only a click on a NEW cell showed
+         it.
+
+         WHAT TO DO: if you built a workaround - a one-click delay, a second
+         read, ignoring the first event - remove it. If you read the event's own
+         payload rather than the attributes, nothing changes for you: the payload
+         was always correct.
+
+         Ordering is the only change. The event fires once per click as before,
+         with the same payload.
+
+      =====================================================================
+      New - three controls
+      =====================================================================
+
+      - SubstrateMapWidget: a dashboard tile. A map with nine attributes rather
+        than a container holding one. It keeps the last map that RENDERED when a
+        feed stops, ages it, and marks itself stale with a dashed border - not a
+        tint, because every color on the tile is data. A click raises
+        onSubstrateSelected with enough to open the full view. No cell-level hit
+        test: at 200 px a die is a fraction of a pixel.
+
+      - SubstrateMapBinChart: bins counted, as bars or as proportions. ONE
+        control for both - ChartStyle is "Bars" or "Share" - because they consume
+        identical data and differ only in geometry. Bars are descending by count
+        and linear FROM ZERO: with yield data the distance to zero is the
+        information. Nine categories plus a remainder, and every bar is the
+        color the map paints for that code.
+
+      - SubstrateMapFilterBar: selectors that drive a map's filters through a
+        binding. It renders no map and holds none - it is the only control in the
+        package that WRITES. It never offers an illegal filter/channel pairing;
+        it grays the kernel out and says why.
+
+      Each takes the SAME map attributes SubstrateMap takes, bound by you - not a
+      reference to a sibling control by id. An id coupling points silently at
+      nothing the moment someone moves the map to another page.
+
+      =====================================================================
+      New - spatial filters
+      =====================================================================
+
+      - SpatialFilter (new, default "None"): "Median", "Min", "Max", "Box" or
+        "Gauss" over the aggregated image, with SpatialFilterRadius in device
+        pixels.
+
+        Median removes scattered single-cell noise without moving an edge. Max
+        dilates - it makes a faint scratch unmistakable, and on a noisy wafer it
+        will wall the substrate in, which is a property of the operation and not
+        a defect. Min erodes. Box and Gauss smooth a scalar field.
+
+      - FieldView (new, default "Bins"): "Bins", "FailDensity" or "ValueField".
+
+        EIGHT OF THE EIGHTEEN PAIRINGS ARE ILLEGAL. Median, Min and Max pick or
+        order palette indices - the median of two categories is a category. Box
+        and Gauss average, and the average of two bin indices is not a bin. Bind
+        an illegal pair and the control reports E142_FILTER_NOT_APPLICABLE and
+        filters nothing; it does not silently substitute. The table is in
+        README.md.
+
+      - FILTERS NEED THE MAP TO BE AGGREGATING. They run over the aggregated
+        bitmap, which is what makes them cheap - one pass over what is on screen
+        rather than over a million cells. Above one device pixel per die there is
+        nothing to filter. Zoom out and a filter engages; zoom in and it stops.
+
+        Measured over 640 000 device pixels: Median, Min and Max cost 20 ms at
+        radius 1, 28 ms at radius 2, 63 ms at radius 5. Box and Gauss cost 82,
+        114 and 187 ms - they convolve a float field rather than pick from a
+        histogram. This is PER VIEW CHANGE, not per frame: the layer cache key
+        includes the filter, so panning a filtered map costs nothing further.
+
+      =====================================================================
+      New - the golden map
+      =====================================================================
+
+      - ReferenceGridData and ReferenceMode (both new): compare a map against
+        another and gray out what matches.
+
+        The useful reference is NOT a perfect wafer. It is one carrying what the
+        substrate is SUPPOSED to contain - test dies, dummy dies, process-control
+        structures - which bin as defects by design and are not defects. Bind it
+        and they gray out; what stays lit is what is actually wrong.
+
+        Compared by bin CODE rather than by table index, so a reference whose bin
+        table is ordered differently still matches.
+
+      =====================================================================
+      New - age and staleness
+      =====================================================================
+
+      - MapTimestamp (new): the same attribute on the map, the tile and the
+        chart, so ONE SYMBOL drives all three. Where it is unbound, a control
+        shows when the payload ARRIVED instead and says which clock it used -
+        "measured 09:15:00 CEST" against "received 11:59:30 CEST". They are
+        different facts: a map that arrived a second ago may describe a wafer
+        tested this morning.
+
+        AN E142 DOCUMENT CARRIES NO TIMESTAMP OF ITS OWN. The ITEMVERSION the
+        standard defines belongs to the Stream 21 message that transports the
+        item, not to the map, so a control that only sees the document cannot
+        know when it was made. Bind it from wherever your transport keeps it.
+
+      - StaleAfterSeconds (new, tile): marks a tile whose data has stopped
+        arriving. STALENESS IS THE ABSENCE OF AN EVENT and cannot be observed, so
+        the control wakes to check - at a rate DERIVED from your threshold, a
+        tenth of it, floored at one second and capped at a minute. A fifteen-
+        minute takt is not polled every second and a one-second takt is not
+        polled every minute. Nothing runs at all when no threshold is set.
+
+      =====================================================================
+      Fixed
+      =====================================================================
+
+      - Every control's Description.json now states the package version. Base,
+        widget, chart and filter bar read 0.0.1.0 while the package read 4.0.0.0.
+        The 2.0 notes recorded fixing this class of drift once already; a gate
+        now compares the nuspec, every descriptor AND the version these notes
+        lead with, so it cannot come back silently.
+
+      =====================================================================
+      Previous releases
+      =====================================================================
+
+      3.0.0.0 - Level-of-detail aggregation, group selection, and a JSON API.
+      Two development cycles since 2.0.0.0: the JSON representation work and the
+      LOD aggregation work. See README.md for the features and the reasoning
+      behind them.
+
+      =====================================================================
+      BREAKING CHANGE - read this one before upgrading
+      =====================================================================
+
+      1. A TAP ON A SMALL DIE NOW RAISES onGroupSelected, NOT onItemSelected.
+
+         When dies are drawn smaller than TouchTargetSize (new, default 40 CSS
+         pixels), a tap selects a GROUP of dies rather than one, and the control
+         raises .onGroupSelected with a summary instead of .onItemSelected. The
+         two events never both fire, so a view that binds only .onItemSelected
+         goes silent on those maps.
+
+         MEASURE YOUR OWN VIEWS BEFORE UPGRADING. On the reference page shipped
+         with this control, ALL SEVEN map panels are affected - their dies are
+         16 to 38 CSS pixels, every one below the 40 px default:
+
+           panel              grid     die size     after upgrade
+           GridData           13x11     16.1 px     groups 3x3
+           GridDataCoord       5x4      37.8 px     groups 2x2
+           E142Xml            11x8      19.2 px     groups 3x3
+           Frame               8x8      34.6 px     groups 2x2
+           Transfer            4x4      37.8 px     groups 2x2
+
+         ITEMS ARE NOT AFFECTED. An item hit still wins outright and still
+         raises .onItemSelected, because grouping is about dies being too small
+         to tap and an item is not a die.
+
+         WHAT TO DO: bind .onGroupSelected as well. Its data carries the group
+         id, the cell count, the worst severity present, and a histogram of the
+         ten most common bin codes with the rest as a remainder. Call
+         readGroupMembers(id) when you need the individual cells - it returns a
+         Uint32Array of cell indices and is deliberately NOT in the payload,
+         because a 12 900-cell group as a list of objects is about 1.5 MB, built
+         and serialized on every tap.
+
+         TO KEEP THE OLD BEHAVIOR EXACTLY: set TouchTargetSize to 0. That is the
+         only value that turns grouping off, and every tap then selects one die
+         and raises .onItemSelected as before. The 24 CSS px floor - WCAG 2.2
+         SC 2.5.8, Target Size (Minimum) - still applies to every POSITIVE value,
+         so a negative number or a 10 clamps to 24; zero is the absence of a
+         target rather than a small one.
+
+         A selected group is drawn: its member cells take the same 2 px selection
+         ring a single die gets, so a tap always leaves a visible mark.
+
+      =====================================================================
+      Changed rendering - the same document can look different
+      =====================================================================
+
+      2. BELOW ONE DEVICE PIXEL PER DIE, THE MAP NOW AGGREGATES.
+
+         2.0 point-sampled: each pixel picked ONE die and painted it, so every
+         other die in that pixel was invisible, and which one survived depended
+         on where the grid happened to land relative to the pixel raster. On a
+         600x600 map at 20 dies per pixel a single failing die was invisible at
+         EVERY subpixel phase - not bad luck, a certainty.
+
+         3.0 scatters instead: every die reaches the pixel it falls in and the
+         pixel is reduced. The same failing die is visible at every factor and
+         every phase.
+
+         Aggregated tiles are painted from a SEPARATE, darker palette so an
+         operator can tell a summary from a datum. AggregationFactor and
+         AggregationMode (both new, read-only) report what the last frame did.
+
+         You are affected if you have baselined screenshots of a zoomed-out map.
+         A map whose dies are at least one device pixel across renders exactly
+         as before.
+
+      3. DECORATED CELLS ARE MARKED UNDER AGGREGATION.
+
+         Overlay decorations draw as corner wedges above 6 pixels per die and
+         stopped entirely below that, so a map with three overlays looked like a
+         map with one. An aggregated tile whose bucket carries a decoration is
+         now drawn at reduced alpha - same color, substrate showing faintly
+         through - so the marks are not silently lost.
+
+      =====================================================================
+      New - JSON representation (nothing existing changes)
+      =====================================================================
+
+      - E142MapDataJson (new): bind an E142 document as JSON instead of XML.
+        Same model, same validation, same errors - for systems that would
+        rather not carry an XML parser.
+
+      - toGridData() (new function): export the bound map as compact GridData
+        JSON. toE142Xml() is unchanged.
+
+      - The two representations are held to parity by the build: every XML test
+        fixture has a JSON counterpart or a registered exemption, and 58 XML /
+        77 JSON fixtures round-trip through both transports.
+
+      =====================================================================
+      New - aggregation and selection
+      =====================================================================
+
+      - AggregationReducer (new, default "Auto"): which reduction an aggregated
+        tile uses. "MaxSeverity" paints the worst die in the pixel - it never
+        hides a lone defect but saturates on a noisy wafer. "FailFraction"
+        paints how much of the pixel failed - it never floods but reduces a
+        scratch to a tint.
+
+        "Auto" MEASURES which is happening rather than inferring it from the
+        zoom, because the zoom does not determine it: at one aggregation factor
+        the chance a pixel holds a failing die runs from 0.5 % to 100 % with the
+        defect rate. Each frame measures its own saturation and selects for the
+        next, switching up at 0.6 and back at 0.4. The measurement is free - the
+        reducer that just ran has already accumulated it.
+
+      - TouchTargetSize (new, default 40 CSS px): how small a die has to be
+        before a tap selects a group. Floors at 24. See the breaking change.
+
+      - onGroupSelected (new event), readGroupMembers() (new function).
+
+      - BinQualityAliases (new): map your own vocabulary onto E142 BinQuality,
+        so a document spelling it "GOOD" or "P" can be read without editing it.
+
+      - BinSeverityPriority (new): your own ordering of bin codes for the
+        MaxSeverity reduction, when the standard's pass/fail/unknown ladder is
+        not the ordering that matters on your line.
+
+      =====================================================================
+      New - two injection seams, both inert until used
+      =====================================================================
+
+      - VALUE FIELDS. An E142 overlay may be given the role "valueField" in
+        E142Overlays and is drawn as a lightness-ordered ramp over its own
+        BinDefinitions instead of the bin palette. It is for a per-die
+        measurement the bin codes cannot express - an LRP relevance map, a
+        thermal field, a probe result.
+
+        NOTHING IS ADDED TO THE E142 DOCUMENT. Table 9 already defines MapName
+        as "a name that describes the purpose of the bin codes in the map", with
+        SortGrade and DefectCode among its own examples, so a quantized
+        measurement written as an Overlay named "Relevance" is ordinary
+        conformant E142. The role is interpretation on the control's side only.
+
+      - ViewTransform (new) and MapScale (new, read-only): an affine transform
+        composed into the view as six components - zoom, pan, rotation, mirror,
+        shear. GEOMETRY ONLY; it cannot carry a per-die value, which is what
+        value fields are for.
+
+        It is post-multiplied, so its translation is in MILLIMETERS of the
+        substrate frame and its scaling is anchored at the canvas center. Read
+        MapScale to convert: millimeters = pixels / MapScale.
+
+      =====================================================================
+      Fixed
+      =====================================================================
+
+      - A single failing die is no longer lost at zoom (see 2).
+      - Overlay decorations are no longer silently dropped at zoom (see 3).
+      - Physical StepSize is now exercised by the test corpus at three device
+        pitches in all four BinTypes. NOTE: the four E142 panels on the shipped
+        reference page carry no Layout element at all and render at a constant
+        5 mm fallback pitch, so they do not demonstrate physical scale. Adding a
+        Layout with a real StepSize to those documents would fix it; the page is
+        yours and this release does not touch it.
+
+      =====================================================================
+      Limits - documented so they are supported rather than discovered
+      =====================================================================
+
+      - THE ITEM PATH DOES NOT AGGREGATE AND DOES NOT SCALE. Measured: 1 000
+        items build in 10 ms and 1.7 MB, 10 000 in 30 ms and 21 MB, 100 000 in
+        701 ms and 145 MB. THE SUPPORTED CEILING IS 10 000 ITEMS. Nothing in
+        this release raises it and nothing was intended to - items are
+        individually identified, hit-tested and styled, so there is no bucket
+        that could stand for several of them the way a tile stands for a
+        thousand dies. If you have more than ten thousand things to draw, they
+        are dies rather than items: put them in a GridData or an E142 overlay.
+
+      - Aggregation requires a layer cache. A control rendering without one uses
+        the run strategy at any zoom, whatever AggregationFactor reports.
+
+      =====================================================================
+      Previous releases
+      =====================================================================
+
+      2.0.0.0 - SEMI E142 model coverage, export fidelity and selection detail.
+      See README.md for the per-object conformance matrix.
+
+      =====================================================================
+      BREAKING CHANGES - read these two before upgrading
+      =====================================================================
+
+      1. toE142Xml() EMITS A DIFFERENT DOCUMENT SHAPE.
+
+         For the same bound map, the exported XML now carries a two-level layout
+         tree instead of one flat layout:
+
+           1.0                             2.0
+           one &lt;Layout&gt;                    two: a top-level 1x1 substrate layout
+                                           plus a child device layout
+           LayoutSpecifier="L0"            LayoutSpecifier="L0/L0_Devices"
+           no &lt;Substrates&gt; block           &lt;Substrates&gt; with the substrate identity
+
+         Both forms are schema-valid and any conforming E142 reader accepts either.
+         You are affected only if something downstream byte-compares exported
+         documents, or matches on the LayoutSpecifier VALUE rather than resolving
+         it. If your exports go to another E142 reader or to a human, nothing
+         changes for you.
+
+         Why it changed: E142 Table 2 puts the substrate at Dimension 1x1 with the
+         devices in a child layout. The 1.0 output conflated the two and emitted no
+         substrate identity at all, so LotId, GoodDevices, AliasIds and the carrier
+         fields were lost on every export. Keeping the old shape would have meant
+         keeping that defect.
+
+      2. A MAP WITH LID-ONLY BIN CODES NOW RENDERS MORE CELLS.
+
+         &lt;BinCode&gt; entries carrying only a LID, with no X/Y, were dropped by 1.0 -
+         it said so, with the warning E142_XML_LID_ONLY_EXCLUDED. They are now
+         resolved against the declared lattice and drawn. The same document
+         therefore shows cells that were previously blank, and the warning no
+         longer fires.
+
+         You are affected only if you have baselined screenshots or cell counts for
+         such a document. A map whose bin codes all carry X/Y is unchanged.
+
+      =====================================================================
+      NOT breaking - every new behavior is off by default
+      =====================================================================
+
+      - ViewSubstrateSide (new) defaults to "follow-map": nothing mirrors. A
+        BottomSide map can now be rendered mirrored, but ONLY once this attribute
+        is moved off that default. SubstrateSide on its own has never mirrored
+        anything and still does not - the coordinate consequences of the other face
+        are already carried by OriginLocation and AxisDirection.
+      - E142Overlays (new) defaults to null: single-overlay rendering, exactly as
+        before. The decoration render pass is skipped entirely.
+      - E142AlignToReferenceDevices remains off by default; placement is unchanged
+        unless it is explicitly enabled.
+      - No attribute was removed, retyped or re-defaulted; no event or callable was
+        removed; nothing that parsed in 1.0 fails in 2.0. Verified by running both
+        versions over the full 63-document test corpus.
+
+      =====================================================================
+      NEW
+      =====================================================================
+
+      - Substrate alias identifiers (AliasIds) and the carrier fields CarrierType,
+        CarrierId, SlotNumber and SubstrateNumber, exposed as read-only Map*
+        attributes and preserved on export.
+      - Location identifiers (LID) on bin codes and device ids, carried verbatim as
+        join keys and reported on selection. A LID-only map resolves against the
+        declared lattice; one with no lattice at all is refused rather than guessed.
+      - TransferMap: substrate-to-substrate traceability. A selected cell reports
+        where its device came from - source substrate type and id, plus either a
+        coordinate or a location identifier on that source.
+      - DeviceDataMap with the embedded SEMI E138 PVSet payload. All sixteen PVType
+        alternatives are read, including the recursive Su and Arr and the explicit
+        NoValue, which stays distinct from xsi:nil and from an empty string.
+      - Multi-overlay composition: E142Overlays takes an ordered list of one base
+        plus decorations, which draw as per-cell marks over the base fill.
+      - ViewSubstrateSide and MapSubstrateSide; E142SubstrateId,
+        E142LayoutSpecifier, E142OverlayVersion and E142DeviceDataOverlayName for
+        selecting a map in a multi-substrate document; MapSubstrateCount.
+
+      =====================================================================
+      EXPORT FIDELITY
+      =====================================================================
+
+      toE142Xml now preserves the frame, orientation, substrate side, overlay name
+      and version, step size, device size, the source layout tree, bin definitions,
+      the full substrate identity including alias ids and carrier fields, and
+      resolvable transfer maps. What it does NOT preserve is listed explicitly in
+      README.md with the reason for each: device-id maps, device data, per-cell
+      LIDs, reference devices, every substrate but the rendered one, and any
+      transfer whose source reference cannot be satisfied.
+
+      =====================================================================
+      SELECTION
+      =====================================================================
+
+      The onItemSelected cell payload and SelectedItems gain lid, deviceId, the five
+      transfer fields, deviceData joined to its parameter names by index, and
+      per-overlay bin codes for a composed map. Three previously undeclared or
+      wrongly typed fields in the SelectionList schema were corrected.
+
+      =====================================================================
+      FIXES
+      =====================================================================
+
+      - The E142AlignToReferenceDevices descriptor no longer claims a behavior the
+        control does not have; it is opt-in and off by default, and says so.
+      - The package version was inconsistent between Description.json (0.1.0.0) and
+        the nuspec (1.0.0.0). Both now read 2.0.0.0.
+      - Documentation: the ITEMTYPE discussion, which stated the well-known name was
+        unsettled, now cites [E142.04-RQ-00006-00], which has fixed it since
+        October 2022.
+      - Source comments and JSDoc were rewritten in plain English throughout, with
+        every rule stating whether the standard settles it, the XSD declares it, or
+        it is inferred.
+    </releaseNotes>
+    <copyright>Copyright 2026</copyright>
+    <tags>TwinCAT HMI</tags>
+    <readme>README.md</readme>
+    <license type="file">LICENSE.txt</license>
+    <icon>images/logo.png</icon>
+    <dependencies>
+      <group targetFramework="native1.12-tchmi">
+        <dependency id="Beckhoff.TwinCAT.HMI.Controls" version="14.7.1" />
+        <dependency id="Beckhoff.TwinCAT.HMI.Framework" version="14.5.1" />
+        <dependency id="Beckhoff.TwinCAT.HMI.Server.Engineering" version="23.0.421" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="LICENSE.txt" target="" exclude="bin\**;Packages\**" />
+    <file src="LICENSE.txt" target="runtimes\native1.12-tchmi\" exclude="bin\**;Packages\**" />
+    <file src="ARCHITECTURE.md" target="" exclude="bin\**;Packages\**" />
+    <file src="API.md" target="" exclude="bin\**;Packages\**" />
+    <file src="CONTRIBUTING.md" target="" exclude="bin\**;Packages\**" />
+    <file src="CHANGELOG.md" target="" exclude="bin\**;Packages\**" />
+    <file src="README.md" target="" exclude="bin\**;Packages\**" />
+    <file src="README.md" target="runtimes\native1.12-tchmi\" exclude="bin\**;Packages\**" />
+    <file src="images\logo.png" target="images\" exclude="bin\**;Packages\**" />
+    <file src="Manifest.json" target="runtimes\native1.12-tchmi\" exclude="bin\**;Packages\**" />
+    <file src="**/*.function.json" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/Description.json" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.Schema.json" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="Schema\E142\*.xsd" target="runtimes\native1.12-tchmi\Schema\E142\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="Schema\E142\JSON-FORMAT.md" target="runtimes\native1.12-tchmi\Schema\E142\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.html" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.css" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.png" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.svg" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.jpg" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.ico" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.theme" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.js" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.js.map" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.ts" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.usercontrol" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.usercontrol.json" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.content" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.view" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+    <file src="**/*.localization" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
+  </files>
+</package>

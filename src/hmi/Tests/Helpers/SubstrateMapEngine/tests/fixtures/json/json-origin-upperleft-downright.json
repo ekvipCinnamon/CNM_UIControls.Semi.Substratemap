@@ -1,0 +1,23 @@
+{
+  "_fixtureNote": "OriginLocation UpperLeft x AxisDirection DownRight. Neither value appeared anywhere in the JSON corpus. Grid 3x3, all tokens distinct so one probe pins the mapping. UpperLeft -> logical (0,0) is serialization (col 0, row 0); DownRight -> +x right, +y down, so logical (x,y) == serialization (col x, row y).",
+  "dimension": {
+    "x": 3,
+    "y": 3
+  },
+  "units": "mm",
+  "stepSize": {
+    "x": 1,
+    "y": 1
+  },
+  "orientation": 0,
+  "originLocation": "UpperLeft",
+  "axisDirection": "DownRight",
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "2DArray",
+  "bins": [
+    "ABC",
+    "DEF",
+    "GHI"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "../../Packages/Beckhoff.TwinCAT.HMI.Framework.14.5.1/runtimes/native1.12-tchmi/Schema/LocalizationDescription.Schema.json",
+  "scope": "Control",
+  "locale": "de-DE",
+  "order": 2,
+  "localizedText": {
+    "SubstrateMapBinChart.displayName": "Substratemap-Bin-Diagramm",
+    "SubstrateMapBinChart.description": "Zählt die Bins eines Substrats und zeigt sie als Balken oder als Anteile am Ganzen.",
+    "chart.other": "Sonstige",
+    "age.measured": "gemessen",
+    "age.received": "empfangen",
+    "category.Data": "Daten",
+    "category.Chart": "Diagramm"
+  }
+}

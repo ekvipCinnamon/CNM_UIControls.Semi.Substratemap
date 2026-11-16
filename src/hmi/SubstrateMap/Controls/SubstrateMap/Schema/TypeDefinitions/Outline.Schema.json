@@ -1,0 +1,473 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapOutline": {
+      "type": "object",
+      "title": "SubstrateMapOutline",
+      "description": "The substrate outline: exactly one closed shape authored in the substrate frame (+y up, origin at the substrate center). Filled with the body color and stroked with the edge color, both from the theme. Its bounding box defines the fit box and the origin anchors.",
+      "properties": {
+        "unit": {
+          "type": "string",
+          "description": "Base unit for the outline coordinates and sizes.",
+          "enum": [
+            "meter"
+          ]
+        },
+        "prefix": {
+          "type": "string",
+          "description": "Metric prefix applied to the meter base unit (outline coordinates and sizes).",
+          "enum": [
+            "yocto",
+            "zepto",
+            "atto",
+            "femto",
+            "pico",
+            "nano",
+            "micro",
+            "milli",
+            "centi",
+            "deci",
+            "none"
+          ],
+          "options": [
+            {
+              "value": "yocto",
+              "label": null
+            },
+            {
+              "value": "zepto",
+              "label": null
+            },
+            {
+              "value": "atto",
+              "label": null
+            },
+            {
+              "value": "femto",
+              "label": null
+            },
+            {
+              "value": "pico",
+              "label": null
+            },
+            {
+              "value": "nano",
+              "label": null
+            },
+            {
+              "value": "micro",
+              "label": null
+            },
+            {
+              "value": "milli",
+              "label": null
+            },
+            {
+              "value": "centi",
+              "label": null
+            },
+            {
+              "value": "deci",
+              "label": null
+            },
+            {
+              "value": "none",
+              "label": null
+            }
+          ]
+        },
+        "geometry": {
+          "type": "object",
+          "description": "The single closed outline shape, discriminated by `type`. Coordinates are in the substrate frame, +y up.",
+          "oneOf": [
+            {
+              "description": "Rectangle centered on (center_position_x, center_position_y) at zero rotation. `width`/`length` are the rectangle's size. Always body-filled and edge-stroked from the theme colors.",
+              "properties": {
+                "type": {
+                  "enum": [
+                    "rectangle"
+                  ]
+                },
+                "center_position_x": {
+                  "type": "integer"
+                },
+                "center_position_y": {
+                  "type": "integer"
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "length": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "type",
+                "center_position_x",
+                "center_position_y",
+                "width",
+                "length"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "description": "Circle centered on (center_position_x, center_position_y) with `radius`. Always body-filled and edge-stroked from the theme colors.",
+              "properties": {
+                "type": {
+                  "enum": [
+                    "circle"
+                  ]
+                },
+                "center_position_x": {
+                  "type": "integer"
+                },
+                "center_position_y": {
+                  "type": "integer"
+                },
+                "radius": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "type",
+                "center_position_x",
+                "center_position_y",
+                "radius"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "description": "Ellipse centered on (center_position_x, center_position_y); radius_x/radius_y along the axes. Always body-filled and edge-stroked from the theme colors.",
+              "properties": {
+                "type": {
+                  "enum": [
+                    "ellipse"
+                  ]
+                },
+                "center_position_x": {
+                  "type": "integer"
+                },
+                "center_position_y": {
+                  "type": "integer"
+                },
+                "radius_x": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "radius_y": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "type",
+                "center_position_x",
+                "center_position_y",
+                "radius_x",
+                "radius_y"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "description": "Closed polygon through `points` (last vertex auto-joined to the first). Always body-filled and edge-stroked from the theme colors.",
+              "properties": {
+                "type": {
+                  "enum": [
+                    "polygon"
+                  ]
+                },
+                "points": {
+                  "type": "array",
+                  "minItems": 3,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "integer"
+                      },
+                      "y": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "type",
+                "points"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "description": "SVG path as a list of named-field commands; multi-contour paths allowed, nonzero fill rule. Coordinates are in the substrate frame, +y up (NOT raw SVG +y-down); *_relative commands are deltas from the current point. Always body-filled and edge-stroked from the theme colors.",
+              "properties": {
+                "type": {
+                  "enum": [
+                    "path"
+                  ]
+                },
+                "commands": {
+                  "type": "array",
+                  "minItems": 1,
+                  "description": "Ordered drawing commands, reassembled into an SVG path. abs/rel is encoded in the command name (*_absolute / *_relative).",
+                  "items": {
+                    "type": "object",
+                    "oneOf": [
+                      {
+                        "description": "Close the current subpath (SVG Z). No fields.",
+                        "properties": {
+                          "type": {
+                            "enum": [
+                              "close_path"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "type"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "description": "Move / line / smooth-quadratic to an endpoint (SVG M/L/T). move_to_* starts a new subpath; line_to_* draws a straight line; smooth_quadratic_bezier_* curves with a reflected control point.",
+                        "properties": {
+                          "type": {
+                            "enum": [
+                              "move_to_absolute",
+                              "move_to_relative",
+                              "line_to_absolute",
+                              "line_to_relative",
+                              "smooth_quadratic_bezier_absolute",
+                              "smooth_quadratic_bezier_relative"
+                            ]
+                          },
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "x",
+                          "y"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "description": "Horizontal line (SVG H). Only x changes.",
+                        "properties": {
+                          "type": {
+                            "enum": [
+                              "horizontal_line_to_absolute",
+                              "horizontal_line_to_relative"
+                            ]
+                          },
+                          "x": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "x"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "description": "Vertical line (SVG V). Only y changes.",
+                        "properties": {
+                          "type": {
+                            "enum": [
+                              "vertical_line_to_absolute",
+                              "vertical_line_to_relative"
+                            ]
+                          },
+                          "y": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "y"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "description": "Quadratic Bezier (SVG Q): one control point + endpoint.",
+                        "properties": {
+                          "type": {
+                            "enum": [
+                              "quadratic_bezier_absolute",
+                              "quadratic_bezier_relative"
+                            ]
+                          },
+                          "control_x": {
+                            "type": "number"
+                          },
+                          "control_y": {
+                            "type": "number"
+                          },
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "control_x",
+                          "control_y",
+                          "x",
+                          "y"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "description": "Smooth cubic Bezier (SVG S): the SECOND control point + endpoint; the first is the reflection of the previous curve's second control point.",
+                        "properties": {
+                          "type": {
+                            "enum": [
+                              "smooth_cubic_bezier_absolute",
+                              "smooth_cubic_bezier_relative"
+                            ]
+                          },
+                          "control_2_x": {
+                            "type": "number"
+                          },
+                          "control_2_y": {
+                            "type": "number"
+                          },
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "control_2_x",
+                          "control_2_y",
+                          "x",
+                          "y"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "description": "Cubic Bezier (SVG C): two control points + endpoint.",
+                        "properties": {
+                          "type": {
+                            "enum": [
+                              "cubic_bezier_absolute",
+                              "cubic_bezier_relative"
+                            ]
+                          },
+                          "control_1_x": {
+                            "type": "number"
+                          },
+                          "control_1_y": {
+                            "type": "number"
+                          },
+                          "control_2_x": {
+                            "type": "number"
+                          },
+                          "control_2_y": {
+                            "type": "number"
+                          },
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "control_1_x",
+                          "control_1_y",
+                          "control_2_x",
+                          "control_2_y",
+                          "x",
+                          "y"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "description": "Elliptical arc (SVG A). large_arc/sweep are booleans (serialized to 0/1). NOTE: sweep direction is visually mirrored by the control's y-flip (veto #3).",
+                        "properties": {
+                          "type": {
+                            "enum": [
+                              "elliptical_arc_absolute",
+                              "elliptical_arc_relative"
+                            ]
+                          },
+                          "rx": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "ry": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "x_axis_rotation": {
+                            "type": "number",
+                            "description": "degrees"
+                          },
+                          "large_arc": {
+                            "type": "boolean",
+                            "description": "Choose the larger of the two possible arcs."
+                          },
+                          "sweep": {
+                            "type": "boolean",
+                            "description": "Sweep direction (mirrored by the y-flip)."
+                          },
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "rx",
+                          "ry",
+                          "x_axis_rotation",
+                          "large_arc",
+                          "sweep",
+                          "x",
+                          "y"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "type",
+                "commands"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "required": [
+        "unit",
+        "prefix",
+        "geometry"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

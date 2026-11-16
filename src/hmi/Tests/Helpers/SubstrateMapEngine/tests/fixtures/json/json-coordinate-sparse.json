@@ -1,0 +1,25 @@
+{
+  "_fixtureNote": "bins as {x,y,bin}[] sparse array - ONLY valid combined with mapType 'Coordinate' per the GridData v1 contract. Grid 4x3 (x=4,y=3); only 6 of 12 cells populated, remaining 6 are nullBin by omission.",
+  "dimension": { "x": 4, "y": 3 },
+  "units": "mm",
+  "stepSize": { "x": 1.0, "y": 1.0 },
+  "orientation": 0,
+  "originLocation": "LowerLeft",
+  "axisDirection": "UpRight",
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "Coordinate",
+  "binDefinitions": [
+    { "binCode": "1", "binQuality": "Pass" },
+    { "binCode": "9", "binQuality": "Fail" }
+  ],
+  "bins": [
+    { "x": 0, "y": 0, "bin": "1" },
+    { "x": 1, "y": 0, "bin": "1" },
+    { "x": 2, "y": 0, "bin": "9" },
+    { "x": 0, "y": 1, "bin": "1" },
+    { "x": 3, "y": 1, "bin": "1" },
+    { "x": 1, "y": 2, "bin": "1" }
+  ],
+  "substrateId": "JSONCOORD1"
+}

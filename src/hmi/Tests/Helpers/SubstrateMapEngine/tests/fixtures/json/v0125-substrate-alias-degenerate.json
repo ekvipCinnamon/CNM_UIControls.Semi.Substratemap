@@ -1,0 +1,22 @@
+{
+  "$comment": "HAND-AUTHORED from v0125-substrate-alias-degenerate.xml (Rule 10, D-030). Task 14's negative case. AliasIdType declares BOTH @Type and @Value use=\"required\", so an empty @Value is schema-valid and prose-invalid: the element is present and addresses nothing - E142_XML_ID_EMPTY, carried rather than dropped so a reader can see what the producer emitted. The third alias is 33 characters, one past MaterialIdType's maxLength 32 - E142_XML_ID_TOO_LONG, and the value survives UNTRUNCATED, because an alias is a join key and a shortened one silently joins to nothing. The fourth has an empty @Type and is reported by nothing at all: the type vocabulary is OPEN, Table 7 gives examples and declares no restriction, so there is no facet to violate. That asymmetry between @Type and @Value is the point of the fixture.",
+  "$format": "semi-e142", "$version": 1,
+  "$namespace": "urn:semi-org:xsd.E142-1.V0125.SubstrateMap",
+  "Layouts": [{ "LayoutId": "AlDeg", "DefaultUnits": "mm", "TopLevel": true,
+    "Dimension": { "X": 1, "Y": 1 } }],
+  "Substrates": [{
+    "SubstrateType": "Wafer", "SubstrateId": "ALDEG-01",
+    "AliasIds": [
+      { "Type": "FrontsideId", "Value": "GOOD-0001" },
+      { "Type": "BacksideId", "Value": "" },
+      { "Type": "CustomerBarcode", "Value": "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL" },
+      { "Type": "", "Value": "NO-TYPE-0001" }
+    ],
+    "GoodDevices": 1
+  }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "ALDEG-01", "LayoutSpecifier": "AlDeg",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "1",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray", "BinCode": ["a"] } }]
+  }]
+}

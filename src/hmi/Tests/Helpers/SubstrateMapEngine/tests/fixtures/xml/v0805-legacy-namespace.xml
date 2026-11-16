@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0805-legacy-namespace.xml
+ Basis: namespace coverage bullet. Minimal but complete, valid document exercising the
+ legacy namespace string alone; data model is identical to V0211
+ per the standard ("Kern-Geometrie-Attribute... byte-identisch").
+ Covers: namespace V0805; MapType=2DArray (explicit); BinType=Ascii;
+ default OriginLocation/AxisDirection (both omitted -> LowerLeft/
+ UpRight).
+ Grid: 4 cols x 3 rows.
+-->
+<MapData xmlns="urn:semi-org:xsd.E142-1.V0805.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Top" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="4" Y="3"/>
+      <StepSize X="1.0" Y="1.0"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="LEGACY001"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="LEGACY001" LayoutSpecifier="Top">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinDescription="Pass"/>
+            <BinDefinition BinCode="9" BinDescription="Fail"/>
+          </BinDefinitions>
+          <BinCode>.11.</BinCode>
+          <BinCode>1191</BinCode>
+          <BinCode>.11.</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

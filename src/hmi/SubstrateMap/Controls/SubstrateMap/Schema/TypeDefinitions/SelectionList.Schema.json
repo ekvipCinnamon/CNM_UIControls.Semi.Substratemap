@@ -1,0 +1,184 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapSelectionList": {
+      "type": "array",
+      "minItems": 0,
+      "title": "SubstrateMapSelectionList",
+      "description": "The current selection as typed entries. Read-only output mirrored from the control; empty when nothing is selected. 'cell' entries additionally carry binQuality and the signed logical mapX / mapY.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "description": "Discriminates the selected element: an item geometry or a grid cell.",
+            "enum": [
+              "item",
+              "cell"
+            ]
+          },
+          "item_id": {
+            "type": "integer",
+            "description": "Id of the selected element: the item_id for items, the cell index for grid cells."
+          },
+          "status": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Resolved status / bin string of the selected element, as mapped via StatusColorMapping. Null when there is none - the control emits null for a cell with no bin, and an item whose status does not resolve."
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Name of the selected element, when it has one. Null when there is none - the control emits null for every cell entry (a cell has no name)."
+          },
+          "user_data": {
+            "type": [
+              "string",
+              "number",
+              "null"
+            ],
+            "description": "Opaque user_data of the selected item, passed through unchanged; null for grid cells."
+          },
+          "binQuality": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Bin quality of a selected cell as the source declared it; present only on 'cell' entries, null when the source declared none. Absent for items."
+          },
+          "mapX": {
+            "type": "number",
+            "description": "Signed logical E142 map X of a selected cell. Present only on 'cell' entries when a map frame is known."
+          },
+          "mapY": {
+            "type": "number",
+            "description": "Signed logical E142 map Y of a selected cell. Present only on 'cell' entries when a map frame is known."
+          },
+          "deviceId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Device id of a selected CELL, from a DeviceIdMap overlay entry addressing the same cell. Null when the map carries no DeviceIdMap or that cell has no <Id>. Absent for item entries. NOTE: this is the identifier of the DEVICE, which moves; see `lid` for the identifier of the LOCATION, which does not."
+          },
+          "lid": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Location identifier of a selected CELL, from E142 BinCode/@LID. Null when the map names no location for that cell. Absent for item entries. E142 13.4: 'A location identifier is distinct from the DeviceId ... The location identifier is still present when the device is removed.' - so `lid` names the socket and `deviceId` names whatever is currently in it. Opaque: never trimmed or case-folded, because it is a join key. An EMPTY STRING is a legal zero-length LID and is not the same as null."
+          },
+          "fromSubstrateType": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "SubstrateType of the substrate this CELL's device came from (E142 TransferMap/@FromSubstrateType). Null when the map carries no transfer covering this cell. Reported with fromSubstrateId because an id alone is half a key: SubstrateMapKey is (SubstrateType, SubstrateId, LayoutSpecifier), so one document may legitimately carry a Wafer and a TnR with the same id."
+          },
+          "fromSubstrateId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "SubstrateId of the substrate this CELL's device came from - the R2-3 traceability path. Null when no transfer covers this cell. E142 13.9 and R2-3 make TransferMap the substrate-to-substrate traceability mechanism; R2-3.2.2 describes the wafer -> tape-and-reel -> target chain it records. Absent for item entries."
+          },
+          "fromX": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Logical X on the SOURCE substrate (E142 T/@FX). Null when no transfer covers this cell, or when that transfer addressed its source end by identifier rather than by coordinate - each end of a transfer is addressed independently. Exactly one of (fromX, fromY) and fromLid is non-null for a covered cell."
+          },
+          "fromY": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Logical Y on the source substrate (E142 T/@FY). See fromX."
+          },
+          "fromLid": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Location identifier on the SOURCE substrate (E142 T/@FID) - a tape pocket, in the R2-3.2.2 case. Null when no transfer covers this cell, or when that transfer addressed its source end by coordinate."
+          },
+          "deviceData": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "description": "Parameter readings for a selected CELL, from a DeviceDataMap overlay. Null when the map carries none or none covers this cell. Each entry has the parameter name, the value rendered for display, and the raw E138 PVSet value. Names join to values BY INDEX (E142 Table 19); an empty name means the document's Parameter list was shorter than its value list.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Parameter/@Name; empty when the document supplied none."
+                },
+                "value": {
+                  "type": "string",
+                  "description": "The value rendered for a human. '(nil)' for xsi:nil, '(reason: text)' for NoValue, '(a, b)' for a structure, '[a, b]' for an array."
+                },
+                "raw": {
+                  "description": "The E138 PvValue itself, for a consumer that needs the tree rather than the text."
+                }
+              },
+              "required": [
+                "name",
+                "value"
+              ]
+            }
+          },
+          "overlays": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "description": "Every composed overlay's bin for this CELL, base first, in the E142Overlays order. Null when the map is not composed. binCode on this entry remains the BASE overlay's, unchanged. A layer that says nothing about the cell is LISTED with binCode null rather than omitted - omitting would be ambiguous with 'no such overlay'.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "mapName": {
+                  "type": "string",
+                  "description": "Overlay/@MapName."
+                },
+                "mapVersion": {
+                  "type": "string",
+                  "description": "Overlay/@MapVersion. With mapName this is OverlayKey, so the pair identifies the overlay."
+                },
+                "binCode": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "This overlay's bin code for the cell, or null when it names no bin there."
+                },
+                "binQuality": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "The bin's declared quality, or null."
+                }
+              },
+              "required": [
+                "mapName",
+                "mapVersion"
+              ]
+            }
+          }
+        },
+        "required": [
+          "kind",
+          "item_id"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+/*
+ * SubstrateMapWidget - tile layout.
+ *
+ * The canvas, its sizing and every colour come from SubstrateMapBase and its
+ * --substratemap-* variables. This file exists so a tile can be given a
+ * border or a padding without touching the base, and it is deliberately
+ * almost empty: a tile that styled the map differently from the map would
+ * be two appearances to keep in step.
+ */
+
+.TcHmi_Controls_CNM_UIControls_SEMI_SubstrateMapWidget-Template {
+    display: block;
+    width: 100%;
+    height: 100%;
+}

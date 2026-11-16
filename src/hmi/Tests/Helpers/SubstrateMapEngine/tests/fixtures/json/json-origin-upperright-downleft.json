@@ -1,0 +1,26 @@
+{
+  "_fixtureNote": "OriginLocation UpperRight x AxisDirection DownLeft, with a non-square pitch and an explicit deviceSize so the street survives the round trip. UpperRight -> serialization (col 3, row 0); DownLeft -> +x left, +y down.",
+  "dimension": {
+    "x": 4,
+    "y": 2
+  },
+  "units": "mm",
+  "stepSize": {
+    "x": 2,
+    "y": 3
+  },
+  "deviceSize": {
+    "x": 1.5,
+    "y": 2.5
+  },
+  "orientation": 0,
+  "originLocation": "UpperRight",
+  "axisDirection": "DownLeft",
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "2DArray",
+  "bins": [
+    "1234",
+    "5678"
+  ]
+}

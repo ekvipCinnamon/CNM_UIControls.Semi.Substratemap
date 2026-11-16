@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapChartStyle": {
+      "type": "string",
+      "title": "SubstrateMapChartStyle",
+      "enum": [
+        "Bars",
+        "Share"
+      ],
+      "description": "Which presentation SubstrateMapBinChart draws. Bars is one bar per category with the count above it; Share is the same data as proportions. One control carries both because they differ only in geometry."
+    },
+    "SubstrateMapChartSort": {
+      "type": "string",
+      "title": "SubstrateMapChartSort",
+      "enum": [
+        "CountDescending",
+        "Code"
+      ],
+      "description": "The category order. CountDescending puts the biggest first, which is what a chart is for. Code orders by the bin code, which is an accident of the sort program's numbering - useful only when two charts must line up. The remainder bucket is last in both."
+    }
+  }
+}

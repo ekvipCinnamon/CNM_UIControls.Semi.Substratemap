@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-defaultunits-100microns.xml
+ Covers: DefaultUnits="100Microns" - a second non-normative unit string
+ variant observed in an earlier research pass over the same SEMI
+ "Related Information" appendix. Per
+ the assumption note: the /^(\d+)Microns$/ multiplier pattern is
+ tolerated with a warning, mapped to n x um [C - thin evidence, explicitly
+ quarantined behind the same seam as "microns" but graded lower].
+ Grid: 3 cols x 3 rows.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="HundredMicron" DefaultUnits="100Microns" TopLevel="true">
+      <Dimension X="3" Y="3"/>
+      <StepSize X="6.3" Y="6.4"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="HUNDREDMIC"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="HUNDREDMIC" LayoutSpecifier="HundredMicron">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinDescription="Pass"/>
+            <BinDefinition BinCode="9" BinDescription="Fail"/>
+          </BinDefinitions>
+          <BinCode>111</BinCode>
+          <BinCode>191</BinCode>
+          <BinCode>111</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

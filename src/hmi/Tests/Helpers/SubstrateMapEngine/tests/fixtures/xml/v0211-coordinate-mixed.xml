@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-coordinate-mixed.xml
+ Covers: MapType=Coordinate (V0211 schema; BinCodeType X/Y both used per
+ device, the standard/6.5.5: "The X and Y coordinates must both
+ be included"); one <BinCode> per device; sparse (not every cell
+ present -> absent cells are NullBin by omission, consistent with
+ Coordinate being "am wenigsten kompakt; robustest gegenueber
+ Luecken", the standard); Number attribute present but informational
+ only.
+ Grid: 4 cols x 3 rows, defaults (LowerLeft/UpRight) -> logical X in [0,3],
+ Y in [0,2]. Only 7 of 12 cells populated; remaining 5 are NullBin.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Coord" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="4" Y="3"/>
+      <StepSize X="1.0" Y="1.0"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="COORDMIX01"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="COORDMIX01" LayoutSpecifier="Coord">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="Coordinate">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinDescription="Pass"/>
+            <BinDefinition BinCode="9" BinDescription="Fail"/>
+          </BinDefinitions>
+          <BinCode X="0" Y="0" Number="1">1</BinCode>
+          <BinCode X="1" Y="0" Number="2">1</BinCode>
+          <BinCode X="2" Y="0" Number="3">9</BinCode>
+          <BinCode X="0" Y="1" Number="4">1</BinCode>
+          <BinCode X="3" Y="1" Number="5">1</BinCode>
+          <BinCode X="1" Y="2" Number="6">1</BinCode>
+          <BinCode X="2" Y="2" Number="7">1</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

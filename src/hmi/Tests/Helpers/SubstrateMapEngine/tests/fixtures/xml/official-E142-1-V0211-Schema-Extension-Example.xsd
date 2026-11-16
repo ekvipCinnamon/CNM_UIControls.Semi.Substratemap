@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema id="MapData" 
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap_ACMEProductsInc"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:sm="urn:semi-org:xsd.E142-1.V0211.SubstrateMap"
+    targetNamespace="urn:semi-org:xsd.E142-1.V0211.SubstrateMap_ACMEProductsInc" 
+    elementFormDefault="qualified">
+
+    <xs:import namespace="urn:semi-org:xsd.E142-1.V0211.SubstrateMap" schemaLocation="E142-1-V0211-Schema.xsd" />
+
+    <xs:element name="MapData" type="sm:MapDataType" />
+
+    <xs:complexType name="SubstrateTypeExtension">
+        <xs:complexContent>
+            <xs:extension base="sm:SubstrateType">
+                <xs:sequence>
+                    <xs:element ref="SupplierData" minOccurs="0" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="SupplierData" type="SupplierDataType" />
+
+    <xs:complexType name="SupplierDataType">
+        <xs:sequence>
+            <xs:element ref="SetupFile" />
+            <xs:element ref="TestSystem" />
+            <xs:element ref="TestProgram" />
+            <xs:element ref="Prober" />
+            <xs:element ref="Operator" />
+            <xs:element ref="ProbeCard" />
+            <xs:element ref="TestStartTime" />
+            <xs:element ref="TestEndTime" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SupplierValue">
+        <xs:attribute name="Value" type="xs:string" />
+    </xs:complexType>
+
+    <xs:element name="SetupFile" type="SupplierValue" />
+    <xs:element name="TestSystem" type="SupplierValue" />
+    <xs:element name="TestProgram" type="SupplierValue" />
+    <xs:element name="Prober" type="SupplierValue" />
+    <xs:element name="Operator" type="SupplierValue" />
+    <xs:element name="ProbeCard" type="SupplierValue" />
+    <xs:element name="TestStartTime" type="SupplierValue" />
+    <xs:element name="TestEndTime" type="SupplierValue" />
+
+</xs:schema>

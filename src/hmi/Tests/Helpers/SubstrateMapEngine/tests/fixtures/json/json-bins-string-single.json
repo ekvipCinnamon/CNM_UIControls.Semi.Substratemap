@@ -1,0 +1,30 @@
+{
+  "_fixtureNote": "bins as a single string (one block, mapType 'Array', row-major starting top-left per). Grid 4x3 (x=4, y=3), so the string must be exactly 12 characters long.",
+  "dimension": {
+    "x": 4,
+    "y": 3
+  },
+  "units": "mm",
+  "stepSize": {
+    "x": 1.0,
+    "y": 1.0
+  },
+  "orientation": 0,
+  "originLocation": "LowerLeft",
+  "axisDirection": "UpRight",
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "Array",
+  "binDefinitions": [
+    {
+      "binCode": "1",
+      "binQuality": "Pass"
+    },
+    {
+      "binCode": "9",
+      "binQuality": "Fail"
+    }
+  ],
+  "bins": "1191119111.1",
+  "substrateId": "JSONARR001"
+}

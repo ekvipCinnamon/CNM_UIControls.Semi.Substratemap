@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-origin-downleft.xml
+ Covers: OriginLocation x AxisDirection variation - explicit
+ OriginLocation="UpperRight" combined with AxisDirection="DownLeft"
+ (the DownLeft case required by PART 1). Per the standard token
+ decomposition (Y-first/X-second, inference ): DownLeft ->
+ Y increases downward, X increases leftward.
+ Grid: 5 cols x 3 rows.
+ Zero-cell derivation : for a corner
+ OriginLocation (not Center), the zero-cell is that literal visual
+ corner: UpperRight -> (from_left, from_bottom) = (C-1, R-1) = (4,2).
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="DownLeft" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="5" Y="3"/>
+      <StepSize X="1.0" Y="1.0"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="DOWNLEFT01"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="DOWNLEFT01" LayoutSpecifier="DownLeft"
+        OriginLocation="UpperRight" AxisDirection="DownLeft">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinDefinitions>
+            <BinDefinition BinCode="1" BinDescription="Pass"/>
+            <BinDefinition BinCode="9" BinDescription="Fail"/>
+          </BinDefinitions>
+          <BinCode>11191</BinCode>
+          <BinCode>19111</BinCode>
+          <BinCode>11111</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

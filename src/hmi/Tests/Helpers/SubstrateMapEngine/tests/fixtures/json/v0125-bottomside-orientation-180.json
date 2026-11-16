@@ -1,0 +1,17 @@
+{
+  "$comment": "HAND-AUTHORED from v0125-bottomside-orientation-180.xml (Rule 10, D-030). Three frame facts at once and all non-default: SubstrateSide BottomSide, Orientation 180, OriginLocation UpperRight with AxisDirection DownLeft. Each alone is a transform; together they compose, and a reader that applies any one of them as a default instead of reading it produces a map that still parses and is wrong. DeviceSize differs from StepSize, so the street width is real rather than inferred.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0125.SubstrateMap",
+  "Layouts": [{ "LayoutId": "Combo", "DefaultUnits": "mm", "TopLevel": true,
+    "Dimension": { "X": 4, "Y": 2 },
+    "DeviceSize": { "X": 1.5, "Y": 1.5, "Units": "mm" },
+    "StepSize": { "X": 2.0, "Y": 2.0, "Units": "mm" } }],
+  "Substrates": [{ "SubstrateType": "Wafer", "SubstrateId": "COMBO01" }],
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "COMBO01", "LayoutSpecifier": "Combo",
+    "SubstrateSide": "BottomSide", "Orientation": 180,
+    "OriginLocation": "UpperRight", "AxisDirection": "DownLeft",
+    "Overlay": [{ "MapName": "Sort", "MapVersion": "2",
+      "BinCodeMap": { "BinType": "Ascii", "NullBin": ".", "MapType": "2DArray",
+        "BinCode": ["1234", "5678"] } }]
+  }]
+}

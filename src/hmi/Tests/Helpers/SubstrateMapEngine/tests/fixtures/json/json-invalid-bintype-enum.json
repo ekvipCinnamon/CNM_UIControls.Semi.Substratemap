@@ -1,0 +1,20 @@
+{
+  "_fixtureNote": "INVALID FIXTURE - expected failure class: typed validation error, out-of-enum binType. 'Octal' is not a member of the GridData v1 / E142 BinTypeEnum {Ascii, Decimal, HexaDecimal, Integer2}. A conformant parser must reject this document with a typed enum error rather than silently accepting an unknown binType.",
+  "dimension": {
+    "x": 2,
+    "y": 2
+  },
+  "units": "mm",
+  "stepSize": {
+    "x": 1.0,
+    "y": 1.0
+  },
+  "binType": "Octal",
+  "nullBin": "0",
+  "mapType": "2DArray",
+  "bins": [
+    "11",
+    "11"
+  ],
+  "substrateId": "JSONBADTYP"
+}

@@ -1,0 +1,25 @@
+{
+  "$comment": "HAND-AUTHORED from official-BinCodeMap-Example.xml (Rule 10, D-030). SEMI's own BinCodeMap example. Three things make it the corpus's most realistic document: MapType is ABSENT, so the prose default 2DArray applies with no XSD default to lean on; there is no Layouts block at all, so the lattice comes from the payload rather than from a declared Dimension and the LayoutSpecifier \"WaferLayout/Devices\" dangles; and a ReferenceDevice is present with logical Coordinates and no Position. The round wafer is 12x11 with the corners as NullBin, which is why every row has a different token count of real devices.",
+  "$format": "semi-e142", "$version": 1, "$namespace": "urn:semi-org:xsd.E142-1.V0211.SubstrateMap",
+  "SubstrateMaps": [{
+    "SubstrateType": "Wafer", "SubstrateId": "Wafer1", "LayoutSpecifier": "WaferLayout/Devices",
+    "Overlay": [{
+      "MapName": "SortGrade", "MapVersion": "1",
+      "ReferenceDevices": [{ "Name": "FirstDevice", "Coordinates": { "X": 1, "Y": 2 } }],
+      "BinCodeMap": {
+        "BinType": "Ascii", "NullBin": ".",
+        "BinDefinitions": [
+          { "BinCode": "1", "BinDescription": "3.5GHz Ok" },
+          { "BinCode": "2", "BinDescription": "2.7GHz Ok" },
+          { "BinCode": "8", "BinDescription": "Inspection Failed" },
+          { "BinCode": "9", "BinDescription": "Test Failed" }
+        ],
+        "BinCode": [
+          "...112111...", "..18111111..", ".9111111811.", "111111111111", "111111111111",
+          "121111111211", "111111111111", "911111111119", ".1111811221.", "..11111111..",
+          "...111111..."
+        ]
+      }
+    }]
+  }]
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-layout-images.xml
+  Covers: Layout/TopImage and Layout/BottomImage (Task 22), on BOTH levels of a
+          two-level layout tree.
+  WHY BOTH LEVELS. Table 2 defines these as the URI "of an image showing the
+  top side of an INDIVIDUAL DEVICE in the layout" - a die picture, not a wafer
+  photo. A two-level tree therefore has two legitimately different images: the
+  substrate-level layout and the device-level layout each describe a different
+  "device". A parser that merged them, or that let the child inherit the
+  parent's, would pass a single-layout fixture and fail here.
+  Also covers a RELATIVE URI and a percent-encoded one: the XSD types both
+  elements xs:string, not xs:anyURI, so nothing may be syntax-checked or
+  rewritten - carry-only, verbatim.
+  Grid: 2 cols x 2 rows, all tokens distinct. LowerLeft / UpRight.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Img" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="1" Y="1"/>
+      <TopImage>images/substrate-top.png</TopImage>
+      <BottomImage>images/substrate-bottom.png</BottomImage>
+      <ChildLayouts><ChildLayout LayoutId="Img_Devices"/></ChildLayouts>
+    </Layout>
+    <Layout LayoutId="Img_Devices" DefaultUnits="mm">
+      <Dimension X="2" Y="2"/>
+      <StepSize X="1.0" Y="1.0" Units="mm"/>
+      <TopImage>../assets/die%20top.png</TopImage>
+      <BottomImage>../assets/die%20bottom.png</BottomImage>
+      <ProductId>PROD-22</ProductId>
+    </Layout>
+  </Layouts>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="IMAGES-01" LayoutSpecifier="Img/Img_Devices"
+        OriginLocation="LowerLeft" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>mn</BinCode>
+          <BinCode>op</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

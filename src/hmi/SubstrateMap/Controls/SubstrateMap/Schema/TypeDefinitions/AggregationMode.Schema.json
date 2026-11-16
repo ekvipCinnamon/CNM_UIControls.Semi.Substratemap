@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapAggregationMode": {
+      "$schema": "http://json-schema.org/draft-04/schema",
+      "title": "SubstrateMapAggregationMode",
+      "type": "string",
+      "enum": [
+        "None",
+        "PointSample",
+        "MaxSeverity",
+        "FailFraction"
+      ],
+      "description": "Which reduction produced the frame last drawn. 'None' means a cell covers at least one device pixel and is drawn in its own right. 'PointSample' means cells are smaller than a pixel and the renderer paints one cell per pixel, so other cells in that pixel are invisible and which one survives depends on subpixel phase - a defect being reported, not a feature. 'MaxSeverity' and 'FailFraction' name the reducer once aggregation is wired in."
+    }
+  }
+}

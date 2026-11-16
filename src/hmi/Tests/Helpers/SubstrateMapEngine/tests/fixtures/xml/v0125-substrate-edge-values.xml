@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fixture: v0125-substrate-edge-values.xml
+  Covers: the SCHEMA BOUNDARIES of the Substrate record, all three at once.
+    - GoodDevices = 0. The type is xs:nonNegativeInteger, so zero is a legal
+      MEASUREMENT ("no good devices"), not a missing one. It must survive the
+      round trip rather than being treated as absent - the opposite of a zero
+      physical extent, which positiveXY() rejects.
+    - LotId at exactly 80 characters, the LotIdType maxLength. One more would be
+      schema-invalid and the parser warns.
+    - SubstrateId at exactly 32 characters, the MaterialIdType maxLength. The id
+      appears TWICE in an exported document (Substrate and SubstrateMap), so a
+      truncation bug would break the SubstrateKey join rather than only shorten
+      a label.
+  Grid: 2 cols x 2 rows, all tokens distinct.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0125.SubstrateMap E142-1-V0125-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0125.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Edge" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="2" Y="2"/>
+      <StepSize X="1.0" Y="1.0" Units="mm"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Panel" SubstrateId="SUBSTRATE-ID-EXACTLY-32-CHARS-AB">
+      <LotId>LOT-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA-END</LotId>
+      <GoodDevices>0</GoodDevices>
+    </Substrate>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Panel" SubstrateId="SUBSTRATE-ID-EXACTLY-32-CHARS-AB" LayoutSpecifier="Edge"
+        OriginLocation="LowerLeft" AxisDirection="UpRight">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="Ascii" NullBin="." MapType="2DArray">
+          <BinCode>pq</BinCode>
+          <BinCode>rs</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

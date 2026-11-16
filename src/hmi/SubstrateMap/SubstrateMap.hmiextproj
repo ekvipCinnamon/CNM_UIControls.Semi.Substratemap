@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Clean;Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.props" Condition="Exists('packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <TcHmiDirectory>$(registry:HKEY_CURRENT_USER\Software\Beckhoff\TwinCAT3\3.1@InstallDir)\..\Functions\TE2000-HMI-Engineering</TcHmiDirectory>
+    <TcHmiDirectory Condition="'$(TcHmiDirectory)'==''">$(registry:HKEY_LOCAL_MACHINE\Software\Beckhoff\TwinCAT3\3.1@InstallDir)\..\Functions\TE2000-HMI-Engineering</TcHmiDirectory>
+    <TcHmiDirectory Condition="'$(TcHmiDirectory)'==''">$(registry:HKEY_LOCAL_MACHINE\Software\Wow6432Node\Beckhoff\TwinCAT3\3.1@InstallDir)\..\Functions\TE2000-HMI-Engineering</TcHmiDirectory>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">TwinCAT HMI</Platform>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
+    <AvailablePlatforms>TwinCAT HMI</AvailablePlatforms>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <TcHmiCreatorVersion>[1.12,]</TcHmiCreatorVersion>
+    <TargetFrameworkMoniker>native,Version=v1.12.0,Profile=tchmi</TargetFrameworkMoniker>
+    <TargetFramework>native1.12-tchmi</TargetFramework>
+    <ProjectTypeGuids>{3B740506-4966-4147-AB1F-357FE08946EA}</ProjectTypeGuids>
+    <ProjectGuid>09b46f29-e4b5-433c-821c-26119e701241</ProjectGuid>
+    <ProjectName>SubstrateMap</ProjectName>
+    <Name>SubstrateMap</Name>
+    <HmiCommunicationServerPort>3001</HmiCommunicationServerPort>
+    <HmiCommunicationServerAuthPort>13001</HmiCommunicationServerAuthPort>
+    <HmiCommunicationServerPublicPort>3443</HmiCommunicationServerPublicPort>
+    <HmiInitial>14.3.804.1</HmiInitial>
+    <HmiRecent>14.17.22.1</HmiRecent>
+    <HmiServerNodeAdvancedView>False</HmiServerNodeAdvancedView>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|TwinCAT HMI' ">
+    <PlatformTarget>TwinCAT HMI</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefaultNamespace>SubstrateMap</DefaultNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|TwinCAT HMI' ">
+    <PlatformTarget>TwinCAT HMI</PlatformTarget>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefaultNamespace>SubstrateMap</DefaultNamespace>
+  </PropertyGroup>
+  <PropertyGroup Label="TwinCatHMI">
+    <TcHmiExtensionTypes>{CC169D49-EEDD-4BAF-8151-63DF12EDD7B4}</TcHmiExtensionTypes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TwinCATHmi_Tasks>$(TcHmiDirectory)\MSBuild\Beckhoff.TwinCAT.HMI.tasks</TwinCATHmi_Tasks>
+    <TwinCATHmi_Targets>$(TcHmiDirectory)\MSBuild\Beckhoff.TwinCAT.HMI.targets</TwinCATHmi_Targets>
+  </PropertyGroup>
+  <Target Name="GetFrameworkPaths" />
+  <Import Project="$(TwinCATHmi_Tasks)" />
+  <Import Project="$(TwinCATHmi_Targets)" />
+  <PropertyGroup>
+    <!-- 
+	      Values: 
+		    VisualStudio := default Microsoft.TypeScript.MsBuild behaviour
+		    Global := the installation directory provided by Windows' registry is used
+	    -->
+    <_TcHmiNodeJsMode>Global</_TcHmiNodeJsMode>
+    <_TcHmiNodeJsMode Condition="'$(_TcHmiNodeJsMode)' == ''">Global</_TcHmiNodeJsMode>
+    <_TcHmiNodePath Condition="'$(_TcHmiNodeJsMode)' == 'Global'">$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Node.js@InstallPath)</_TcHmiNodePath>
+    <_TcHmiNodePath Condition="'$(_TcHmiNodeJsMode)' == 'Global' AND '$(_TcHmiNodePath)' == '' AND Exists('C:\Program Files\nodejs\')">C:\Program Files\nodejs\</_TcHmiNodePath>
+    <_TcHmiNodePath Condition="'$(_TcHmiNodeJsMode)' == 'Global' AND '$(_TcHmiNodePath)' == '' AND Exists('C:\Program Files (x86)\nodejs\')">C:\Program Files (x86)\nodejs\</_TcHmiNodePath>
+  </PropertyGroup>
+  <Target Name="ReTargetNodePath" Condition="'$(_TcHmiNodePath)' != ''" BeforeTargets="$(CompileDependsOn)">
+    <PropertyGroup>
+      <NodePath>$(_TcHmiNodePath)</NodePath>
+    </PropertyGroup>
+  </Target>
+  <ItemGroup>
+    <Content Include="Controls\SubstrateMapBase\en-US.localization">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Controls\SubstrateMapBase\de-DE.localization">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Controls\SubstrateMapBase\Description.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapFilterBar\en-US.localization">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Controls\SubstrateMapFilterBar\de-DE.localization">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Controls\SubstrateMapFilterBar\Description.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapWidget\en-US.localization">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Controls\SubstrateMapWidget\de-DE.localization">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Controls\SubstrateMapWidget\Description.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBinChart\en-US.localization">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Controls\SubstrateMapBinChart\de-DE.localization">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Controls\SubstrateMapBinChart\Description.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBinChart\Schema\TypeDefinitions\ChartSettings.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBinChart\Template.html">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBinChart\Style.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBinChart\SubstrateMapBinChart.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBinChart\SubstrateMapBinChart.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBinChart\SubstrateMapBinChart.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBinChart\Icons\16x16.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBinChart\Themes\Base\Style.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBinChart\Themes\Base-Dark\Style.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapWidget\Themes\Base\Style.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapWidget\Themes\Base-Dark\Style.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapWidget\Schema\TypeDefinitions\TileSelection.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapWidget\Template.html">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapWidget\Style.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapWidget\SubstrateMapWidget.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapWidget\SubstrateMapWidget.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapWidget\SubstrateMapWidget.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapWidget\Icons\16x16.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapFilterBar\Template.html">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapFilterBar\Style.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapFilterBar\SubstrateMapFilterBar.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapFilterBar\SubstrateMapFilterBar.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapFilterBar\SubstrateMapFilterBar.d.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapFilterBar\Icons\16x16.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBase\Icons\16x16.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBase\Style.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBase\NoDataBase.svg">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBase\NoDataBaseDark.svg">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBase\SubstrateMapBase.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMapBase\Template.html">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\en-US.localization">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Controls\SubstrateMap\en-UK.localization">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Controls\SubstrateMap\de-DE.localization">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Description.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Icons\16x16.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\AliasIdList.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\E142OverlayList.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\E142TransferData.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\E142MapDataJson.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\GroupSelection.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\ItemSelection.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\BinStatistics.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\FilterSettings.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\GridData.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\ItemList.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\ItemStatusAssignmentList.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\LabelList.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\Outline.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\OutlinePreset.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\SelectionList.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\BinSeverityPriority.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\AggregationReducer.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\ViewTransform.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\AggregationMode.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\BinQualityAliases.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Schema\TypeDefinitions\StatusColorMapping.Schema.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Style.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\SubstrateMap.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Template.html">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Themes\Base-Dark\Style.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Controls\SubstrateMap\Themes\Base\Style.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Helpers\SubstrateMapEngine\E142.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Helpers\SubstrateMapEngine\E142Bins.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Helpers\SubstrateMapEngine\E142Grid.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Helpers\SubstrateMapEngine\Oklch.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Helpers\SubstrateMapEngine\GridAggregate.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Helpers\SubstrateMapEngine\BinCodec.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Helpers\SubstrateMapEngine\BinSeverity.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Helpers\SubstrateMapEngine\BinPalette.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Helpers\SubstrateMapEngine\SpatialFilter.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Helpers\SubstrateMapEngine\E142Item.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Helpers\SubstrateMapEngine\E138Pv.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Helpers\SubstrateMapEngine\E142Json.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Helpers\SubstrateMapEngine\E142Xml.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Helpers\SubstrateMapEngine\Engine.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Schema\E142\E138-1-V0709-Schema.xsd">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Schema\E142\E142-1-V0125-Schema.xsd">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Schema\E142\E142-1-V0211-Schema.xsd">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Schema\E142\E142-1-V0224-Schema.xsd">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Schema\E142\E142-1-V0921-Schema.xsd">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="README.md">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="WIDGET-PATTERN.md">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\ADS\ADS.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\ADS\ADS.Config.remote.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\ADS\ADS.Storage.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiLua\TcHmiLua.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiLua\TcHmiLua.Config.remote.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiLua\TcHmiLua.Storage.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiSqliteLogger\TcHmiSqliteLogger.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiSqliteLogger\TcHmiSqliteLogger.Config.remote.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiSqliteLogger\TcHmiSqliteLogger.Storage.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiSrv\TcHmiSrv.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiSrv\TcHmiSrv.Config.remote.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiSrv\TcHmiSrv.Storage.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiUserManagement\TcHmiUserManagement.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiUserManagement\TcHmiUserManagement.Config.remote.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiUserManagement\TcHmiUserManagement.Storage.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="tsconfig.base.json">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="tsconfig.tpl.json">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="tsconfig.json">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+      <DependentUpon>tsconfig.tpl.json</DependentUpon>
+    </Content>
+    <Folder Include="Controls\SubstrateMapBase\" />
+    <Folder Include="Controls\SubstrateMapBase\Icons\" />
+    <Folder Include="Controls\SubstrateMapBase\Schema\" />
+    <Folder Include="Controls\SubstrateMapBase\Themes\" />
+    <Folder Include="Controls\SubstrateMapBase\Themes\Base-Dark\" />
+    <Folder Include="Controls\SubstrateMapBase\Themes\Base\" />
+    <Folder Include="Controls\SubstrateMapBinChart\" />
+    <Folder Include="Controls\SubstrateMapBinChart\Icons\" />
+    <Folder Include="Controls\SubstrateMapBinChart\Schema\" />
+    <Folder Include="Controls\SubstrateMapBinChart\Schema\TypeDefinitions\" />
+    <Folder Include="Controls\SubstrateMapBinChart\Themes\" />
+    <Folder Include="Controls\SubstrateMapBinChart\Themes\Base-Dark\" />
+    <Folder Include="Controls\SubstrateMapBinChart\Themes\Base\" />
+    <Folder Include="Controls\SubstrateMapFilterBar\" />
+    <Folder Include="Controls\SubstrateMapFilterBar\Icons\" />
+    <Folder Include="Controls\SubstrateMapWidget\" />
+    <Folder Include="Controls\SubstrateMapWidget\Icons\" />
+    <Folder Include="Controls\SubstrateMapWidget\Schema\" />
+    <Folder Include="Controls\SubstrateMapWidget\Schema\TypeDefinitions\" />
+    <Folder Include="Controls\SubstrateMapWidget\Themes\" />
+    <Folder Include="Controls\SubstrateMapWidget\Themes\Base-Dark\" />
+    <Folder Include="Controls\SubstrateMapWidget\Themes\Base\" />
+    <Folder Include="Controls\SubstrateMap\" />
+    <Folder Include="Controls\SubstrateMap\Icons\" />
+    <Folder Include="Controls\SubstrateMap\Schema\" />
+    <Folder Include="Controls\SubstrateMap\Schema\TypeDefinitions" />
+    <Folder Include="Controls\SubstrateMap\Themes\" />
+    <Folder Include="Controls\SubstrateMap\Themes\Base-Dark\" />
+    <Folder Include="Controls\SubstrateMap\Themes\Base\" />
+    <Folder Include="Fonts\" />
+    <Folder Include="Helpers\SubstrateMapEngine\" />
+    <Folder Include="Images\" />
+    <Folder Include="Controls" />
+    <Folder Include="Helpers" />
+    <Folder Include="Schema\" />
+    <Folder Include="Schema\E142\" />
+    <Folder Include="Server">
+      <WorkingDirectory>SubstrateMap</WorkingDirectory>
+    </Folder>
+    <Folder Include="Server\ADS\" />
+    <Folder Include="Server\TcHmiLua\" />
+    <Folder Include="Server\TcHmiSqliteLogger\" />
+    <Folder Include="Server\TcHmiSrv\" />
+    <Folder Include="Server\TcHmiUserManagement\" />
+    <Folder Include="Themes\" />
+    <Folder Include="Themes\Base-Dark\" />
+    <Folder Include="Themes\Base-Dark\Images\" />
+    <Folder Include="Themes\Base\" />
+    <Folder Include="Themes\Base\Images\" />
+    <HmiManifest Include="Manifest.json" />
+    <Content Include="images\charts.png" />
+    <Content Include="images\dashboard.png" />
+    <Content Include="images\map-e142.png" />
+    <Content Include="images\map-griddata.png" />
+    <Content Include="images\maps-and-tiles.png" />
+    <Content Include="images\tile-stale.png" />
+    <Content Include="images\logo.png" />
+    <Content Include="ARCHITECTURE.md" />
+    <Content Include="API.md" />
+    <Content Include="CONTRIBUTING.md" />
+    <Content Include="CHANGELOG.md" />
+    <Content Include="LICENSE.txt" />
+    <Content Include="Images\logo.png" />
+    <Content Include="SubstrateMap.nuspec" />
+    <Content Include="eslint.config.mjs">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include=".tfignore">
+      <SubType>Content</SubType>
+      <Visible>false</Visible>
+    </Content>
+    <Content Include=".gitignore">
+      <SubType>Content</SubType>
+      <Visible>false</Visible>
+    </Content>
+    <Content Include="Fonts\Fonts.css">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Fonts\Roboto-Condensed-webfont.woff">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Themes\Base\Base.theme">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Themes\Base\BaseStyle.css">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+      <IncludeInManifest>False</IncludeInManifest>
+    </Content>
+    <Content Include="Themes\Base\Images\Splash-320x534.png">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Themes\Base\Images\Splash-420x200.png">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Themes\Base\Images\Splash-800x600.png">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Themes\Base-Dark\Base-Dark.theme">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Themes\Base-Dark\Base-DarkStyle.css">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+      <IncludeInManifest>False</IncludeInManifest>
+    </Content>
+    <Content Include="Themes\Base-Dark\Images\Splash-320x534.png">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Themes\Base-Dark\Images\Splash-420x200.png">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Themes\Base-Dark\Images\Splash-800x600.png">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="packages.config">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="packages.xsd">
+      <SubType>Content</SubType>
+      <Visible>false</Visible>
+    </Content>
+    <Folder Include="Properties" />
+    <Content Include="Properties\Default.tpl">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Properties\tchmiconfig.json">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="Properties\tchmi.framework.Schema.json">
+      <SubType>Content</SubType>
+      <Visible>true</Visible>
+    </Content>
+  </ItemGroup>
+  <PropertyGroup>
+    <PreBuildEventDependsOn>
+    </PreBuildEventDependsOn>
+    <PostBuildEventDependsOn>
+    </PostBuildEventDependsOn>
+  </PropertyGroup>
+  <Target Name="PreBuildEvent" Condition="'$(PreBuildEvent)'!=''" DependsOnTargets="$(PreBuildEventDependsOn)">
+    <Exec WorkingDirectory="$(OutDir)" Command="$(PreBuildEvent)" />
+  </Target>
+  <Target Name="PostBuildEvent" Condition="'$(PostBuildEvent)' != '' and ('$(RunPostBuildEvent)'=='Always' or '$(RunPostBuildEvent)'=='OnOutputUpdated')" DependsOnTargets="$(PostBuildEventDependsOn)">
+    <Exec WorkingDirectory="$(OutDir)" Command="$(PostBuildEvent)" />
+  </Target>
+  <PropertyGroup>
+    <BuiltProjectOutputGroupDependsOn>
+			PreBuildEvent;
+			CoreBuild;
+			PostBuildEvent
+		</BuiltProjectOutputGroupDependsOn>
+    <CleanDependsOn>
+			BaseClean
+		</CleanDependsOn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TcHmi_ProjectDirectory Condition="'$(TcHmi_ProjectDirectory)' == ''">$(MSBuildProjectDirectory)</TcHmi_ProjectDirectory>
+    <TcHmi_ServerAddress Condition="'$(TcHmi_ServerAddress)' == ''">127.0.0.1</TcHmi_ServerAddress>
+    <TcHmi_ServerPort Condition="'$(TcHmi_ServerPort)' == ''">1010</TcHmi_ServerPort>
+  </PropertyGroup>
+  <Target Name="CoreBuild">
+    <TcHmiMSBuild.Publish.TcHmiBuild TaskAction="Clean" ProjectDirectory="$(TcHmi_ProjectDirectory)" OutputPath="$(OutputPath)" />
+    <TcHmiMSBuild.Publish.TcHmiBuild TaskAction="Build" ProjectDirectory="$(TcHmi_ProjectDirectory)" OutputPath="$(OutputPath)" ProjectFiles="@(Content)" VirtualMappings="$(TcHmi_VirtualMappings)" PostProcessing="$(HmiPostProcessing)" />
+    <TcHmiMSBuild.Publish.TcHmiGenerator TaskAction="EntryPage" ProjectDirectory="$(TcHmi_ProjectDirectory)" OutputPath="$(OutputPath)" TcHmiServerAddress="$(TcHmi_ServerAddress)" TcHmiServerPort="$(TcHmi_ServerPort)">
+      <Output TaskParameter="Result" PropertyName="TaskResult0" />
+    </TcHmiMSBuild.Publish.TcHmiGenerator>
+    <Message Text="Generating the Default.html within OutputPath('$(OutputPath)'): $(TaskResult0)" />
+  </Target>
+  <Target Name="Build" DependsOnTargets="$(BuiltProjectOutputGroupDependsOn)" />
+  <Target Name="Clean" DependsOnTargets="$(CleanDependsOn)" />
+  <Target Name="ReBuild" DependsOnTargets="Clean; Build" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.props'))" />
+    <Error Condition="!Exists('packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.targets'))" />
+  </Target>
+  <Import Project="packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.targets" Condition="Exists('packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.targets')" />
+</Project>

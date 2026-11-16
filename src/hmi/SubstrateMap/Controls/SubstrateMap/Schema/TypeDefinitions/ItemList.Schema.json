@@ -1,0 +1,648 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "SubstrateMapItemList": {
+      "type": "array",
+      "minItems": 0,
+      "title": "SubstrateMapItemList",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "type": "integer",
+            "description": "Primary key/identifier of an item."
+          },
+          "substrate_ref": {
+            "type": "integer",
+            "description": "Parent substrate reference. Accepted for 1:1 row binding, not used for rendering."
+          },
+          "name": {
+            "type": "string",
+            "description": "e.g. I12"
+          },
+          "layer": {
+            "type": "integer",
+            "description": "Optional z-order. Items without a layer draw first (array order, index 0 = bottom); items with a layer draw on top, ascending. Higher = more foreground."
+          },
+          "unit": {
+            "type": "string",
+            "description": "Base unit for all geometry coordinates and sizes.",
+            "enum": [
+              "meter"
+            ]
+          },
+          "prefix": {
+            "type": "string",
+            "description": "Metric prefix applied to the meter base unit (all geometry coordinates and sizes).",
+            "enum": [
+              "yocto",
+              "zepto",
+              "atto",
+              "femto",
+              "pico",
+              "nano",
+              "micro",
+              "milli",
+              "centi",
+              "deci",
+              "none"
+            ],
+            "options": [
+              {
+                "value": "yocto",
+                "label": null
+              },
+              {
+                "value": "zepto",
+                "label": null
+              },
+              {
+                "value": "atto",
+                "label": null
+              },
+              {
+                "value": "femto",
+                "label": null
+              },
+              {
+                "value": "pico",
+                "label": null
+              },
+              {
+                "value": "nano",
+                "label": null
+              },
+              {
+                "value": "micro",
+                "label": null
+              },
+              {
+                "value": "milli",
+                "label": null
+              },
+              {
+                "value": "centi",
+                "label": null
+              },
+              {
+                "value": "deci",
+                "label": null
+              },
+              {
+                "value": "none",
+                "label": null
+              }
+            ]
+          },
+          "orientation": {
+            "type": "number",
+            "description": "Rotation magnitude. Defaults to 0 when absent. CCW-positive yaw about +z, about the item's combined-geometry bbox center. One value for the whole group."
+          },
+          "orientation_unit": {
+            "type": "string",
+            "description": "Base unit of orientation.",
+            "enum": [
+              "degree"
+            ]
+          },
+          "orientation_prefix": {
+            "type": "string",
+            "description": "Metric prefix applied to the degree base unit. MES sends 'micro' (micro-degrees).",
+            "enum": [
+              "yocto",
+              "zepto",
+              "atto",
+              "femto",
+              "pico",
+              "nano",
+              "micro",
+              "milli",
+              "centi",
+              "deci",
+              "none"
+            ],
+            "options": [
+              {
+                "value": "yocto",
+                "label": null
+              },
+              {
+                "value": "zepto",
+                "label": null
+              },
+              {
+                "value": "atto",
+                "label": null
+              },
+              {
+                "value": "femto",
+                "label": null
+              },
+              {
+                "value": "pico",
+                "label": null
+              },
+              {
+                "value": "nano",
+                "label": null
+              },
+              {
+                "value": "micro",
+                "label": null
+              },
+              {
+                "value": "milli",
+                "label": null
+              },
+              {
+                "value": "centi",
+                "label": null
+              },
+              {
+                "value": "deci",
+                "label": null
+              },
+              {
+                "value": "none",
+                "label": null
+              }
+            ]
+          },
+          "status": {
+            "type": "string",
+            "description": "Free-form status / bin string (e.g. BIN_42) for the whole item. Mapped to a color via StatusColorMapping."
+          },
+          "user_data": {
+            "type": [
+              "string",
+              "number"
+            ],
+            "description": "Optional opaque value. Passed through unchanged into the selection payload and exposed as SelectedItemUserData; not used for rendering."
+          },
+          "geometries": {
+            "type": "array",
+            "minItems": 1,
+            "description": "One or more geometries drawn as a group with the item's shared bin color and orientation, in list order.",
+            "items": {
+              "type": "object",
+              "description": "One geometry. Discriminated by `type`. Coordinates are authored in the data frame (origin = data origin, +y per YAxisDirection) in the item's unit/prefix.",
+              "oneOf": [
+                {
+                  "description": "Rectangle centered on (center_position_x, center_position_y) at zero rotation. `width`/`length` are the rectangle's size. Outline-only when `stroke_width` is present (stroked in the bin color, no fill); filled otherwise.",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "rectangle"
+                      ]
+                    },
+                    "center_position_x": {
+                      "type": "integer"
+                    },
+                    "center_position_y": {
+                      "type": "integer"
+                    },
+                    "width": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "length": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "stroke_width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "Optional. Present -> draw as an outline of this real-world thickness in the bin color (no fill). Absent -> fill. Distinct from `width` (the rectangle's size)."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "center_position_x",
+                    "center_position_y",
+                    "width",
+                    "length"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "description": "Circle centered on (center_position_x, center_position_y). Outline-only (a ring) when `stroke_width` is present; filled disc otherwise.",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "circle"
+                      ]
+                    },
+                    "center_position_x": {
+                      "type": "integer"
+                    },
+                    "center_position_y": {
+                      "type": "integer"
+                    },
+                    "radius": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "stroke_width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "Optional. Present -> draw as a ring outline of this real-world thickness in the bin color (no fill). Absent -> filled disc."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "center_position_x",
+                    "center_position_y",
+                    "radius"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "description": "Ellipse centered on (center_position_x, center_position_y); radius_x/radius_y along the unrotated axes. Outline-only when `stroke_width` is present; filled otherwise.",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "ellipse"
+                      ]
+                    },
+                    "center_position_x": {
+                      "type": "integer"
+                    },
+                    "center_position_y": {
+                      "type": "integer"
+                    },
+                    "radius_x": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "radius_y": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "stroke_width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "Optional. Present -> outline of this real-world thickness in the bin color (no fill). Absent -> fill."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "center_position_x",
+                    "center_position_y",
+                    "radius_x",
+                    "radius_y"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "description": "Open polyline: straight segments through `points`, always stroked at `stroke_width` in the bin color (open shape, never filled).",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "polyline"
+                      ]
+                    },
+                    "points": {
+                      "type": "array",
+                      "minItems": 2,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": "integer"
+                          },
+                          "y": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "x",
+                          "y"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "stroke_width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "Real-world stroke thickness in the bin color. Required (a polyline is always stroked)."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "points",
+                    "stroke_width"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "description": "Closed polygon through `points` (last vertex auto-joined to the first). Outline-only when `stroke_width` is present; filled otherwise.",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "polygon"
+                      ]
+                    },
+                    "points": {
+                      "type": "array",
+                      "minItems": 3,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": "integer"
+                          },
+                          "y": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "x",
+                          "y"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "stroke_width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "Optional. Present -> outline of this real-world thickness in the bin color (no fill). Absent -> fill."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "points"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "description": "SVG path as a list of named-field commands. Outline-only when `stroke_width` is present (stroked in the bin color); filled when absent. Coordinates are in the data frame, +y per YAxisDirection (NOT raw SVG +y-down); *_relative commands are deltas from the current point.",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "path"
+                      ]
+                    },
+                    "commands": {
+                      "type": "array",
+                      "minItems": 1,
+                      "description": "Ordered drawing commands, reassembled into an SVG path. abs/rel is encoded in the command name (*_absolute / *_relative).",
+                      "items": {
+                        "type": "object",
+                        "oneOf": [
+                          {
+                            "description": "Close the current subpath (SVG Z). No fields.",
+                            "properties": {
+                              "type": {
+                                "enum": [
+                                  "close_path"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "type"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "description": "Move / line / smooth-quadratic to an endpoint (SVG M/L/T). move_to_* starts a new subpath; line_to_* draws a straight line; smooth_quadratic_bezier_* curves with a reflected control point.",
+                            "properties": {
+                              "type": {
+                                "enum": [
+                                  "move_to_absolute",
+                                  "move_to_relative",
+                                  "line_to_absolute",
+                                  "line_to_relative",
+                                  "smooth_quadratic_bezier_absolute",
+                                  "smooth_quadratic_bezier_relative"
+                                ]
+                              },
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "x",
+                              "y"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "description": "Horizontal line (SVG H). Only x changes.",
+                            "properties": {
+                              "type": {
+                                "enum": [
+                                  "horizontal_line_to_absolute",
+                                  "horizontal_line_to_relative"
+                                ]
+                              },
+                              "x": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "x"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "description": "Vertical line (SVG V). Only y changes.",
+                            "properties": {
+                              "type": {
+                                "enum": [
+                                  "vertical_line_to_absolute",
+                                  "vertical_line_to_relative"
+                                ]
+                              },
+                              "y": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "y"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "description": "Quadratic Bezier (SVG Q): one control point + endpoint.",
+                            "properties": {
+                              "type": {
+                                "enum": [
+                                  "quadratic_bezier_absolute",
+                                  "quadratic_bezier_relative"
+                                ]
+                              },
+                              "control_x": {
+                                "type": "number"
+                              },
+                              "control_y": {
+                                "type": "number"
+                              },
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "control_x",
+                              "control_y",
+                              "x",
+                              "y"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "description": "Smooth cubic Bezier (SVG S): the SECOND control point + endpoint; the first is the reflection of the previous curve's second control point.",
+                            "properties": {
+                              "type": {
+                                "enum": [
+                                  "smooth_cubic_bezier_absolute",
+                                  "smooth_cubic_bezier_relative"
+                                ]
+                              },
+                              "control_2_x": {
+                                "type": "number"
+                              },
+                              "control_2_y": {
+                                "type": "number"
+                              },
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "control_2_x",
+                              "control_2_y",
+                              "x",
+                              "y"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "description": "Cubic Bezier (SVG C): two control points + endpoint.",
+                            "properties": {
+                              "type": {
+                                "enum": [
+                                  "cubic_bezier_absolute",
+                                  "cubic_bezier_relative"
+                                ]
+                              },
+                              "control_1_x": {
+                                "type": "number"
+                              },
+                              "control_1_y": {
+                                "type": "number"
+                              },
+                              "control_2_x": {
+                                "type": "number"
+                              },
+                              "control_2_y": {
+                                "type": "number"
+                              },
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "control_1_x",
+                              "control_1_y",
+                              "control_2_x",
+                              "control_2_y",
+                              "x",
+                              "y"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "description": "Elliptical arc (SVG A). large_arc/sweep are booleans (serialized to 0/1). NOTE: sweep direction is visually mirrored by the control's y-flip (veto #3).",
+                            "properties": {
+                              "type": {
+                                "enum": [
+                                  "elliptical_arc_absolute",
+                                  "elliptical_arc_relative"
+                                ]
+                              },
+                              "rx": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "ry": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "x_axis_rotation": {
+                                "type": "number",
+                                "description": "degrees"
+                              },
+                              "large_arc": {
+                                "type": "boolean",
+                                "description": "Choose the larger of the two possible arcs."
+                              },
+                              "sweep": {
+                                "type": "boolean",
+                                "description": "Sweep direction (mirrored by the y-flip)."
+                              },
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "rx",
+                              "ry",
+                              "x_axis_rotation",
+                              "large_arc",
+                              "sweep",
+                              "x",
+                              "y"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "stroke_width": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "Optional. Present -> stroke the path at this real-world thickness in the bin color (open-curve use). Absent -> fill (closed-region use)."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "commands"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "unit",
+          "prefix",
+          "geometries"
+        ],
+        "additionalProperties": {}
+      }
+    }
+  }
+}

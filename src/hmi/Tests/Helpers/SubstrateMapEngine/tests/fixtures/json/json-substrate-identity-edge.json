@@ -1,0 +1,25 @@
+{
+  "_fixtureNote": "EDGE case: goodDevices = 0 (the schema types it integer/minimum 0, so zero is a measurement and must survive, not be treated as absent), lotId at exactly 80 characters and substrateId at exactly 32 - the maxLength boundaries the schema declares for each.",
+  "dimension": {
+    "x": 2,
+    "y": 2
+  },
+  "units": "mm",
+  "stepSize": {
+    "x": 1,
+    "y": 1
+  },
+  "orientation": 0,
+  "originLocation": "LowerLeft",
+  "axisDirection": "UpRight",
+  "binType": "Ascii",
+  "nullBin": ".",
+  "mapType": "2DArray",
+  "bins": [
+    "pq",
+    "rs"
+  ],
+  "substrateId": "SUBSTRATE-ID-EXACTLY-32-CHARS-AB",
+  "lotId": "LOT-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA-END",
+  "goodDevices": 0
+}

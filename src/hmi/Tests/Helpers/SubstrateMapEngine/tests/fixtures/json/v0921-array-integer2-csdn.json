@@ -1,0 +1,54 @@
+{
+  "$comment": "HAND-AUTHORED from v0921-array-integer2-csdn.xml, transcribed element by element from the XML bytes - NOT produced by e142DocumentToJson (Rule 10, D-030). The richest overlay fixture in the corpus and the negative case for Task 11. Covers: MapType=Array carried as ONE string rather than an array of rows; MapType ABSENT on the second overlay, where no XSD default exists and the prose default 2DArray applies - one BinCode is then one ROW of 20 tokens against a 5x4 lattice, which is where E142_XML_DIM_MISMATCH comes from; MapName with NO MapVersion, so the OverlayKey version is \"\" and the member is omitted rather than written empty; an Overlay carrying NO map at all, because OverlayType's xs:choice is optional; and two SubstrateMap entries sharing a SubstrateId with different LayoutSpecifier, which is schema-legal. The XML writes its attributes in scrambled order (MapType before NullBin before BinType) - order is meaningless in both formats, which is why this transcription does not preserve it.",
+  "$format": "semi-e142",
+  "$version": 1,
+  "$namespace": "urn:semi-org:xsd.E142-1.V0921.SubstrateMap",
+  "Layouts": [
+    {
+      "LayoutId": "StripLayout",
+      "DefaultUnits": "mm",
+      "TopLevel": true,
+      "Dimension": { "X": 1, "Y": 1 },
+      "ChildLayouts": ["Device"]
+    },
+    {
+      "LayoutId": "Device",
+      "DefaultUnits": "mm",
+      "Dimension": { "X": 5, "Y": 4 }
+    }
+  ],
+  "SubstrateMaps": [
+    {
+      "SubstrateType": "Strip",
+      "SubstrateId": "33D075",
+      "LayoutSpecifier": "StripLayout/Device",
+      "Overlay": [
+        {
+          "MapName": "DownloadCodeMap",
+          "BinCodeMap": {
+            "BinType": "Integer2",
+            "NullBin": "0000",
+            "MapType": "Array",
+            "BinCode": "00010002000100020001000200010002000100020001000200010002000100020001000200010002"
+          }
+        },
+        {
+          "MapName": "UploadCodeMap",
+          "BinCodeMap": {
+            "BinType": "Integer2",
+            "NullBin": "0000",
+            "BinCode": ["0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A"]
+          }
+        }
+      ]
+    },
+    {
+      "SubstrateType": "Strip",
+      "SubstrateId": "33D075",
+      "LayoutSpecifier": "StripLayout/Device/Die1",
+      "Overlay": [
+        { "MapName": "UploadTransferMap" }
+      ]
+    }
+  ]
+}

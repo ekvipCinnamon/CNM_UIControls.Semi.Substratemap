@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Fixture: v0211-hexadecimal-nullbin-round.xml
+ Covers: BinType=HexaDecimal (2-digit hex, no separators per the standard); NullBin-heavy round-wafer shape (NullBin corners outside
+ the simulated circular substrate, same pattern as the official
+ BinCodeMap-Example.xml's Ascii round pattern, the standard).
+ Grid: 9 cols x 9 rows.
+-->
+<MapData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:semi-org:xsd.E142-1.V0211.SubstrateMap E142-1-V0211-Schema.xsd"
+    xmlns="urn:semi-org:xsd.E142-1.V0211.SubstrateMap">
+  <Layouts>
+    <Layout LayoutId="Round" DefaultUnits="mm" TopLevel="true">
+      <Dimension X="9" Y="9"/>
+      <StepSize X="1.0" Y="1.0"/>
+    </Layout>
+  </Layouts>
+  <Substrates>
+    <Substrate SubstrateType="Wafer" SubstrateId="ROUNDHEX01"/>
+  </Substrates>
+  <SubstrateMaps>
+    <SubstrateMap SubstrateType="Wafer" SubstrateId="ROUNDHEX01" LayoutSpecifier="Round">
+      <Overlay MapName="Sort" MapVersion="1">
+        <BinCodeMap BinType="HexaDecimal" NullBin="F0" MapType="2DArray">
+          <BinDefinitions>
+            <BinDefinition BinCode="01" BinDescription="Pass"/>
+            <BinDefinition BinCode="09" BinDescription="Fail"/>
+          </BinDefinitions>
+          <BinCode>F0F0F0010101F0F0F0</BinCode>
+          <BinCode>F001010101010101F0</BinCode>
+          <BinCode>F001010101010101F0</BinCode>
+          <BinCode>010101010901010101</BinCode>
+          <BinCode>010101010101010101</BinCode>
+          <BinCode>010101090101010101</BinCode>
+          <BinCode>F001010101010101F0</BinCode>
+          <BinCode>F001010101010101F0</BinCode>
+          <BinCode>F0F0F0010101F0F0F0</BinCode>
+        </BinCodeMap>
+      </Overlay>
+    </SubstrateMap>
+  </SubstrateMaps>
+</MapData>

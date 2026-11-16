@@ -1,7 +1,7 @@
 # SubstrateMap
 
 ![A substrate map: a wafer outline with its dies colored by status, the origin marker at the data
-origin, and the substrate identity below.](images/map-griddata.png)
+origin, and the substrate identity below.](Images/map-griddata.png)
 
 *One control, one binding. The outline comes from a preset, the dies from `GridData`, and the line
 underneath is the substrate identity and the age of the data.*
@@ -178,7 +178,7 @@ layout and the bins out of the document.
 ```
 
 ![Three maps beside three tiles: the same three substrates drawn as full maps on the left and as
-compact dashboard tiles on the right.](images/maps-and-tiles.png)
+compact dashboard tiles on the right.](Images/maps-and-tiles.png)
 
 *The same three substrates, as maps and as tiles. A tile is a map with a smaller attribute surface -
 no outline, no origin marker, and a marking of its own when the data stops arriving.*
@@ -199,7 +199,7 @@ not.
 ```
 
 ![A dashboard: three tiles above a filter bar, and below it the same lot drawn unfiltered and
-filtered side by side with a bar chart and a share chart of its bins.](images/dashboard.png)
+filtered side by side with a bar chart and a share chart of its bins.](Images/dashboard.png)
 
 *Unfiltered on the left, filtered on the right, from one bar. The comparison is the point: a filtered
 image on its own says nothing about what the filter removed.*
@@ -225,7 +225,7 @@ on its own says nothing about what the filter removed.
 ```
 
 ![Two pie charts and a bar chart, each headed by its substrate identity on the left and the age of
-the data on the right.](images/charts.png)
+the data on the right.](Images/charts.png)
 
 *Both chart styles off the same data. A long identity is shortened so it never runs into the
 timestamp; the timestamp is never shortened, because half a clock time is not a time.*
@@ -2290,7 +2290,7 @@ the chart paint it, because neither has a band.
 going quiet produces no event, so the control has to wake up and look.
 
 ![A dashboard tile whose data has stopped arriving: a dashed border drawn just outside the
-substrate, with the age of the last update beneath it.](images/tile-stale.png)
+substrate, with the age of the last update beneath it.](Images/tile-stale.png)
 
 *What a stale tile looks like. The dashed border sits just outside the substrate rather than on it,
 so the marking is legible against the dies; the age underneath says how long ago the data arrived.*

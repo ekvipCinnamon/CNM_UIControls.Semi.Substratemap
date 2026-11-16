@@ -591,7 +591,7 @@
     <file src="CHANGELOG.md" target="" exclude="bin\**;Packages\**" />
     <file src="README.md" target="" exclude="bin\**;Packages\**" />
     <file src="README.md" target="runtimes\native1.12-tchmi\" exclude="bin\**;Packages\**" />
-    <file src="images\logo.png" target="images\" exclude="bin\**;Packages\**" />
+    <file src="images\*.png" target="images\" exclude="bin\**;Packages\**" />
     <file src="Manifest.json" target="runtimes\native1.12-tchmi\" exclude="bin\**;Packages\**" />
     <file src="**/*.function.json" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
     <file src="**/Description.json" target="runtimes\native1.12-tchmi\" exclude=".hmipkgs\**;.hmiframework\**;bin\**;Packages\**" />
